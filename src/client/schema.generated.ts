@@ -24,6 +24,52 @@ export interface Scalars {
   Float: number;
 }
 
+/** Input for the addCartItems mutation */
+export interface AddCartItemsInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Cart items to be added */
+  items?: InputMaybe<Array<InputMaybe<CartItemInput>>>;
+}
+
+/** Input for the addFee mutation */
+export interface AddFeeInput {
+  /** Fee amount */
+  amount?: InputMaybe<Scalars['Float']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Unique name for the fee. */
+  name: Scalars['String'];
+  /** The tax class for the fee if taxable. */
+  taxClass?: InputMaybe<TaxClassEnum>;
+  /** Is the fee taxable? */
+  taxable?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Input for the addToCart mutation */
+export interface AddToCartInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** JSON string representation of extra cart item data */
+  extraData?: InputMaybe<Scalars['String']>;
+  /** Cart item product database ID or global ID */
+  productId: Scalars['Int'];
+  /** Cart item quantity */
+  quantity?: InputMaybe<Scalars['Int']>;
+  /** Cart item product variation attributes */
+  variation?: InputMaybe<Array<InputMaybe<ProductAttributeInput>>>;
+  /** Cart item product variation database ID or global ID */
+  variationId?: InputMaybe<Scalars['Int']>;
+}
+
+/** Input for the applyCoupon mutation */
+export interface ApplyCouponInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Code of coupon being applied */
+  code: Scalars['String'];
+}
+
 /** What rating to display avatars up to. Accepts 'G', 'PG', 'R', 'X', and are judged in that order. Default is the value of the 'avatar_rating' option */
 export enum AvatarRatingEnum {
   /** Indicates a G level avatar rating level. */
@@ -34,6 +80,56 @@ export enum AvatarRatingEnum {
   R = 'R',
   /** Indicates an X level avatar rating level. */
   X = 'X',
+}
+
+/** Product backorder enumeration */
+export enum BackordersEnum {
+  NO = 'NO',
+  NOTIFY = 'NOTIFY',
+  YES = 'YES',
+}
+
+/** Cart error type enumeration */
+export enum CartErrorType {
+  INVALID_CART_ITEM = 'INVALID_CART_ITEM',
+  INVALID_COUPON = 'INVALID_COUPON',
+  INVALID_SHIPPING_METHOD = 'INVALID_SHIPPING_METHOD',
+}
+
+/** Cart item quantity */
+export interface CartItemInput {
+  /** JSON string representation of extra cart item data */
+  extraData?: InputMaybe<Scalars['String']>;
+  /** Cart item product database ID or global ID */
+  productId: Scalars['Int'];
+  /** Cart item quantity */
+  quantity?: InputMaybe<Scalars['Int']>;
+  /** Cart item product variation attributes */
+  variation?: InputMaybe<Array<InputMaybe<ProductAttributeInput>>>;
+  /** Cart item product variation database ID or global ID */
+  variationId?: InputMaybe<Scalars['Int']>;
+}
+
+/** Cart item quantity */
+export interface CartItemQuantityInput {
+  /** Cart item being updated */
+  key: Scalars['ID'];
+  /** Cart item's new quantity */
+  quantity: Scalars['Int'];
+}
+
+/** Arguments for filtering the CartToCartItemConnection connection */
+export interface CartToCartItemConnectionWhereArgs {
+  /** Limit results to cart items that require shipping */
+  needsShipping?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Product catalog visibility enumeration */
+export enum CatalogVisibilityEnum {
+  CATALOG = 'CATALOG',
+  HIDDEN = 'HIDDEN',
+  SEARCH = 'SEARCH',
+  VISIBLE = 'VISIBLE',
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -198,6 +294,32 @@ export interface CategoryToPostConnectionWhereArgs {
   tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the checkout mutation */
+export interface CheckoutInput {
+  /** Create new customer account */
+  account?: InputMaybe<CreateAccountInput>;
+  /** Order billing address */
+  billing?: InputMaybe<CustomerAddressInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Order customer note */
+  customerNote?: InputMaybe<Scalars['String']>;
+  /** Define if the order is paid. It will set the status to processing and reduce stock items. */
+  isPaid?: InputMaybe<Scalars['Boolean']>;
+  /** Order meta data */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Payment method ID. */
+  paymentMethod?: InputMaybe<Scalars['String']>;
+  /** Ship to a separate address */
+  shipToDifferentAddress?: InputMaybe<Scalars['Boolean']>;
+  /** Order shipping address */
+  shipping?: InputMaybe<CustomerAddressInput>;
+  /** Order shipping method */
+  shippingMethod?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Order transaction ID */
+  transactionId?: InputMaybe<Scalars['String']>;
 }
 
 /** Arguments for filtering the CommentToCommentConnection connection */
@@ -446,6 +568,537 @@ export enum ContentTypesOfTagEnum {
   POST = 'POST',
 }
 
+/** Countries enumeration */
+export enum CountriesEnum {
+  AD = 'AD',
+  AE = 'AE',
+  AF = 'AF',
+  AG = 'AG',
+  AI = 'AI',
+  AL = 'AL',
+  AM = 'AM',
+  AO = 'AO',
+  AQ = 'AQ',
+  AR = 'AR',
+  AS = 'AS',
+  AT = 'AT',
+  AU = 'AU',
+  AW = 'AW',
+  AX = 'AX',
+  AZ = 'AZ',
+  BA = 'BA',
+  BB = 'BB',
+  BD = 'BD',
+  BE = 'BE',
+  BF = 'BF',
+  BG = 'BG',
+  BH = 'BH',
+  BI = 'BI',
+  BJ = 'BJ',
+  BL = 'BL',
+  BM = 'BM',
+  BN = 'BN',
+  BO = 'BO',
+  BQ = 'BQ',
+  BR = 'BR',
+  BS = 'BS',
+  BT = 'BT',
+  BV = 'BV',
+  BW = 'BW',
+  BY = 'BY',
+  BZ = 'BZ',
+  CA = 'CA',
+  CC = 'CC',
+  CD = 'CD',
+  CF = 'CF',
+  CG = 'CG',
+  CH = 'CH',
+  CI = 'CI',
+  CK = 'CK',
+  CL = 'CL',
+  CM = 'CM',
+  CN = 'CN',
+  CO = 'CO',
+  CR = 'CR',
+  CU = 'CU',
+  CV = 'CV',
+  CW = 'CW',
+  CX = 'CX',
+  CY = 'CY',
+  CZ = 'CZ',
+  DE = 'DE',
+  DJ = 'DJ',
+  DK = 'DK',
+  DM = 'DM',
+  DO = 'DO',
+  DZ = 'DZ',
+  EC = 'EC',
+  EE = 'EE',
+  EG = 'EG',
+  EH = 'EH',
+  ER = 'ER',
+  ES = 'ES',
+  ET = 'ET',
+  FI = 'FI',
+  FJ = 'FJ',
+  FK = 'FK',
+  FM = 'FM',
+  FO = 'FO',
+  FR = 'FR',
+  GA = 'GA',
+  GB = 'GB',
+  GD = 'GD',
+  GE = 'GE',
+  GF = 'GF',
+  GG = 'GG',
+  GH = 'GH',
+  GI = 'GI',
+  GL = 'GL',
+  GM = 'GM',
+  GN = 'GN',
+  GP = 'GP',
+  GQ = 'GQ',
+  GR = 'GR',
+  GS = 'GS',
+  GT = 'GT',
+  GU = 'GU',
+  GW = 'GW',
+  GY = 'GY',
+  HK = 'HK',
+  HM = 'HM',
+  HN = 'HN',
+  HR = 'HR',
+  HT = 'HT',
+  HU = 'HU',
+  ID = 'ID',
+  IE = 'IE',
+  IL = 'IL',
+  IM = 'IM',
+  IN = 'IN',
+  IO = 'IO',
+  IQ = 'IQ',
+  IR = 'IR',
+  IS = 'IS',
+  IT = 'IT',
+  JE = 'JE',
+  JM = 'JM',
+  JO = 'JO',
+  JP = 'JP',
+  KE = 'KE',
+  KG = 'KG',
+  KH = 'KH',
+  KI = 'KI',
+  KM = 'KM',
+  KN = 'KN',
+  KP = 'KP',
+  KR = 'KR',
+  KW = 'KW',
+  KY = 'KY',
+  KZ = 'KZ',
+  LA = 'LA',
+  LB = 'LB',
+  LC = 'LC',
+  LI = 'LI',
+  LK = 'LK',
+  LR = 'LR',
+  LS = 'LS',
+  LT = 'LT',
+  LU = 'LU',
+  LV = 'LV',
+  LY = 'LY',
+  MA = 'MA',
+  MC = 'MC',
+  MD = 'MD',
+  ME = 'ME',
+  MF = 'MF',
+  MG = 'MG',
+  MH = 'MH',
+  MK = 'MK',
+  ML = 'ML',
+  MM = 'MM',
+  MN = 'MN',
+  MO = 'MO',
+  MP = 'MP',
+  MQ = 'MQ',
+  MR = 'MR',
+  MS = 'MS',
+  MT = 'MT',
+  MU = 'MU',
+  MV = 'MV',
+  MW = 'MW',
+  MX = 'MX',
+  MY = 'MY',
+  MZ = 'MZ',
+  NA = 'NA',
+  NC = 'NC',
+  NE = 'NE',
+  NF = 'NF',
+  NG = 'NG',
+  NI = 'NI',
+  NL = 'NL',
+  NO = 'NO',
+  NP = 'NP',
+  NR = 'NR',
+  NU = 'NU',
+  NZ = 'NZ',
+  OM = 'OM',
+  PA = 'PA',
+  PE = 'PE',
+  PF = 'PF',
+  PG = 'PG',
+  PH = 'PH',
+  PK = 'PK',
+  PL = 'PL',
+  PM = 'PM',
+  PN = 'PN',
+  PR = 'PR',
+  PS = 'PS',
+  PT = 'PT',
+  PW = 'PW',
+  PY = 'PY',
+  QA = 'QA',
+  RE = 'RE',
+  RO = 'RO',
+  RS = 'RS',
+  RU = 'RU',
+  RW = 'RW',
+  SA = 'SA',
+  SB = 'SB',
+  SC = 'SC',
+  SD = 'SD',
+  SE = 'SE',
+  SG = 'SG',
+  SH = 'SH',
+  SI = 'SI',
+  SJ = 'SJ',
+  SK = 'SK',
+  SL = 'SL',
+  SM = 'SM',
+  SN = 'SN',
+  SO = 'SO',
+  SR = 'SR',
+  SS = 'SS',
+  ST = 'ST',
+  SV = 'SV',
+  SX = 'SX',
+  SY = 'SY',
+  SZ = 'SZ',
+  TC = 'TC',
+  TD = 'TD',
+  TF = 'TF',
+  TG = 'TG',
+  TH = 'TH',
+  TJ = 'TJ',
+  TK = 'TK',
+  TL = 'TL',
+  TM = 'TM',
+  TN = 'TN',
+  TO = 'TO',
+  TR = 'TR',
+  TT = 'TT',
+  TV = 'TV',
+  TW = 'TW',
+  TZ = 'TZ',
+  UA = 'UA',
+  UG = 'UG',
+  UM = 'UM',
+  US = 'US',
+  UY = 'UY',
+  UZ = 'UZ',
+  VA = 'VA',
+  VC = 'VC',
+  VE = 'VE',
+  VG = 'VG',
+  VI = 'VI',
+  VN = 'VN',
+  VU = 'VU',
+  WF = 'WF',
+  WS = 'WS',
+  YE = 'YE',
+  YT = 'YT',
+  ZA = 'ZA',
+  ZM = 'ZM',
+  ZW = 'ZW',
+}
+
+/** The Type of Identifier used to fetch a single Coupon. Default is ID. */
+export enum CouponIdTypeEnum {
+  /** Coupon code. */
+  CODE = 'CODE',
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+}
+
+/** Arguments for filtering the CouponToCustomerConnection connection */
+export interface CouponToCustomerConnectionWhereArgs {
+  /** Limit result set to resources with a specific email. */
+  email?: InputMaybe<Scalars['String']>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Order of results. */
+  order?: InputMaybe<OrderEnum>;
+  /** Order results by a specific field. */
+  orderby?: InputMaybe<CustomerConnectionOrderbyEnum>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the CouponToExcludedProductCategoriesConnection connection */
+export interface CouponToExcludedProductCategoriesConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the CouponToExcludedProductsConnection connection */
+export interface CouponToExcludedProductsConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Arguments for filtering the CouponToProductCategoryConnection connection */
+export interface CouponToProductCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the CouponToProductConnection connection */
+export interface CouponToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Customer account credentials */
+export interface CreateAccountInput {
+  /** Customer password */
+  password: Scalars['String'];
+  /** Customer username */
+  username: Scalars['String'];
+}
+
 /** Input for the createCategory mutation */
 export interface CreateCategoryInput {
   /** The slug that the category will be an alias of */
@@ -474,16 +1127,62 @@ export interface CreateCommentInput {
   authorUrl?: InputMaybe<Scalars['String']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']>;
-  /** The ID of the post object the comment belongs to. */
+  /** The database ID of the post object the comment belongs to. */
   commentOn?: InputMaybe<Scalars['Int']>;
   /** Content of the comment. */
   content?: InputMaybe<Scalars['String']>;
   /** The date of the object. Preferable to enter as year/month/day ( e.g. 01/31/2017 ) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars['String']>;
-  /** Parent comment of current comment. */
+  /** Parent comment ID of current comment. */
   parent?: InputMaybe<Scalars['ID']>;
   /** Type of comment. */
   type?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the createCoupon mutation */
+export interface CreateCouponInput {
+  /** The amount of discount. Should always be numeric, even if setting a percentage. */
+  amount?: InputMaybe<Scalars['Float']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Coupon code. */
+  code: Scalars['String'];
+  /** The date the coupon expires, in the site's timezone. */
+  dateExpires?: InputMaybe<Scalars['String']>;
+  /** The date the coupon expires, as GMT. */
+  dateExpiresGmt?: InputMaybe<Scalars['String']>;
+  /** Coupon description. */
+  description?: InputMaybe<Scalars['String']>;
+  /** Determines the type of discount that will be applied. */
+  discountType?: InputMaybe<DiscountTypeEnum>;
+  /** List of email addresses that can use this coupon. */
+  emailRestrictions?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** If true, this coupon will not be applied to items that have sale prices. */
+  excludeSaleItems?: InputMaybe<Scalars['Boolean']>;
+  /** List of category IDs the coupon does not apply to. */
+  excludedProductCategories?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** List of product IDs the coupon cannot be used on. */
+  excludedProductIds?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** If true and if the free shipping method requires a coupon, this coupon will enable free shipping. */
+  freeShipping?: InputMaybe<Scalars['Boolean']>;
+  /** If true, the coupon can only be used individually. Other applied coupons will be removed from the cart. */
+  individualUse?: InputMaybe<Scalars['Boolean']>;
+  /** Max number of items in the cart the coupon can be applied to. */
+  limitUsageToXItems?: InputMaybe<Scalars['Int']>;
+  /** Maximum order amount allowed when using the coupon. */
+  maximumAmount?: InputMaybe<Scalars['String']>;
+  /** Meta data. */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Minimum order amount that needs to be in the cart before coupon applies. */
+  minimumAmount?: InputMaybe<Scalars['String']>;
+  /** List of category IDs the coupon applies to. */
+  productCategories?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** List of product IDs the coupon can be used on. */
+  productIds?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** How many times the coupon can be used in total. */
+  usageLimit?: InputMaybe<Scalars['Int']>;
+  /** How many times the coupon can be used per customer. */
+  usageLimitPerUser?: InputMaybe<Scalars['Int']>;
 }
 
 /** Input for the createMediaItem mutation */
@@ -508,7 +1207,7 @@ export interface CreateMediaItemInput {
   filePath?: InputMaybe<Scalars['String']>;
   /** The file type of the mediaItem */
   fileType?: InputMaybe<MimeTypeEnum>;
-  /** The WordPress post ID or the graphQL postId of the parent object */
+  /** The ID of the parent object */
   parentId?: InputMaybe<Scalars['ID']>;
   /** The ping status for the mediaItem */
   pingStatus?: InputMaybe<Scalars['String']>;
@@ -518,6 +1217,44 @@ export interface CreateMediaItemInput {
   status?: InputMaybe<MediaItemStatusEnum>;
   /** The title of the mediaItem */
   title?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the createOrder mutation */
+export interface CreateOrderInput {
+  /** Order billing address */
+  billing?: InputMaybe<CustomerAddressInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Coupons codes to be applied to order */
+  coupons?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Currency the order was created with, in ISO format. */
+  currency?: InputMaybe<Scalars['String']>;
+  /** Order customer ID */
+  customerId?: InputMaybe<Scalars['Int']>;
+  /** Note left by customer during checkout. */
+  customerNote?: InputMaybe<Scalars['String']>;
+  /** Order shipping lines */
+  feeLines?: InputMaybe<Array<InputMaybe<FeeLineInput>>>;
+  /** Define if the order is paid. It will set the status to processing and reduce stock items. */
+  isPaid?: InputMaybe<Scalars['Boolean']>;
+  /** Order line items */
+  lineItems?: InputMaybe<Array<InputMaybe<LineItemInput>>>;
+  /** Order meta data */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Parent order ID. */
+  parentId?: InputMaybe<Scalars['Int']>;
+  /** Payment method ID. */
+  paymentMethod?: InputMaybe<Scalars['String']>;
+  /** Payment method title. */
+  paymentMethodTitle?: InputMaybe<Scalars['String']>;
+  /** Order shipping address */
+  shipping?: InputMaybe<CustomerAddressInput>;
+  /** Order shipping lines */
+  shippingLines?: InputMaybe<Array<InputMaybe<ShippingLineInput>>>;
+  /** Order status */
+  status?: InputMaybe<OrderStatusEnum>;
+  /** Order transaction ID */
+  transactionId?: InputMaybe<Scalars['String']>;
 }
 
 /** Input for the createPage mutation */
@@ -598,6 +1335,64 @@ export interface CreatePostInput {
   toPing?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 }
 
+/** Input for the createProductCategory mutation */
+export interface CreateProductCategoryInput {
+  /** The slug that the product_cat will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_cat object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The name of the product_cat object to mutate */
+  name: Scalars['String'];
+  /** The ID of the product_cat that should be set as the parent */
+  parentId?: InputMaybe<Scalars['ID']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the createProductTag mutation */
+export interface CreateProductTagInput {
+  /** The slug that the product_tag will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_tag object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The name of the product_tag object to mutate */
+  name: Scalars['String'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the createProductType mutation */
+export interface CreateProductTypeInput {
+  /** The slug that the product_type will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_type object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The name of the product_type object to mutate */
+  name: Scalars['String'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the createShippingClass mutation */
+export interface CreateShippingClassInput {
+  /** The slug that the product_shipping_class will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_shipping_class object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The name of the product_shipping_class object to mutate */
+  name: Scalars['String'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
 /** Input for the createTag mutation */
 export interface CreateTagInput {
   /** The slug that the post_tag will be an alias of */
@@ -650,6 +1445,126 @@ export interface CreateUserInput {
   websiteUrl?: InputMaybe<Scalars['String']>;
   /** User's Yahoo IM account. */
   yim?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the createVisibleProduct mutation */
+export interface CreateVisibleProductInput {
+  /** The slug that the product_visibility will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_visibility object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The name of the product_visibility object to mutate */
+  name: Scalars['String'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Customer address information */
+export interface CustomerAddressInput {
+  /** Address 1 */
+  address1?: InputMaybe<Scalars['String']>;
+  /** Address 2 */
+  address2?: InputMaybe<Scalars['String']>;
+  /** City */
+  city?: InputMaybe<Scalars['String']>;
+  /** Company */
+  company?: InputMaybe<Scalars['String']>;
+  /** Country */
+  country?: InputMaybe<CountriesEnum>;
+  /** E-mail */
+  email?: InputMaybe<Scalars['String']>;
+  /** First name */
+  firstName?: InputMaybe<Scalars['String']>;
+  /** Last name */
+  lastName?: InputMaybe<Scalars['String']>;
+  /** Clear old address data */
+  overwrite?: InputMaybe<Scalars['Boolean']>;
+  /** Phone */
+  phone?: InputMaybe<Scalars['String']>;
+  /** Zip Postal Code */
+  postcode?: InputMaybe<Scalars['String']>;
+  /** State */
+  state?: InputMaybe<Scalars['String']>;
+}
+
+/** Field to order the connection by */
+export enum CustomerConnectionOrderbyEnum {
+  /** Order by customer email */
+  EMAIL = 'EMAIL',
+  /** Order by customer ID */
+  ID = 'ID',
+  /** Order by include field */
+  INCLUDE = 'INCLUDE',
+  /** Order by customer display name */
+  NAME = 'NAME',
+  /** Order by customer registration date */
+  REGISTERED_DATE = 'REGISTERED_DATE',
+  /** Order by customer username */
+  USERNAME = 'USERNAME',
+}
+
+/** Arguments for filtering the CustomerToDownloadableItemConnection connection */
+export interface CustomerToDownloadableItemConnectionWhereArgs {
+  /** Limit results to downloadable items that can be downloaded now. */
+  active?: InputMaybe<Scalars['Boolean']>;
+  /** Limit results to downloadable items that are expired. */
+  expired?: InputMaybe<Scalars['Boolean']>;
+  /** Limit results to downloadable items that have downloads remaining. */
+  hasDownloadsRemaining?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the CustomerToOrderConnection connection */
+export interface CustomerToOrderConnectionWhereArgs {
+  /** Limit result set to orders assigned a specific customer. */
+  customerId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to orders assigned a specific group of customers. */
+  customersIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<OrdersOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to orders assigned a specific product. */
+  productId?: InputMaybe<Scalars['Int']>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to orders assigned a specific status. */
+  statuses?: InputMaybe<Array<InputMaybe<OrderStatusEnum>>>;
+}
+
+/** Arguments for filtering the CustomerToRefundConnection connection */
+export interface CustomerToRefundConnectionWhereArgs {
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to refunds from a specific group of order IDs. */
+  orderIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostTypeOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to refunds assigned a specific status. */
+  statuses?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 }
 
 /** Date values */
@@ -710,6 +1625,16 @@ export interface DeleteCommentInput {
   id: Scalars['ID'];
 }
 
+/** Input for the deleteCoupon mutation */
+export interface DeleteCouponInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Delete the object. Set to "false" by default. */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** Unique identifier for the object. */
+  id: Scalars['ID'];
+}
+
 /** Input for the deleteMediaItem mutation */
 export interface DeleteMediaItemInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -718,6 +1643,30 @@ export interface DeleteMediaItemInput {
   forceDelete?: InputMaybe<Scalars['Boolean']>;
   /** The ID of the mediaItem to delete */
   id: Scalars['ID'];
+}
+
+/** Input for the deleteOrder mutation */
+export interface DeleteOrderInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Delete or simply place in trash. */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** Order global ID */
+  id?: InputMaybe<Scalars['ID']>;
+  /** Order WP ID */
+  orderId?: InputMaybe<Scalars['Int']>;
+}
+
+/** Input for the deleteOrderItems mutation */
+export interface DeleteOrderItemsInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Order global ID */
+  id?: InputMaybe<Scalars['ID']>;
+  /** ID Order items being deleted */
+  itemIds?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Order WP ID */
+  orderId?: InputMaybe<Scalars['Int']>;
 }
 
 /** Input for the deletePage mutation */
@@ -748,6 +1697,48 @@ export interface DeletePostInput {
   id: Scalars['ID'];
 }
 
+/** Input for the deleteProductCategory mutation */
+export interface DeleteProductCategoryInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the productCategory to delete */
+  id: Scalars['ID'];
+}
+
+/** Input for the deleteProductTag mutation */
+export interface DeleteProductTagInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the productTag to delete */
+  id: Scalars['ID'];
+}
+
+/** Input for the deleteProductType mutation */
+export interface DeleteProductTypeInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the productType to delete */
+  id: Scalars['ID'];
+}
+
+/** Input for the deleteReview mutation */
+export interface DeleteReviewInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Whether the product review should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** The ID of the target product review */
+  id: Scalars['ID'];
+}
+
+/** Input for the deleteShippingClass mutation */
+export interface DeleteShippingClassInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the shippingClass to delete */
+  id: Scalars['ID'];
+}
+
 /** Input for the deleteTag mutation */
 export interface DeleteTagInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -766,6 +1757,59 @@ export interface DeleteUserInput {
   reassignId?: InputMaybe<Scalars['ID']>;
 }
 
+/** Input for the deleteVisibleProduct mutation */
+export interface DeleteVisibleProductInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the visibleProduct to delete */
+  id: Scalars['ID'];
+}
+
+/** Coupon discount type enumeration */
+export enum DiscountTypeEnum {
+  /** Fixed cart discount */
+  FIXED_CART = 'FIXED_CART',
+  /** Fixed product discount */
+  FIXED_PRODUCT = 'FIXED_PRODUCT',
+  /** Percentage discount */
+  PERCENT = 'PERCENT',
+}
+
+/** Input for the emptyCart mutation */
+export interface EmptyCartInput {
+  clearPersistentCart?: InputMaybe<Scalars['Boolean']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+}
+
+/** Fee line data. */
+export interface FeeLineInput {
+  /** Fee amount. */
+  amount?: InputMaybe<Scalars['String']>;
+  /** Fee Line ID */
+  id?: InputMaybe<Scalars['ID']>;
+  /** Fee name. */
+  name?: InputMaybe<Scalars['String']>;
+  /** Tax class of fee. */
+  taxClass?: InputMaybe<TaxClassEnum>;
+  /** Tax status of fee. */
+  taxStatus?: InputMaybe<TaxStatusEnum>;
+  /** Line total (after discounts). */
+  total?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the fillCart mutation */
+export interface FillCartInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Coupons to be applied to the cart */
+  coupons?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Cart items to be added */
+  items?: InputMaybe<Array<InputMaybe<CartItemInput>>>;
+  /** Shipping methods to be used. */
+  shippingMethods?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+}
+
 /** Input for the generateAuthorizationCode mutation */
 export interface GenerateAuthorizationCodeInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -776,6 +1820,128 @@ export interface GenerateAuthorizationCodeInput {
   password?: InputMaybe<Scalars['String']>;
   /** Username for WordPress user */
   username?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the GlobalProductAttributeToTermNodeConnection connection */
+export interface GlobalProductAttributeToTermNodeConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the GroupProductToProductConnection connection */
+export interface GroupProductToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
 }
 
 /** Arguments for filtering the HierarchicalContentNodeToContentNodeAncestorsConnection connection */
@@ -858,6 +2024,37 @@ export interface HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs
   title?: InputMaybe<Scalars['String']>;
 }
 
+/** Meta data. */
+export interface LineItemInput {
+  /** Line Item ID */
+  id?: InputMaybe<Scalars['ID']>;
+  /** Meta data. */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Line name */
+  name?: InputMaybe<Scalars['String']>;
+  /** Product ID. */
+  productId?: InputMaybe<Scalars['Int']>;
+  /** Quantity ordered. */
+  quantity?: InputMaybe<Scalars['Int']>;
+  /** Product SKU. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Line subtotal (before discounts). */
+  subtotal?: InputMaybe<Scalars['String']>;
+  /** Tax class of product. */
+  taxClass?: InputMaybe<TaxClassEnum>;
+  /** Line total (after discounts). */
+  total?: InputMaybe<Scalars['String']>;
+  /** Variation ID, if applicable. */
+  variationId?: InputMaybe<Scalars['Int']>;
+}
+
+/** Product manage stock enumeration */
+export enum ManageStockEnum {
+  FALSE = 'FALSE',
+  PARENT = 'PARENT',
+  TRUE = 'TRUE',
+}
+
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
 export enum MediaItemIdType {
   /** Identify a resource by the Database ID. */
@@ -876,12 +2073,26 @@ export enum MediaItemIdType {
 export enum MediaItemSizeEnum {
   /** MediaItem with the large size */
   LARGE = 'LARGE',
+  /** MediaItem with the mailpoet_newsletter_max size */
+  MAILPOET_NEWSLETTER_MAX = 'MAILPOET_NEWSLETTER_MAX',
   /** MediaItem with the medium size */
   MEDIUM = 'MEDIUM',
   /** MediaItem with the medium_large size */
   MEDIUM_LARGE = 'MEDIUM_LARGE',
+  /** MediaItem with the shop_catalog size */
+  SHOP_CATALOG = 'SHOP_CATALOG',
+  /** MediaItem with the shop_single size */
+  SHOP_SINGLE = 'SHOP_SINGLE',
+  /** MediaItem with the shop_thumbnail size */
+  SHOP_THUMBNAIL = 'SHOP_THUMBNAIL',
   /** MediaItem with the thumbnail size */
   THUMBNAIL = 'THUMBNAIL',
+  /** MediaItem with the woocommerce_gallery_thumbnail size */
+  WOOCOMMERCE_GALLERY_THUMBNAIL = 'WOOCOMMERCE_GALLERY_THUMBNAIL',
+  /** MediaItem with the woocommerce_single size */
+  WOOCOMMERCE_SINGLE = 'WOOCOMMERCE_SINGLE',
+  /** MediaItem with the woocommerce_thumbnail size */
+  WOOCOMMERCE_THUMBNAIL = 'WOOCOMMERCE_THUMBNAIL',
   /** MediaItem with the 1536x1536 size */
   _1536X1536 = '_1536X1536',
   /** MediaItem with the 2048x2048 size */
@@ -1010,6 +2221,14 @@ export interface MenuToMenuItemConnectionWhereArgs {
   parentDatabaseId?: InputMaybe<Scalars['Int']>;
   /** The ID of the parent menu object */
   parentId?: InputMaybe<Scalars['ID']>;
+}
+
+/** Meta data. */
+export interface MetaDataInput {
+  /** Meta key. */
+  key: Scalars['String'];
+  /** Meta value. */
+  value: Scalars['String'];
 }
 
 /** The MimeType of the object */
@@ -1202,6 +2421,166 @@ export enum OrderEnum {
   DESC = 'DESC',
 }
 
+/** The Type of Identifier used to fetch a single Order. Default is ID. */
+export enum OrderIdTypeEnum {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+  /** Order number. */
+  ORDER_NUMBER = 'ORDER_NUMBER',
+}
+
+/** Order status enumeration */
+export enum OrderStatusEnum {
+  /** Cancelled */
+  CANCELLED = 'CANCELLED',
+  /** Completed */
+  COMPLETED = 'COMPLETED',
+  /** Failed */
+  FAILED = 'FAILED',
+  /** On hold */
+  ON_HOLD = 'ON_HOLD',
+  /** Pending payment */
+  PENDING = 'PENDING',
+  /** Processing */
+  PROCESSING = 'PROCESSING',
+  /** Refunded */
+  REFUNDED = 'REFUNDED',
+}
+
+/** Arguments for filtering the OrderToCommentConnection connection */
+export interface OrderToCommentConnectionWhereArgs {
+  /** Comment author email address. */
+  authorEmail?: InputMaybe<Scalars['String']>;
+  /** Array of author IDs to include comments for. */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of author IDs to exclude comments for. */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Comment author URL. */
+  authorUrl?: InputMaybe<Scalars['String']>;
+  /** Array of comment IDs to include. */
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Include comments of a given type. */
+  commentType?: InputMaybe<Scalars['String']>;
+  /** Include comments from a given array of comment types. */
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Exclude comments from a given array of comment types. */
+  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  /** Content object author ID to limit results by. */
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of author IDs to retrieve comments for. */
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of author IDs *not* to retrieve comments for. */
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Limit results to those affiliated with a given content object ID. */
+  contentId?: InputMaybe<Scalars['ID']>;
+  /** Array of content object IDs to include affiliated comments for. */
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of content object IDs to exclude affiliated comments for. */
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Content object name to retrieve affiliated comments for. */
+  contentName?: InputMaybe<Scalars['String']>;
+  /** Content Object parent ID to retrieve affiliated comments for. */
+  contentParent?: InputMaybe<Scalars['Int']>;
+  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+  /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Karma score to retrieve matching comments for. */
+  karma?: InputMaybe<Scalars['Int']>;
+  /** The cardinality of the order of the connection */
+  order?: InputMaybe<OrderEnum>;
+  /** Field to order the comments by. */
+  orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
+  /** Parent ID of comment to retrieve children of. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Array of parent IDs of comments to retrieve children for. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of parent IDs of comments *not* to retrieve children for. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Search term(s) to retrieve matching comments for. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Comment status to limit results by. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Include comments for a specific user ID. */
+  userId?: InputMaybe<Scalars['ID']>;
+}
+
+/** Arguments for filtering the OrderToDownloadableItemConnection connection */
+export interface OrderToDownloadableItemConnectionWhereArgs {
+  /** Limit results to downloadable items that can be downloaded now. */
+  active?: InputMaybe<Scalars['Boolean']>;
+  /** Limit results to downloadable items that are expired. */
+  expired?: InputMaybe<Scalars['Boolean']>;
+  /** Limit results to downloadable items that have downloads remaining. */
+  hasDownloadsRemaining?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the OrderToRefundConnection connection */
+export interface OrderToRefundConnectionWhereArgs {
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to refunds from a specific group of order IDs. */
+  orderIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostTypeOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to refunds assigned a specific status. */
+  statuses?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+}
+
+/** Fields to order the Orders connection by */
+export enum OrdersOrderByEnum {
+  /** Order by publish date */
+  DATE = 'DATE',
+  /** Order by date the order was completed */
+  DATE_COMPLETED = 'DATE_COMPLETED',
+  /** Order by date the order was paid */
+  DATE_PAID = 'DATE_PAID',
+  /** Order by order discount amount */
+  DISCOUNT = 'DISCOUNT',
+  /** Preserve the ID order given in the IN array */
+  IN = 'IN',
+  /** Order by the menu order value */
+  MENU_ORDER = 'MENU_ORDER',
+  /** Order by last modified date */
+  MODIFIED = 'MODIFIED',
+  /** Preserve slug order given in the NAME_IN array */
+  NAME_IN = 'NAME_IN',
+  /** Order by order key */
+  ORDER_KEY = 'ORDER_KEY',
+  /** Order by parent ID */
+  PARENT = 'PARENT',
+  /** Order by slug */
+  SLUG = 'SLUG',
+  /** Order by order total */
+  TAX = 'TAX',
+  /** Order by order total */
+  TOTAL = 'TOTAL',
+}
+
+/** Options for ordering the connection */
+export interface OrdersOrderbyInput {
+  field: OrdersOrderByEnum;
+  order?: InputMaybe<OrderEnum>;
+}
+
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
 export enum PageIdType {
   /** Identify a resource by the Database ID. */
@@ -1318,6 +2697,24 @@ export interface PageToRevisionConnectionWhereArgs {
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']>;
+}
+
+/** The status of the WordPress plugin. */
+export enum PluginStatusEnum {
+  /** The plugin is currently active. */
+  ACTIVE = 'ACTIVE',
+  /** The plugin is a drop-in plugin. */
+  DROP_IN = 'DROP_IN',
+  /** The plugin is currently inactive. */
+  INACTIVE = 'INACTIVE',
+  /** The plugin is a must-use plugin. */
+  MUST_USE = 'MUST_USE',
+  /** The plugin is technically active but was paused while loading. */
+  PAUSED = 'PAUSED',
+  /** The plugin was active recently. */
+  RECENTLY_ACTIVE = 'RECENTLY_ACTIVE',
+  /** The plugin has an upgrade available. */
+  UPGRADE = 'UPGRADE',
 }
 
 /** Set relationships between the post to categories */
@@ -1474,9 +2871,9 @@ export enum PostIdType {
 
 /** The format of post field data. */
 export enum PostObjectFieldFormatEnum {
-  /** Provide the field value directly from database */
+  /** Provide the field value directly from database. Null on unauthenticated requests. */
   RAW = 'RAW',
-  /** Apply the default WordPress rendering */
+  /** Provide the field value as rendered by WordPress. Default. */
   RENDERED = 'RENDERED',
 }
 
@@ -1546,10 +2943,14 @@ export enum PostStatusEnum {
   AUTO_DRAFT = 'AUTO_DRAFT',
   /** Objects with the draft status */
   DRAFT = 'DRAFT',
+  /** Objects with the failed status */
+  FAILED = 'FAILED',
   /** Objects with the future status */
   FUTURE = 'FUTURE',
   /** Objects with the inherit status */
   INHERIT = 'INHERIT',
+  /** Objects with the in-progress status */
+  IN_PROGRESS = 'IN_PROGRESS',
   /** Objects with the pending status */
   PENDING = 'PENDING',
   /** Objects with the private status */
@@ -1566,6 +2967,20 @@ export enum PostStatusEnum {
   REQUEST_PENDING = 'REQUEST_PENDING',
   /** Objects with the trash status */
   TRASH = 'TRASH',
+  /** Objects with the wc-cancelled status */
+  WC_CANCELLED = 'WC_CANCELLED',
+  /** Objects with the wc-completed status */
+  WC_COMPLETED = 'WC_COMPLETED',
+  /** Objects with the wc-failed status */
+  WC_FAILED = 'WC_FAILED',
+  /** Objects with the wc-on-hold status */
+  WC_ON_HOLD = 'WC_ON_HOLD',
+  /** Objects with the wc-pending status */
+  WC_PENDING = 'WC_PENDING',
+  /** Objects with the wc-processing status */
+  WC_PROCESSING = 'WC_PROCESSING',
+  /** Objects with the wc-refunded status */
+  WC_REFUNDED = 'WC_REFUNDED',
 }
 
 /** Set relationships between the post to tags */
@@ -1894,6 +3309,1173 @@ export interface PostToTermNodeConnectionWhereArgs {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 }
 
+/** Fields to order the PostType connection by */
+export enum PostTypeOrderByEnum {
+  /** Order by publish date */
+  DATE = 'DATE',
+  /** Preserve the ID order given in the IN array */
+  IN = 'IN',
+  /** Order by the menu order value */
+  MENU_ORDER = 'MENU_ORDER',
+  /** Order by last modified date */
+  MODIFIED = 'MODIFIED',
+  /** Preserve slug order given in the NAME_IN array */
+  NAME_IN = 'NAME_IN',
+  /** Order by parent ID */
+  PARENT = 'PARENT',
+  /** Order by slug */
+  SLUG = 'SLUG',
+}
+
+/** Options for ordering the connection */
+export interface PostTypeOrderbyInput {
+  field: PostTypeOrderByEnum;
+  order?: InputMaybe<OrderEnum>;
+}
+
+/** Pricing field format enumeration */
+export enum PricingFieldFormatEnum {
+  FORMATTED = 'FORMATTED',
+  RAW = 'RAW',
+}
+
+/** Options for ordering the connection */
+export interface ProductAttributeInput {
+  attributeName: Scalars['String'];
+  attributeValue?: InputMaybe<Scalars['String']>;
+}
+
+/** Product attribute type enumeration */
+export enum ProductAttributeTypesEnum {
+  /** A global product attribute */
+  GLOBAL = 'GLOBAL',
+  /** A local product attribute */
+  LOCAL = 'LOCAL',
+}
+
+/** Product category display type enumeration */
+export enum ProductCategoryDisplay {
+  /** Display both products and subcategories of this category. */
+  BOTH = 'BOTH',
+  /** Display default content connected to this category. */
+  DEFAULT = 'DEFAULT',
+  /** Display products associated with this category. */
+  PRODUCTS = 'PRODUCTS',
+  /** Display subcategories of this category. */
+  SUBCATEGORIES = 'SUBCATEGORIES',
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ProductCategoryIdType {
+  /** The Database ID for the node */
+  DATABASE_ID = 'DATABASE_ID',
+  /** The hashed Global ID */
+  ID = 'ID',
+  /** The name of the node */
+  NAME = 'NAME',
+  /** Url friendly name of the node */
+  SLUG = 'SLUG',
+  /** The URI for the node */
+  URI = 'URI',
+}
+
+/** Arguments for filtering the ProductCategoryToContentNodeConnection connection */
+export interface ProductCategoryToContentNodeConnectionWhereArgs {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the ProductCategoryToProductCategoryConnection connection */
+export interface ProductCategoryToProductCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the ProductCategoryToProductConnection connection */
+export interface ProductCategoryToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** The Type of Identifier used to fetch a single Product. Default is ID. */
+export enum ProductIdTypeEnum {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+  /** Unique store identifier for product. */
+  SKU = 'SKU',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = 'SLUG',
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ProductTagIdType {
+  /** The Database ID for the node */
+  DATABASE_ID = 'DATABASE_ID',
+  /** The hashed Global ID */
+  ID = 'ID',
+  /** The name of the node */
+  NAME = 'NAME',
+  /** Url friendly name of the node */
+  SLUG = 'SLUG',
+  /** The URI for the node */
+  URI = 'URI',
+}
+
+/** Arguments for filtering the ProductTagToContentNodeConnection connection */
+export interface ProductTagToContentNodeConnectionWhereArgs {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the ProductTagToProductConnection connection */
+export interface ProductTagToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Product taxonomies */
+export enum ProductTaxonomyEnum {
+  PRODUCTCATEGORY = 'PRODUCTCATEGORY',
+  PRODUCTTAG = 'PRODUCTTAG',
+  PRODUCTTYPE = 'PRODUCTTYPE',
+  SHIPPINGCLASS = 'SHIPPINGCLASS',
+  VISIBLEPRODUCT = 'VISIBLEPRODUCT',
+}
+
+/** Product filter */
+export interface ProductTaxonomyFilterInput {
+  /** A list of term ids */
+  ids?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Filter operation type */
+  operator?: InputMaybe<TaxonomyOperatorEnum>;
+  /** Which field to select taxonomy term by. */
+  taxonomy: ProductTaxonomyEnum;
+  /** A list of term slugs */
+  terms?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+}
+
+/** Product taxonomy filter type */
+export interface ProductTaxonomyInput {
+  /** Product taxonomy rules to be filter results by */
+  filters?: InputMaybe<Array<InputMaybe<ProductTaxonomyFilterInput>>>;
+  /** Logic relation between each filter. */
+  relation?: InputMaybe<RelationEnum>;
+}
+
+/** Arguments for filtering the ProductToCommentConnection connection */
+export interface ProductToCommentConnectionWhereArgs {
+  /** Comment author email address. */
+  authorEmail?: InputMaybe<Scalars['String']>;
+  /** Array of author IDs to include comments for. */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of author IDs to exclude comments for. */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Comment author URL. */
+  authorUrl?: InputMaybe<Scalars['String']>;
+  /** Array of comment IDs to include. */
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Include comments of a given type. */
+  commentType?: InputMaybe<Scalars['String']>;
+  /** Include comments from a given array of comment types. */
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Exclude comments from a given array of comment types. */
+  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  /** Content object author ID to limit results by. */
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of author IDs to retrieve comments for. */
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of author IDs *not* to retrieve comments for. */
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Limit results to those affiliated with a given content object ID. */
+  contentId?: InputMaybe<Scalars['ID']>;
+  /** Array of content object IDs to include affiliated comments for. */
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of content object IDs to exclude affiliated comments for. */
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Content object name to retrieve affiliated comments for. */
+  contentName?: InputMaybe<Scalars['String']>;
+  /** Content Object parent ID to retrieve affiliated comments for. */
+  contentParent?: InputMaybe<Scalars['Int']>;
+  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+  /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Karma score to retrieve matching comments for. */
+  karma?: InputMaybe<Scalars['Int']>;
+  /** The cardinality of the order of the connection */
+  order?: InputMaybe<OrderEnum>;
+  /** Field to order the comments by. */
+  orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
+  /** Parent ID of comment to retrieve children of. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Array of parent IDs of comments to retrieve children for. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of parent IDs of comments *not* to retrieve children for. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Search term(s) to retrieve matching comments for. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Comment status to limit results by. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Include comments for a specific user ID. */
+  userId?: InputMaybe<Scalars['ID']>;
+}
+
+/** Arguments for filtering the ProductToGlobalProductAttributeConnection connection */
+export interface ProductToGlobalProductAttributeConnectionWhereArgs {
+  /** Filter results by attribute scope. */
+  type?: InputMaybe<ProductAttributeTypesEnum>;
+}
+
+/** Arguments for filtering the ProductToLocalProductAttributeConnection connection */
+export interface ProductToLocalProductAttributeConnectionWhereArgs {
+  /** Filter results by attribute scope. */
+  type?: InputMaybe<ProductAttributeTypesEnum>;
+}
+
+/** Arguments for filtering the ProductToMediaItemConnection connection */
+export interface ProductToMediaItemConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the ProductToProductAttributeConnection connection */
+export interface ProductToProductAttributeConnectionWhereArgs {
+  /** Filter results by attribute scope. */
+  type?: InputMaybe<ProductAttributeTypesEnum>;
+}
+
+/** Arguments for filtering the ProductToProductCategoryConnection connection */
+export interface ProductToProductCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the ProductToProductConnection connection */
+export interface ProductToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Shuffle results? (Pagination currently not support by this argument) */
+  shuffle?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Arguments for filtering the ProductToProductTagConnection connection */
+export interface ProductToProductTagConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the ProductToProductTypeConnection connection */
+export interface ProductToProductTypeConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the ProductToShippingClassConnection connection */
+export interface ProductToShippingClassConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the ProductToUpsellConnection connection */
+export interface ProductToUpsellConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Arguments for filtering the ProductToVisibleProductConnection connection */
+export interface ProductToVisibleProductConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ProductTypeIdType {
+  /** The Database ID for the node */
+  DATABASE_ID = 'DATABASE_ID',
+  /** The hashed Global ID */
+  ID = 'ID',
+  /** The name of the node */
+  NAME = 'NAME',
+  /** Url friendly name of the node */
+  SLUG = 'SLUG',
+  /** The URI for the node */
+  URI = 'URI',
+}
+
+/** Arguments for filtering the ProductTypeToContentNodeConnection connection */
+export interface ProductTypeToContentNodeConnectionWhereArgs {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+}
+
+/** Product type enumeration */
+export enum ProductTypesEnum {
+  /** An external product */
+  EXTERNAL = 'EXTERNAL',
+  /** A product group */
+  GROUPED = 'GROUPED',
+  /** A simple product */
+  SIMPLE = 'SIMPLE',
+  /** A variable product */
+  VARIABLE = 'VARIABLE',
+  /** A product variation */
+  VARIATION = 'VARIATION',
+}
+
+/** The Type of Identifier used to fetch a single ProductVariation. Default is ID. */
+export enum ProductVariationIdTypeEnum {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+}
+
+/** Arguments for filtering the ProductVariationToShippingClassConnection connection */
+export interface ProductVariationToShippingClassConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the ProductVariationToVisibleProductConnection connection */
+export interface ProductVariationToVisibleProductConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Fields to order the Products connection by */
+export enum ProductsOrderByEnum {
+  /** Order by publish date */
+  DATE = 'DATE',
+  /** Preserve the ID order given in the IN array */
+  IN = 'IN',
+  /** Order by the menu order value */
+  MENU_ORDER = 'MENU_ORDER',
+  /** Order by last modified date */
+  MODIFIED = 'MODIFIED',
+  /** Preserve slug order given in the NAME_IN array */
+  NAME_IN = 'NAME_IN',
+  /** Order by date product sale starts */
+  ON_SALE_FROM = 'ON_SALE_FROM',
+  /** Order by date product sale ends */
+  ON_SALE_TO = 'ON_SALE_TO',
+  /** Order by parent ID */
+  PARENT = 'PARENT',
+  /** Order by product's current price */
+  PRICE = 'PRICE',
+  /** Order by product average rating */
+  RATING = 'RATING',
+  /** Order by product's regular price */
+  REGULAR_PRICE = 'REGULAR_PRICE',
+  /** Order by number of reviews on product */
+  REVIEW_COUNT = 'REVIEW_COUNT',
+  /** Order by product's sale price */
+  SALE_PRICE = 'SALE_PRICE',
+  /** Order by slug */
+  SLUG = 'SLUG',
+  /** Order by total sales of products sold */
+  TOTAL_SALES = 'TOTAL_SALES',
+}
+
+/** Options for ordering the connection */
+export interface ProductsOrderbyInput {
+  field: ProductsOrderByEnum;
+  order?: InputMaybe<OrderEnum>;
+}
+
+/** The Type of Identifier used to fetch a single Refund. Default is ID. */
+export enum RefundIdTypeEnum {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+}
+
+/** Input for the registerCustomer mutation */
+export interface RegisterCustomerInput {
+  /** User's AOL IM account. */
+  aim?: InputMaybe<Scalars['String']>;
+  /** Customer billing information */
+  billing?: InputMaybe<CustomerAddressInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** A string containing content about the user. */
+  description?: InputMaybe<Scalars['String']>;
+  /** A string that will be shown on the site. Defaults to user's username. It is likely that you will want to change this, for both appearance and security through obscurity (that is if you dont use and delete the default admin user). */
+  displayName?: InputMaybe<Scalars['String']>;
+  /** A string containing the user's email address. */
+  email?: InputMaybe<Scalars['String']>;
+  /** 	The user's first name. */
+  firstName?: InputMaybe<Scalars['String']>;
+  /** User's Jabber account. */
+  jabber?: InputMaybe<Scalars['String']>;
+  /** The user's last name. */
+  lastName?: InputMaybe<Scalars['String']>;
+  /** User's locale. */
+  locale?: InputMaybe<Scalars['String']>;
+  /** Meta data. */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** A string that contains a URL-friendly name for the user. The default is the user's username. */
+  nicename?: InputMaybe<Scalars['String']>;
+  /** The user's nickname, defaults to the user's username. */
+  nickname?: InputMaybe<Scalars['String']>;
+  /** A string that contains the plain text password for the user. */
+  password?: InputMaybe<Scalars['String']>;
+  /** The date the user registered. Format is Y-m-d H:i:s. */
+  registered?: InputMaybe<Scalars['String']>;
+  /** A string for whether to enable the rich editor or not. False if not empty. */
+  richEditing?: InputMaybe<Scalars['String']>;
+  /** Customer shipping address */
+  shipping?: InputMaybe<CustomerAddressInput>;
+  /** Customer shipping is identical to billing address */
+  shippingSameAsBilling?: InputMaybe<Scalars['Boolean']>;
+  /** A string that contains the user's username. */
+  username?: InputMaybe<Scalars['String']>;
+  /** A string containing the user's URL for the user's web site. */
+  websiteUrl?: InputMaybe<Scalars['String']>;
+  /** User's Yahoo IM account. */
+  yim?: InputMaybe<Scalars['String']>;
+}
+
 /** Input for the registerUser mutation */
 export interface RegisterUserInput {
   /** User's AOL IM account. */
@@ -1940,6 +4522,24 @@ export enum RelationEnum {
   OR = 'OR',
 }
 
+/** Input for the removeCoupons mutation */
+export interface RemoveCouponsInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Code of coupon being applied */
+  codes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+}
+
+/** Input for the removeItemsFromCart mutation */
+export interface RemoveItemsFromCartInput {
+  /** Remove all cart items */
+  all?: InputMaybe<Scalars['Boolean']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Item keys of the items being removed */
+  keys?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+}
+
 /** Input for the resetUserPassword mutation */
 export interface ResetUserPasswordInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1952,11 +4552,27 @@ export interface ResetUserPasswordInput {
   password?: InputMaybe<Scalars['String']>;
 }
 
+/** Input for the restoreCartItems mutation */
+export interface RestoreCartItemsInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Cart item key of the item being removed */
+  keys?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+}
+
 /** Input for the restoreComment mutation */
 export interface RestoreCommentInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']>;
   /** The ID of the comment to be restored */
+  id: Scalars['ID'];
+}
+
+/** Input for the restoreReview mutation */
+export interface RestoreReviewInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the target product review */
   id: Scalars['ID'];
 }
 
@@ -2146,6 +4762,44 @@ export interface RootQueryToContentRevisionUnionConnectionWhereArgs {
   title?: InputMaybe<Scalars['String']>;
 }
 
+/** Arguments for filtering the RootQueryToCouponConnection connection */
+export interface RootQueryToCouponConnectionWhereArgs {
+  /** Limit result set to resources with a specific code. */
+  code?: InputMaybe<Scalars['String']>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostTypeOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the RootQueryToCustomerConnection connection */
+export interface RootQueryToCustomerConnectionWhereArgs {
+  /** Limit result set to resources with a specific email. */
+  email?: InputMaybe<Scalars['String']>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Order of results. */
+  order?: InputMaybe<OrderEnum>;
+  /** Order results by a specific field. */
+  orderby?: InputMaybe<CustomerConnectionOrderbyEnum>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+}
+
 /** Arguments for filtering the RootQueryToMediaItemConnection connection */
 export interface RootQueryToMediaItemConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
@@ -2214,6 +4868,34 @@ export interface RootQueryToMenuItemConnectionWhereArgs {
   parentId?: InputMaybe<Scalars['ID']>;
 }
 
+/** Arguments for filtering the RootQueryToOrderConnection connection */
+export interface RootQueryToOrderConnectionWhereArgs {
+  /** Limit result set to orders assigned a specific customer. */
+  customerId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to orders assigned a specific group of customers. */
+  customersIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<OrdersOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to orders assigned a specific product. */
+  productId?: InputMaybe<Scalars['Int']>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to orders assigned a specific status. */
+  statuses?: InputMaybe<Array<InputMaybe<OrderStatusEnum>>>;
+}
+
 /** Arguments for filtering the RootQueryToPageConnection connection */
 export interface RootQueryToPageConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
@@ -2258,6 +4940,22 @@ export interface RootQueryToPageConnectionWhereArgs {
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']>;
+}
+
+/** Arguments for filtering the RootQueryToPaymentGatewayConnection connection */
+export interface RootQueryToPaymentGatewayConnectionWhereArgs {
+  /** Include disabled payment gateways? */
+  all?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the RootQueryToPluginConnection connection */
+export interface RootQueryToPluginConnectionWhereArgs {
+  /** Show plugin based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve plugins where plugin status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PluginStatusEnum>>>;
+  /** Show plugins with a specific status. */
+  status?: InputMaybe<PluginStatusEnum>;
 }
 
 /** Arguments for filtering the RootQueryToPostConnection connection */
@@ -2370,6 +5068,284 @@ export interface RootQueryToPostFormatConnectionWhereArgs {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 }
 
+/** Arguments for filtering the RootQueryToProductCategoryConnection connection */
+export interface RootQueryToProductCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the RootQueryToProductConnection connection */
+export interface RootQueryToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Arguments for filtering the RootQueryToProductTagConnection connection */
+export interface RootQueryToProductTagConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the RootQueryToProductTypeConnection connection */
+export interface RootQueryToProductTypeConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the RootQueryToRefundConnection connection */
+export interface RootQueryToRefundConnectionWhereArgs {
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to refunds from a specific group of order IDs. */
+  orderIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostTypeOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit results to those matching a string. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to refunds assigned a specific status. */
+  statuses?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+}
+
+/** Arguments for filtering the RootQueryToShippingClassConnection connection */
+export interface RootQueryToShippingClassConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
 /** Arguments for filtering the RootQueryToTagConnection connection */
 export interface RootQueryToTagConnectionWhereArgs {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
@@ -2412,6 +5388,18 @@ export interface RootQueryToTagConnectionWhereArgs {
   termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Arguments for filtering the RootQueryToTaxRateConnection connection */
+export interface RootQueryToTaxRateConnectionWhereArgs {
+  /** Sort by tax class. */
+  class?: InputMaybe<TaxClassEnum>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<TaxRateConnectionOrderbyInput>>>;
+  /** Filter results by a post code. */
+  postCode?: InputMaybe<Scalars['String']>;
+  /** Filter results by a group of post codes. */
+  postCodeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 }
 
 /** Arguments for filtering the RootQueryToTermNodeConnection connection */
@@ -2496,12 +5484,219 @@ export interface RootQueryToUserConnectionWhereArgs {
   >;
 }
 
+/** Arguments for filtering the RootQueryToVisibleProductConnection connection */
+export interface RootQueryToVisibleProductConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+}
+
 /** Input for the sendPasswordResetEmail mutation */
 export interface SendPasswordResetEmailInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']>;
   /** A string that contains the user's username or email address. */
   username: Scalars['String'];
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ShippingClassIdType {
+  /** The Database ID for the node */
+  DATABASE_ID = 'DATABASE_ID',
+  /** The hashed Global ID */
+  ID = 'ID',
+  /** The name of the node */
+  NAME = 'NAME',
+  /** Url friendly name of the node */
+  SLUG = 'SLUG',
+  /** The URI for the node */
+  URI = 'URI',
+}
+
+/** Arguments for filtering the ShippingClassToContentNodeConnection connection */
+export interface ShippingClassToContentNodeConnectionWhereArgs {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+}
+
+/** Shipping lines data. */
+export interface ShippingLineInput {
+  /** Shipping Line ID */
+  id?: InputMaybe<Scalars['ID']>;
+  /** Shipping instance ID. */
+  instanceId?: InputMaybe<Scalars['String']>;
+  /** Meta data. */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Shipping method ID. */
+  methodId: Scalars['String'];
+  /** Shipping method name. */
+  methodTitle: Scalars['String'];
+  /** Line total (after discounts). */
+  total: Scalars['String'];
+}
+
+/** The Type of Identifier used to fetch a single Shipping Method. Default is ID. */
+export enum ShippingMethodIdTypeEnum {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+}
+
+/** Arguments for filtering the SimpleProductToProductConnection connection */
+export interface SimpleProductToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Product stock status enumeration */
+export enum StockStatusEnum {
+  IN_STOCK = 'IN_STOCK',
+  ON_BACKORDER = 'ON_BACKORDER',
+  OUT_OF_STOCK = 'OUT_OF_STOCK',
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -2624,14 +5819,61 @@ export interface TagToPostConnectionWhereArgs {
   title?: InputMaybe<Scalars['String']>;
 }
 
+/** Tax class enumeration */
+export enum TaxClassEnum {
+  /** Inherits Tax class from cart */
+  INHERIT_CART = 'INHERIT_CART',
+  REDUCED_RATE = 'REDUCED_RATE',
+  /** Standard Tax rate */
+  STANDARD = 'STANDARD',
+  ZERO_RATE = 'ZERO_RATE',
+}
+
+/** Field to order the connection by */
+export enum TaxRateConnectionOrderbyEnum {
+  ID = 'ID',
+  ORDER = 'ORDER',
+}
+
+/** Options for ordering the connection */
+export interface TaxRateConnectionOrderbyInput {
+  field: TaxRateConnectionOrderbyEnum;
+  order?: InputMaybe<OrderEnum>;
+}
+
+/** The Type of Identifier used to fetch a single Tax rate. Default is ID. */
+export enum TaxRateIdTypeEnum {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = 'ID',
+}
+
+/** Product tax status enumeration */
+export enum TaxStatusEnum {
+  NONE = 'NONE',
+  SHIPPING = 'SHIPPING',
+  TAXABLE = 'TAXABLE',
+}
+
 /** Allowed taxonomies */
 export enum TaxonomyEnum {
   /** Taxonomy enum category */
   CATEGORY = 'CATEGORY',
   /** Taxonomy enum post_format */
   POSTFORMAT = 'POSTFORMAT',
+  /** Taxonomy enum product_cat */
+  PRODUCTCATEGORY = 'PRODUCTCATEGORY',
+  /** Taxonomy enum product_tag */
+  PRODUCTTAG = 'PRODUCTTAG',
+  /** Taxonomy enum product_type */
+  PRODUCTTYPE = 'PRODUCTTYPE',
+  /** Taxonomy enum product_shipping_class */
+  SHIPPINGCLASS = 'SHIPPINGCLASS',
   /** Taxonomy enum post_tag */
   TAG = 'TAG',
+  /** Taxonomy enum product_visibility */
+  VISIBLEPRODUCT = 'VISIBLEPRODUCT',
 }
 
 /** The Type of Identifier used to fetch a single Taxonomy node. To be used along with the "id" field. Default is "ID". */
@@ -2640,6 +5882,15 @@ export enum TaxonomyIdTypeEnum {
   ID = 'ID',
   /** The name of the taxonomy */
   NAME = 'NAME',
+}
+
+/** Taxonomy query operators */
+export enum TaxonomyOperatorEnum {
+  AND = 'AND',
+  EXISTS = 'EXISTS',
+  IN = 'IN',
+  NOT_EXISTS = 'NOT_EXISTS',
+  NOT_IN = 'NOT_IN',
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is "ID". To be used along with the "id" field. */
@@ -2704,7 +5955,7 @@ export interface UpdateCommentInput {
   authorUrl?: InputMaybe<Scalars['String']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']>;
-  /** The ID of the post object the comment belongs to. */
+  /** The database ID of the post object the comment belongs to. */
   commentOn?: InputMaybe<Scalars['Int']>;
   /** Content of the comment. */
   content?: InputMaybe<Scalars['String']>;
@@ -2712,10 +5963,114 @@ export interface UpdateCommentInput {
   date?: InputMaybe<Scalars['String']>;
   /** The ID of the comment being updated. */
   id: Scalars['ID'];
-  /** Parent comment of current comment. */
+  /** Parent comment ID of current comment. */
   parent?: InputMaybe<Scalars['ID']>;
   /** Type of comment. */
   type?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the updateCoupon mutation */
+export interface UpdateCouponInput {
+  /** The amount of discount. Should always be numeric, even if setting a percentage. */
+  amount?: InputMaybe<Scalars['Float']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Coupon code. */
+  code?: InputMaybe<Scalars['String']>;
+  /** The date the coupon expires, in the site's timezone. */
+  dateExpires?: InputMaybe<Scalars['String']>;
+  /** The date the coupon expires, as GMT. */
+  dateExpiresGmt?: InputMaybe<Scalars['String']>;
+  /** Coupon description. */
+  description?: InputMaybe<Scalars['String']>;
+  /** Determines the type of discount that will be applied. */
+  discountType?: InputMaybe<DiscountTypeEnum>;
+  /** List of email addresses that can use this coupon. */
+  emailRestrictions?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** If true, this coupon will not be applied to items that have sale prices. */
+  excludeSaleItems?: InputMaybe<Scalars['Boolean']>;
+  /** List of category IDs the coupon does not apply to. */
+  excludedProductCategories?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** List of product IDs the coupon cannot be used on. */
+  excludedProductIds?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** If true and if the free shipping method requires a coupon, this coupon will enable free shipping. */
+  freeShipping?: InputMaybe<Scalars['Boolean']>;
+  /** Unique identifier for the object. */
+  id: Scalars['ID'];
+  /** If true, the coupon can only be used individually. Other applied coupons will be removed from the cart. */
+  individualUse?: InputMaybe<Scalars['Boolean']>;
+  /** Max number of items in the cart the coupon can be applied to. */
+  limitUsageToXItems?: InputMaybe<Scalars['Int']>;
+  /** Maximum order amount allowed when using the coupon. */
+  maximumAmount?: InputMaybe<Scalars['String']>;
+  /** Meta data. */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Minimum order amount that needs to be in the cart before coupon applies. */
+  minimumAmount?: InputMaybe<Scalars['String']>;
+  /** List of category IDs the coupon applies to. */
+  productCategories?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** List of product IDs the coupon can be used on. */
+  productIds?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** How many times the coupon can be used in total. */
+  usageLimit?: InputMaybe<Scalars['Int']>;
+  /** How many times the coupon can be used per customer. */
+  usageLimitPerUser?: InputMaybe<Scalars['Int']>;
+}
+
+/** Input for the updateCustomer mutation */
+export interface UpdateCustomerInput {
+  /** User's AOL IM account. */
+  aim?: InputMaybe<Scalars['String']>;
+  /** Customer billing information */
+  billing?: InputMaybe<CustomerAddressInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** A string containing content about the user. */
+  description?: InputMaybe<Scalars['String']>;
+  /** A string that will be shown on the site. Defaults to user's username. It is likely that you will want to change this, for both appearance and security through obscurity (that is if you dont use and delete the default admin user). */
+  displayName?: InputMaybe<Scalars['String']>;
+  /** A string containing the user's email address. */
+  email?: InputMaybe<Scalars['String']>;
+  /** 	The user's first name. */
+  firstName?: InputMaybe<Scalars['String']>;
+  /** The ID of the user */
+  id?: InputMaybe<Scalars['ID']>;
+  /** User's Jabber account. */
+  jabber?: InputMaybe<Scalars['String']>;
+  /** The user's last name. */
+  lastName?: InputMaybe<Scalars['String']>;
+  /** User's locale. */
+  locale?: InputMaybe<Scalars['String']>;
+  /** Meta data. */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** A string that contains a URL-friendly name for the user. The default is the user's username. */
+  nicename?: InputMaybe<Scalars['String']>;
+  /** The user's nickname, defaults to the user's username. */
+  nickname?: InputMaybe<Scalars['String']>;
+  /** A string that contains the plain text password for the user. */
+  password?: InputMaybe<Scalars['String']>;
+  /** The date the user registered. Format is Y-m-d H:i:s. */
+  registered?: InputMaybe<Scalars['String']>;
+  /** A string for whether to enable the rich editor or not. False if not empty. */
+  richEditing?: InputMaybe<Scalars['String']>;
+  /** An array of roles to be assigned to the user. */
+  roles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Customer shipping address */
+  shipping?: InputMaybe<CustomerAddressInput>;
+  /** Customer shipping is identical to billing address */
+  shippingSameAsBilling?: InputMaybe<Scalars['Boolean']>;
+  /** A string containing the user's URL for the user's web site. */
+  websiteUrl?: InputMaybe<Scalars['String']>;
+  /** User's Yahoo IM account. */
+  yim?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the updateItemQuantities mutation */
+export interface UpdateItemQuantitiesInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Cart item being updated */
+  items?: InputMaybe<Array<InputMaybe<CartItemQuantityInput>>>;
 }
 
 /** Input for the updateMediaItem mutation */
@@ -2742,7 +6097,7 @@ export interface UpdateMediaItemInput {
   fileType?: InputMaybe<MimeTypeEnum>;
   /** The ID of the mediaItem object */
   id: Scalars['ID'];
-  /** The WordPress post ID or the graphQL postId of the parent object */
+  /** The ID of the parent object */
   parentId?: InputMaybe<Scalars['ID']>;
   /** The ping status for the mediaItem */
   pingStatus?: InputMaybe<Scalars['String']>;
@@ -2752,6 +6107,48 @@ export interface UpdateMediaItemInput {
   status?: InputMaybe<MediaItemStatusEnum>;
   /** The title of the mediaItem */
   title?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the updateOrder mutation */
+export interface UpdateOrderInput {
+  /** Order billing address */
+  billing?: InputMaybe<CustomerAddressInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Coupons codes to be applied to order */
+  coupons?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Currency the order was created with, in ISO format. */
+  currency?: InputMaybe<Scalars['String']>;
+  /** Order customer ID */
+  customerId?: InputMaybe<Scalars['Int']>;
+  /** Note left by customer during checkout. */
+  customerNote?: InputMaybe<Scalars['String']>;
+  /** Order shipping lines */
+  feeLines?: InputMaybe<Array<InputMaybe<FeeLineInput>>>;
+  /** Order global ID */
+  id?: InputMaybe<Scalars['ID']>;
+  /** Define if the order is paid. It will set the status to processing and reduce stock items. */
+  isPaid?: InputMaybe<Scalars['Boolean']>;
+  /** Order line items */
+  lineItems?: InputMaybe<Array<InputMaybe<LineItemInput>>>;
+  /** Order meta data */
+  metaData?: InputMaybe<Array<InputMaybe<MetaDataInput>>>;
+  /** Order WP ID */
+  orderId?: InputMaybe<Scalars['Int']>;
+  /** Parent order ID. */
+  parentId?: InputMaybe<Scalars['Int']>;
+  /** Payment method ID. */
+  paymentMethod?: InputMaybe<Scalars['String']>;
+  /** Payment method title. */
+  paymentMethodTitle?: InputMaybe<Scalars['String']>;
+  /** Order shipping address */
+  shipping?: InputMaybe<CustomerAddressInput>;
+  /** Order shipping lines */
+  shippingLines?: InputMaybe<Array<InputMaybe<ShippingLineInput>>>;
+  /** Order status */
+  status?: InputMaybe<OrderStatusEnum>;
+  /** Order transaction ID */
+  transactionId?: InputMaybe<Scalars['String']>;
 }
 
 /** Input for the updatePage mutation */
@@ -2838,6 +6235,82 @@ export interface UpdatePostInput {
   toPing?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 }
 
+/** Input for the UpdateProductCategory mutation */
+export interface UpdateProductCategoryInput {
+  /** The slug that the product_cat will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_cat object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the productCategory object to update */
+  id: Scalars['ID'];
+  /** The name of the product_cat object to mutate */
+  name?: InputMaybe<Scalars['String']>;
+  /** The ID of the product_cat that should be set as the parent */
+  parentId?: InputMaybe<Scalars['ID']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the UpdateProductTag mutation */
+export interface UpdateProductTagInput {
+  /** The slug that the product_tag will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_tag object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the productTag object to update */
+  id: Scalars['ID'];
+  /** The name of the product_tag object to mutate */
+  name?: InputMaybe<Scalars['String']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the UpdateProductType mutation */
+export interface UpdateProductTypeInput {
+  /** The slug that the product_type will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_type object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the productType object to update */
+  id: Scalars['ID'];
+  /** The name of the product_type object to mutate */
+  name?: InputMaybe<Scalars['String']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the updateReview mutation */
+export interface UpdateReviewInput {
+  /** The approval status of the comment. */
+  approved?: InputMaybe<Scalars['String']>;
+  /** The name of the comment's author. */
+  author?: InputMaybe<Scalars['String']>;
+  /** The email of the comment's author. */
+  authorEmail?: InputMaybe<Scalars['String']>;
+  /** The url of the comment's author. */
+  authorUrl?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The database ID of the post object the comment belongs to. */
+  commentOn?: InputMaybe<Scalars['Int']>;
+  /** Content of the comment. */
+  content?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day ( e.g. 01/31/2017 ) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** The ID of the review being updated. */
+  id: Scalars['ID'];
+  /** Parent comment ID of current comment. */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Product rating */
+  rating: Scalars['Int'];
+}
+
 /** Input for the updateSettings mutation */
 export interface UpdateSettingsInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -2872,6 +6345,29 @@ export interface UpdateSettingsInput {
   writingSettingsDefaultPostFormat?: InputMaybe<Scalars['String']>;
   /** Convert emoticons like :-) and :-P to graphics on display. */
   writingSettingsUseSmilies?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** Input for the UpdateShippingClass mutation */
+export interface UpdateShippingClassInput {
+  /** The slug that the product_shipping_class will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_shipping_class object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the shippingClass object to update */
+  id: Scalars['ID'];
+  /** The name of the product_shipping_class object to mutate */
+  name?: InputMaybe<Scalars['String']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the updateShippingMethod mutation */
+export interface UpdateShippingMethodInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  shippingMethods?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 }
 
 /** Input for the UpdateTag mutation */
@@ -2930,6 +6426,22 @@ export interface UpdateUserInput {
   yim?: InputMaybe<Scalars['String']>;
 }
 
+/** Input for the UpdateVisibleProduct mutation */
+export interface UpdateVisibleProductInput {
+  /** The slug that the product_visibility will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the product_visibility object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the visibleProduct object to update */
+  id: Scalars['ID'];
+  /** The name of the product_visibility object to mutate */
+  name?: InputMaybe<Scalars['String']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+}
+
 /** The Type of Identifier used to fetch a single User node. To be used along with the "id" field. Default is "ID". */
 export enum UserNodeIdTypeEnum {
   /** The Database ID for the node */
@@ -2949,13 +6461,15 @@ export enum UserNodeIdTypeEnum {
 /** Names of available user roles */
 export enum UserRoleEnum {
   /** User role with specific capabilities */
-  ADMINISTRATOR = 'ADMINISTRATOR',
-  /** User role with specific capabilities */
   AUTHOR = 'AUTHOR',
   /** User role with specific capabilities */
   CONTRIBUTOR = 'CONTRIBUTOR',
   /** User role with specific capabilities */
+  CUSTOMER = 'CUSTOMER',
+  /** User role with specific capabilities */
   EDITOR = 'EDITOR',
+  /** User role with specific capabilities */
+  SHOP_MANAGER = 'SHOP_MANAGER',
   /** User role with specific capabilities */
   SUBSCRIBER = 'SUBSCRIBER',
 }
@@ -3262,9 +6776,246 @@ export enum UsersConnectionSearchColumnEnum {
   URL = 'URL',
 }
 
+/** Arguments for filtering the VariableProductToProductConnection connection */
+export interface VariableProductToProductConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** Arguments for filtering the VariableProductToProductVariationConnection connection */
+export interface VariableProductToProductVariationConnectionWhereArgs {
+  /** Limit result set to products with a specific attribute. Use the taxonomy name/attribute slug. */
+  attribute?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with a specific attribute term ID (required an assigned attribute). */
+  attributeTerm?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  category?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific category name. */
+  categoryId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of category IDs. */
+  categoryIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of category IDs. */
+  categoryIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a group of specific categories by name. */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a group of specific categories by name. */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates. */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** Ensure result set excludes specific IDs. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to featured products. */
+  featured?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to specific ids. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a maximum price. */
+  maxPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products based on a minimum price. */
+  minPrice?: InputMaybe<Scalars['Float']>;
+  /** Limit result set to products on sale. */
+  onSale?: InputMaybe<Scalars['Boolean']>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<ProductsOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Specify objects whose parent is in an array. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Specify objects whose parent is not in an array. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific shipping class ID. */
+  shippingClassId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products with specific SKU(s). Use commas to separate. */
+  sku?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products with specific slugs. */
+  slugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products assigned a specific status. */
+  status?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products in stock or out of stock. */
+  stockStatus?: InputMaybe<Array<InputMaybe<StockStatusEnum>>>;
+  /** Limit result types to types supported by WooGraphQL. */
+  supportedTypesOnly?: InputMaybe<Scalars['Boolean']>;
+  /** Limit result set to products assigned a specific tag name. */
+  tag?: InputMaybe<Scalars['String']>;
+  /** Limit result set to products assigned a specific tag ID. */
+  tagId?: InputMaybe<Scalars['Int']>;
+  /** Limit result set to products assigned to a specific group of tag IDs. */
+  tagIdIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products not assigned to a specific group of tag IDs. */
+  tagIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  /** Limit result set to products assigned to a specific group of tags by name. */
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set to products not assigned to a specific group of tags by name. */
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Limit result set with complex set of taxonomy filters. */
+  taxonomyFilter?: InputMaybe<ProductTaxonomyInput>;
+  /** Limit result set to products assigned a specific type. */
+  type?: InputMaybe<ProductTypesEnum>;
+  /** Limit result set to products assigned to a group of specific types. */
+  typeIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products not assigned to a group of specific types. */
+  typeNotIn?: InputMaybe<Array<InputMaybe<ProductTypesEnum>>>;
+  /** Limit result set to products with a specific visibility level. */
+  visibility?: InputMaybe<CatalogVisibilityEnum>;
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum VisibleProductIdType {
+  /** The Database ID for the node */
+  DATABASE_ID = 'DATABASE_ID',
+  /** The hashed Global ID */
+  ID = 'ID',
+  /** The name of the node */
+  NAME = 'NAME',
+  /** Url friendly name of the node */
+  SLUG = 'SLUG',
+  /** The URI for the node */
+  URI = 'URI',
+}
+
+/** Arguments for filtering the VisibleProductToContentNodeConnection connection */
+export interface VisibleProductToContentNodeConnectionWhereArgs {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+}
+
+/** Input for the writeReview mutation */
+export interface WriteReviewInput {
+  /** The approval status of the comment. */
+  approved?: InputMaybe<Scalars['String']>;
+  /** The name of the comment's author. */
+  author?: InputMaybe<Scalars['String']>;
+  /** The email of the comment's author. */
+  authorEmail?: InputMaybe<Scalars['String']>;
+  /** The url of the comment's author. */
+  authorUrl?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The database ID of the post object the comment belongs to. */
+  commentOn?: InputMaybe<Scalars['Int']>;
+  /** Content of the comment. */
+  content?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day ( e.g. 01/31/2017 ) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** Parent comment ID of current comment. */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Product rating */
+  rating: Scalars['Int'];
+}
+
 export const scalarsEnumsHash: import('gqty').ScalarsEnumsHash = {
   AvatarRatingEnum: true,
+  BackordersEnum: true,
   Boolean: true,
+  CartErrorType: true,
+  CatalogVisibilityEnum: true,
   CategoryIdType: true,
   CommentsConnectionOrderbyEnum: true,
   ContentNodeIdTypeEnum: true,
@@ -3273,9 +7024,14 @@ export const scalarsEnumsHash: import('gqty').ScalarsEnumsHash = {
   ContentTypesOfCategoryEnum: true,
   ContentTypesOfPostFormatEnum: true,
   ContentTypesOfTagEnum: true,
+  CountriesEnum: true,
+  CouponIdTypeEnum: true,
+  CustomerConnectionOrderbyEnum: true,
+  DiscountTypeEnum: true,
   Float: true,
   ID: true,
   Int: true,
+  ManageStockEnum: true,
   MediaItemIdType: true,
   MediaItemSizeEnum: true,
   MediaItemStatusEnum: true,
@@ -3284,26 +7040,113 @@ export const scalarsEnumsHash: import('gqty').ScalarsEnumsHash = {
   MenuNodeIdTypeEnum: true,
   MimeTypeEnum: true,
   OrderEnum: true,
+  OrderIdTypeEnum: true,
+  OrderStatusEnum: true,
+  OrdersOrderByEnum: true,
   PageIdType: true,
+  PluginStatusEnum: true,
   PostFormatIdType: true,
   PostIdType: true,
   PostObjectFieldFormatEnum: true,
   PostObjectsConnectionDateColumnEnum: true,
   PostObjectsConnectionOrderbyEnum: true,
   PostStatusEnum: true,
+  PostTypeOrderByEnum: true,
+  PricingFieldFormatEnum: true,
+  ProductAttributeTypesEnum: true,
+  ProductCategoryDisplay: true,
+  ProductCategoryIdType: true,
+  ProductIdTypeEnum: true,
+  ProductTagIdType: true,
+  ProductTaxonomyEnum: true,
+  ProductTypeIdType: true,
+  ProductTypesEnum: true,
+  ProductVariationIdTypeEnum: true,
+  ProductsOrderByEnum: true,
+  RefundIdTypeEnum: true,
   RelationEnum: true,
+  ShippingClassIdType: true,
+  ShippingMethodIdTypeEnum: true,
+  StockStatusEnum: true,
   String: true,
   TagIdType: true,
+  TaxClassEnum: true,
+  TaxRateConnectionOrderbyEnum: true,
+  TaxRateIdTypeEnum: true,
+  TaxStatusEnum: true,
   TaxonomyEnum: true,
   TaxonomyIdTypeEnum: true,
+  TaxonomyOperatorEnum: true,
   TermNodeIdTypeEnum: true,
   TermObjectsConnectionOrderbyEnum: true,
   UserNodeIdTypeEnum: true,
   UserRoleEnum: true,
   UsersConnectionOrderbyEnum: true,
   UsersConnectionSearchColumnEnum: true,
+  VisibleProductIdType: true,
 };
 export const generatedSchema = {
+  AddCartItemsInput: {
+    clientMutationId: { __type: 'String' },
+    items: { __type: '[CartItemInput]' },
+  },
+  AddCartItemsPayload: {
+    __typename: { __type: 'String!' },
+    added: { __type: '[CartItem]' },
+    cart: { __type: 'Cart' },
+    cartErrors: { __type: '[CartItemError]' },
+    clientMutationId: { __type: 'String' },
+  },
+  AddFeeInput: {
+    amount: { __type: 'Float' },
+    clientMutationId: { __type: 'String' },
+    name: { __type: 'String!' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxable: { __type: 'Boolean' },
+  },
+  AddFeePayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    cartFee: { __type: 'CartFee' },
+    clientMutationId: { __type: 'String' },
+  },
+  AddToCartInput: {
+    clientMutationId: { __type: 'String' },
+    extraData: { __type: 'String' },
+    productId: { __type: 'Int!' },
+    quantity: { __type: 'Int' },
+    variation: { __type: '[ProductAttributeInput]' },
+    variationId: { __type: 'Int' },
+  },
+  AddToCartPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    cartItem: { __type: 'CartItem' },
+    clientMutationId: { __type: 'String' },
+  },
+  AppliedCoupon: {
+    __typename: { __type: 'String!' },
+    code: { __type: 'String!' },
+    description: { __type: 'String' },
+    discountAmount: { __type: 'String!', __args: { excludeTax: 'Boolean' } },
+    discountTax: { __type: 'String!' },
+  },
+  ApplyCouponInput: {
+    clientMutationId: { __type: 'String' },
+    code: { __type: 'String!' },
+  },
+  ApplyCouponPayload: {
+    __typename: { __type: 'String!' },
+    applied: { __type: 'AppliedCoupon' },
+    cart: { __type: 'Cart' },
+    clientMutationId: { __type: 'String' },
+  },
+  Attribute: {
+    __typename: { __type: 'String!' },
+    name: { __type: 'String' },
+    value: { __type: 'String' },
+    $on: { __type: '$Attribute!' },
+  },
   Avatar: {
     __typename: { __type: 'String!' },
     default: { __type: 'String' },
@@ -3318,6 +7161,121 @@ export const generatedSchema = {
     url: { __type: 'String' },
     width: { __type: 'Int' },
   },
+  Cart: {
+    __typename: { __type: 'String!' },
+    appliedCoupons: { __type: '[AppliedCoupon]' },
+    availableShippingMethods: { __type: '[ShippingPackage]' },
+    chosenShippingMethods: { __type: '[String]' },
+    contents: {
+      __type: 'CartToCartItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CartToCartItemConnectionWhereArgs',
+      },
+    },
+    contentsTax: { __type: 'String' },
+    contentsTotal: { __type: 'String' },
+    discountTax: { __type: 'String' },
+    discountTotal: { __type: 'String' },
+    displayPricesIncludeTax: { __type: 'Boolean' },
+    feeTax: { __type: 'String' },
+    feeTotal: { __type: 'String' },
+    fees: { __type: '[CartFee]' },
+    isEmpty: { __type: 'Boolean' },
+    needsShippingAddress: { __type: 'Boolean' },
+    shippingTax: { __type: 'String' },
+    shippingTotal: { __type: 'String' },
+    subtotal: { __type: 'String' },
+    subtotalTax: { __type: 'String' },
+    total: { __type: 'String' },
+    totalTax: { __type: 'String' },
+    totalTaxes: { __type: '[CartTax]' },
+  },
+  CartError: {
+    __typename: { __type: 'String!' },
+    reasons: { __type: '[String]' },
+    type: { __type: 'CartErrorType!' },
+    $on: { __type: '$CartError!' },
+  },
+  CartFee: {
+    __typename: { __type: 'String!' },
+    amount: { __type: 'Float' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String!' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxable: { __type: 'Boolean' },
+    total: { __type: 'Float' },
+  },
+  CartItem: {
+    __typename: { __type: 'String!' },
+    extraData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]' },
+    },
+    key: { __type: 'ID!' },
+    product: { __type: 'CartItemToProductConnectionEdge' },
+    quantity: { __type: 'Int' },
+    subtotal: { __type: 'String' },
+    subtotalTax: { __type: 'String' },
+    tax: { __type: 'String' },
+    total: { __type: 'String' },
+    variation: { __type: 'CartItemToProductVariationConnectionEdge' },
+  },
+  CartItemError: {
+    __typename: { __type: 'String!' },
+    extraData: { __type: 'String' },
+    productId: { __type: 'Int!' },
+    quantity: { __type: 'Int' },
+    reasons: { __type: '[String]' },
+    type: { __type: 'CartErrorType!' },
+    variation: { __type: '[ProductAttributeOutput]' },
+    variationId: { __type: 'Int' },
+  },
+  CartItemInput: {
+    extraData: { __type: 'String' },
+    productId: { __type: 'Int!' },
+    quantity: { __type: 'Int' },
+    variation: { __type: '[ProductAttributeInput]' },
+    variationId: { __type: 'Int' },
+  },
+  CartItemQuantityInput: {
+    key: { __type: 'ID!' },
+    quantity: { __type: 'Int!' },
+  },
+  CartItemToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Product' },
+    simpleVariations: { __type: '[SimpleAttribute]' },
+  },
+  CartItemToProductVariationConnectionEdge: {
+    __typename: { __type: 'String!' },
+    attributes: { __type: '[VariationAttribute]' },
+    node: { __type: 'ProductVariation' },
+  },
+  CartTax: {
+    __typename: { __type: 'String!' },
+    amount: { __type: 'String' },
+    id: { __type: 'ID!' },
+    isCompound: { __type: 'Boolean' },
+    label: { __type: 'String!' },
+  },
+  CartToCartItemConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CartToCartItemConnectionEdge]' },
+    itemCount: { __type: 'Int' },
+    nodes: { __type: '[CartItem]' },
+    pageInfo: { __type: 'WPPageInfo' },
+    productCount: { __type: 'Int' },
+  },
+  CartToCartItemConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'CartItem' },
+  },
+  CartToCartItemConnectionWhereArgs: { needsShipping: { __type: 'Boolean' } },
   Category: {
     __typename: { __type: 'String!' },
     ancestors: {
@@ -3511,6 +7469,27 @@ export const generatedSchema = {
     __typename: { __type: 'String!' },
     node: { __type: 'Taxonomy' },
   },
+  CheckoutInput: {
+    account: { __type: 'CreateAccountInput' },
+    billing: { __type: 'CustomerAddressInput' },
+    clientMutationId: { __type: 'String' },
+    customerNote: { __type: 'String' },
+    isPaid: { __type: 'Boolean' },
+    metaData: { __type: '[MetaDataInput]' },
+    paymentMethod: { __type: 'String' },
+    shipToDifferentAddress: { __type: 'Boolean' },
+    shipping: { __type: 'CustomerAddressInput' },
+    shippingMethod: { __type: '[String]' },
+    transactionId: { __type: 'String' },
+  },
+  CheckoutPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    customer: { __type: 'Customer' },
+    order: { __type: 'Order' },
+    redirect: { __type: 'String' },
+    result: { __type: 'String' },
+  },
   Comment: {
     __typename: { __type: 'String!' },
     agent: { __type: 'String' },
@@ -3549,6 +7528,14 @@ export const generatedSchema = {
   },
   CommentAuthor: {
     __typename: { __type: 'String!' },
+    avatar: {
+      __type: 'Avatar',
+      __args: {
+        forceDefault: 'Boolean',
+        rating: 'AvatarRatingEnum',
+        size: 'Int',
+      },
+    },
     databaseId: { __type: 'Int!' },
     email: { __type: 'String' },
     id: { __type: 'ID!' },
@@ -3643,6 +7630,7 @@ export const generatedSchema = {
   },
   Commenter: {
     __typename: { __type: 'String!' },
+    avatar: { __type: 'Avatar' },
     databaseId: { __type: 'Int!' },
     email: { __type: 'String' },
     id: { __type: 'ID!' },
@@ -3849,6 +7837,284 @@ export const generatedSchema = {
     cursor: { __type: 'String' },
     node: { __type: 'Taxonomy' },
   },
+  Coupon: {
+    __typename: { __type: 'String!' },
+    amount: { __type: 'Float' },
+    code: { __type: 'String' },
+    databaseId: { __type: 'Int' },
+    date: { __type: 'String' },
+    dateExpiry: { __type: 'String' },
+    description: { __type: 'String' },
+    discountType: { __type: 'DiscountTypeEnum' },
+    emailRestrictions: { __type: '[String]' },
+    excludeSaleItems: { __type: 'Boolean' },
+    excludedProductCategories: {
+      __type: 'CouponToExcludedProductCategoriesConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CouponToExcludedProductCategoriesConnectionWhereArgs',
+      },
+    },
+    excludedProducts: {
+      __type: 'CouponToExcludedProductsConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CouponToExcludedProductsConnectionWhereArgs',
+      },
+    },
+    freeShipping: { __type: 'Boolean' },
+    id: { __type: 'ID!' },
+    individualUse: { __type: 'Boolean' },
+    limitUsageToXItems: { __type: 'Int' },
+    maximumAmount: { __type: 'Float' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    minimumAmount: { __type: 'Float' },
+    modified: { __type: 'String' },
+    productCategories: {
+      __type: 'CouponToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CouponToProductCategoryConnectionWhereArgs',
+      },
+    },
+    products: {
+      __type: 'CouponToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CouponToProductConnectionWhereArgs',
+      },
+    },
+    usageCount: { __type: 'Int' },
+    usageLimit: { __type: 'Int' },
+    usageLimitPerUser: { __type: 'Int' },
+    usedBy: {
+      __type: 'CouponToCustomerConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CouponToCustomerConnectionWhereArgs',
+      },
+    },
+  },
+  CouponLine: {
+    __typename: { __type: 'String!' },
+    code: { __type: 'String' },
+    coupon: { __type: 'Coupon' },
+    databaseId: { __type: 'Int' },
+    discount: { __type: 'String' },
+    discountTax: { __type: 'String' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    orderId: { __type: 'Int' },
+  },
+  CouponToCustomerConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CouponToCustomerConnectionEdge]' },
+    nodes: { __type: '[Customer]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CouponToCustomerConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Customer' },
+  },
+  CouponToCustomerConnectionWhereArgs: {
+    email: { __type: 'String' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'CustomerConnectionOrderbyEnum' },
+    search: { __type: 'String' },
+  },
+  CouponToExcludedProductCategoriesConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CouponToExcludedProductCategoriesConnectionEdge]' },
+    nodes: { __type: '[ProductCategory]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CouponToExcludedProductCategoriesConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductCategory' },
+  },
+  CouponToExcludedProductCategoriesConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  CouponToExcludedProductsConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CouponToExcludedProductsConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CouponToExcludedProductsConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  CouponToExcludedProductsConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  CouponToProductCategoryConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CouponToProductCategoryConnectionEdge]' },
+    nodes: { __type: '[ProductCategory]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CouponToProductCategoryConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductCategory' },
+  },
+  CouponToProductCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  CouponToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CouponToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CouponToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  CouponToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  CreateAccountInput: {
+    password: { __type: 'String!' },
+    username: { __type: 'String!' },
+  },
   CreateCategoryInput: {
     aliasOf: { __type: 'String' },
     clientMutationId: { __type: 'String' },
@@ -3880,6 +8146,35 @@ export const generatedSchema = {
     comment: { __type: 'Comment' },
     success: { __type: 'Boolean' },
   },
+  CreateCouponInput: {
+    amount: { __type: 'Float' },
+    clientMutationId: { __type: 'String' },
+    code: { __type: 'String!' },
+    dateExpires: { __type: 'String' },
+    dateExpiresGmt: { __type: 'String' },
+    description: { __type: 'String' },
+    discountType: { __type: 'DiscountTypeEnum' },
+    emailRestrictions: { __type: '[String]' },
+    excludeSaleItems: { __type: 'Boolean' },
+    excludedProductCategories: { __type: '[Int]' },
+    excludedProductIds: { __type: '[Int]' },
+    freeShipping: { __type: 'Boolean' },
+    individualUse: { __type: 'Boolean' },
+    limitUsageToXItems: { __type: 'Int' },
+    maximumAmount: { __type: 'String' },
+    metaData: { __type: '[MetaDataInput]' },
+    minimumAmount: { __type: 'String' },
+    productCategories: { __type: '[Int]' },
+    productIds: { __type: '[Int]' },
+    usageLimit: { __type: 'Int' },
+    usageLimitPerUser: { __type: 'Int' },
+  },
+  CreateCouponPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    code: { __type: 'String' },
+    coupon: { __type: 'Coupon' },
+  },
   CreateMediaItemInput: {
     altText: { __type: 'String' },
     authorId: { __type: 'ID' },
@@ -3901,6 +8196,31 @@ export const generatedSchema = {
     __typename: { __type: 'String!' },
     clientMutationId: { __type: 'String' },
     mediaItem: { __type: 'MediaItem' },
+  },
+  CreateOrderInput: {
+    billing: { __type: 'CustomerAddressInput' },
+    clientMutationId: { __type: 'String' },
+    coupons: { __type: '[String]' },
+    currency: { __type: 'String' },
+    customerId: { __type: 'Int' },
+    customerNote: { __type: 'String' },
+    feeLines: { __type: '[FeeLineInput]' },
+    isPaid: { __type: 'Boolean' },
+    lineItems: { __type: '[LineItemInput]' },
+    metaData: { __type: '[MetaDataInput]' },
+    parentId: { __type: 'Int' },
+    paymentMethod: { __type: 'String' },
+    paymentMethodTitle: { __type: 'String' },
+    shipping: { __type: 'CustomerAddressInput' },
+    shippingLines: { __type: '[ShippingLineInput]' },
+    status: { __type: 'OrderStatusEnum' },
+    transactionId: { __type: 'String' },
+  },
+  CreateOrderPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    order: { __type: 'Order' },
+    orderId: { __type: 'Int' },
   },
   CreatePageInput: {
     authorId: { __type: 'ID' },
@@ -3956,6 +8276,55 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     post: { __type: 'Post' },
   },
+  CreateProductCategoryInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    name: { __type: 'String!' },
+    parentId: { __type: 'ID' },
+    slug: { __type: 'String' },
+  },
+  CreateProductCategoryPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    productCategory: { __type: 'ProductCategory' },
+  },
+  CreateProductTagInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    name: { __type: 'String!' },
+    slug: { __type: 'String' },
+  },
+  CreateProductTagPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    productTag: { __type: 'ProductTag' },
+  },
+  CreateProductTypeInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    name: { __type: 'String!' },
+    slug: { __type: 'String' },
+  },
+  CreateProductTypePayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    productType: { __type: 'ProductType' },
+  },
+  CreateShippingClassInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    name: { __type: 'String!' },
+    slug: { __type: 'String' },
+  },
+  CreateShippingClassPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    shippingClass: { __type: 'ShippingClass' },
+  },
   CreateTagInput: {
     aliasOf: { __type: 'String' },
     clientMutationId: { __type: 'String' },
@@ -3992,6 +8361,167 @@ export const generatedSchema = {
     __typename: { __type: 'String!' },
     clientMutationId: { __type: 'String' },
     user: { __type: 'User' },
+  },
+  CreateVisibleProductInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    name: { __type: 'String!' },
+    slug: { __type: 'String' },
+  },
+  CreateVisibleProductPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    visibleProduct: { __type: 'VisibleProduct' },
+  },
+  Customer: {
+    __typename: { __type: 'String!' },
+    billing: { __type: 'CustomerAddress' },
+    calculatedShipping: { __type: 'Boolean' },
+    databaseId: { __type: 'Int' },
+    date: { __type: 'String' },
+    displayName: { __type: 'String' },
+    downloadableItems: {
+      __type: 'CustomerToDownloadableItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CustomerToDownloadableItemConnectionWhereArgs',
+      },
+    },
+    email: { __type: 'String' },
+    firstName: { __type: 'String' },
+    hasCalculatedShipping: { __type: 'Boolean' },
+    id: { __type: 'ID!' },
+    isPayingCustomer: { __type: 'Boolean' },
+    isVatExempt: { __type: 'Boolean' },
+    lastName: { __type: 'String' },
+    lastOrder: { __type: 'Order' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    orderCount: { __type: 'Int' },
+    orders: {
+      __type: 'CustomerToOrderConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CustomerToOrderConnectionWhereArgs',
+      },
+    },
+    refunds: {
+      __type: 'CustomerToRefundConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'CustomerToRefundConnectionWhereArgs',
+      },
+    },
+    role: { __type: 'String' },
+    sessionToken: { __type: 'String' },
+    shipping: { __type: 'CustomerAddress' },
+    totalSpent: { __type: 'Float' },
+    username: { __type: 'String' },
+  },
+  CustomerAddress: {
+    __typename: { __type: 'String!' },
+    address1: { __type: 'String' },
+    address2: { __type: 'String' },
+    city: { __type: 'String' },
+    company: { __type: 'String' },
+    country: { __type: 'CountriesEnum' },
+    email: { __type: 'String' },
+    firstName: { __type: 'String' },
+    lastName: { __type: 'String' },
+    phone: { __type: 'String' },
+    postcode: { __type: 'String' },
+    state: { __type: 'String' },
+  },
+  CustomerAddressInput: {
+    address1: { __type: 'String' },
+    address2: { __type: 'String' },
+    city: { __type: 'String' },
+    company: { __type: 'String' },
+    country: { __type: 'CountriesEnum' },
+    email: { __type: 'String' },
+    firstName: { __type: 'String' },
+    lastName: { __type: 'String' },
+    overwrite: { __type: 'Boolean' },
+    phone: { __type: 'String' },
+    postcode: { __type: 'String' },
+    state: { __type: 'String' },
+  },
+  CustomerToDownloadableItemConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CustomerToDownloadableItemConnectionEdge]' },
+    nodes: { __type: '[DownloadableItem]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CustomerToDownloadableItemConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'DownloadableItem' },
+  },
+  CustomerToDownloadableItemConnectionWhereArgs: {
+    active: { __type: 'Boolean' },
+    expired: { __type: 'Boolean' },
+    hasDownloadsRemaining: { __type: 'Boolean' },
+  },
+  CustomerToOrderConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CustomerToOrderConnectionEdge]' },
+    nodes: { __type: '[Order]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CustomerToOrderConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Order' },
+  },
+  CustomerToOrderConnectionWhereArgs: {
+    customerId: { __type: 'Int' },
+    customersIn: { __type: '[Int]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    orderby: { __type: '[OrdersOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    productId: { __type: 'Int' },
+    search: { __type: 'String' },
+    statuses: { __type: '[OrderStatusEnum]' },
+  },
+  CustomerToRefundConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[CustomerToRefundConnectionEdge]' },
+    nodes: { __type: '[Refund]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  CustomerToRefundConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Refund' },
+  },
+  CustomerToRefundConnectionWhereArgs: {
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    orderIn: { __type: '[Int]' },
+    orderby: { __type: '[PostTypeOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    statuses: { __type: '[String]' },
   },
   DatabaseIdentifier: {
     __typename: { __type: 'String!' },
@@ -4043,6 +8573,17 @@ export const generatedSchema = {
     comment: { __type: 'Comment' },
     deletedId: { __type: 'ID' },
   },
+  DeleteCouponInput: {
+    clientMutationId: { __type: 'String' },
+    forceDelete: { __type: 'Boolean' },
+    id: { __type: 'ID!' },
+  },
+  DeleteCouponPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    code: { __type: 'String' },
+    coupon: { __type: 'Coupon' },
+  },
   DeleteMediaItemInput: {
     clientMutationId: { __type: 'String' },
     forceDelete: { __type: 'Boolean' },
@@ -4053,6 +8594,28 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     deletedId: { __type: 'ID' },
     mediaItem: { __type: 'MediaItem' },
+  },
+  DeleteOrderInput: {
+    clientMutationId: { __type: 'String' },
+    forceDelete: { __type: 'Boolean' },
+    id: { __type: 'ID' },
+    orderId: { __type: 'Int' },
+  },
+  DeleteOrderItemsInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID' },
+    itemIds: { __type: '[Int]' },
+    orderId: { __type: 'Int' },
+  },
+  DeleteOrderItemsPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    order: { __type: 'Order' },
+  },
+  DeleteOrderPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    order: { __type: 'Order' },
   },
   DeletePageInput: {
     clientMutationId: { __type: 'String' },
@@ -4086,6 +8649,58 @@ export const generatedSchema = {
     deletedId: { __type: 'ID' },
     post: { __type: 'Post' },
   },
+  DeleteProductCategoryInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID!' },
+  },
+  DeleteProductCategoryPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    deletedId: { __type: 'ID' },
+    productCategory: { __type: 'ProductCategory' },
+  },
+  DeleteProductTagInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID!' },
+  },
+  DeleteProductTagPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    deletedId: { __type: 'ID' },
+    productTag: { __type: 'ProductTag' },
+  },
+  DeleteProductTypeInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID!' },
+  },
+  DeleteProductTypePayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    deletedId: { __type: 'ID' },
+    productType: { __type: 'ProductType' },
+  },
+  DeleteReviewInput: {
+    clientMutationId: { __type: 'String' },
+    forceDelete: { __type: 'Boolean' },
+    id: { __type: 'ID!' },
+  },
+  DeleteReviewPayload: {
+    __typename: { __type: 'String!' },
+    affectedId: { __type: 'ID' },
+    clientMutationId: { __type: 'String' },
+    rating: { __type: 'Float' },
+    review: { __type: 'Comment' },
+  },
+  DeleteShippingClassInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID!' },
+  },
+  DeleteShippingClassPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    deletedId: { __type: 'ID' },
+    shippingClass: { __type: 'ShippingClass' },
+  },
   DeleteTagInput: {
     clientMutationId: { __type: 'String' },
     id: { __type: 'ID!' },
@@ -4107,10 +8722,40 @@ export const generatedSchema = {
     deletedId: { __type: 'ID' },
     user: { __type: 'User' },
   },
+  DeleteVisibleProductInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID!' },
+  },
+  DeleteVisibleProductPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    deletedId: { __type: 'ID' },
+    visibleProduct: { __type: 'VisibleProduct' },
+  },
   DiscussionSettings: {
     __typename: { __type: 'String!' },
     defaultCommentStatus: { __type: 'String' },
     defaultPingStatus: { __type: 'String' },
+  },
+  DownloadableItem: {
+    __typename: { __type: 'String!' },
+    accessExpires: { __type: 'String' },
+    download: { __type: 'ProductDownload' },
+    downloadId: { __type: 'String!' },
+    downloadsRemaining: { __type: 'Int' },
+    name: { __type: 'String' },
+    product: { __type: 'Product' },
+    url: { __type: 'String' },
+  },
+  EmptyCartInput: {
+    clearPersistentCart: { __type: 'Boolean' },
+    clientMutationId: { __type: 'String' },
+  },
+  EmptyCartPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    clientMutationId: { __type: 'String' },
+    deletedCart: { __type: 'Cart' },
   },
   EnqueuedAsset: {
     __typename: { __type: 'String!' },
@@ -4143,6 +8788,268 @@ export const generatedSchema = {
     src: { __type: 'String' },
     version: { __type: 'String' },
   },
+  ExternalProduct: {
+    __typename: { __type: 'String!' },
+    attributes: {
+      __type: 'ProductToProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductAttributeConnectionWhereArgs',
+      },
+    },
+    averageRating: { __type: 'Float' },
+    buttonText: { __type: 'String' },
+    catalogVisibility: { __type: 'CatalogVisibilityEnum' },
+    commentCount: { __type: 'Int' },
+    commentStatus: { __type: 'String' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    content: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    contentType: { __type: 'ContentNodeToContentTypeConnectionEdge' },
+    contentTypeName: { __type: 'String!' },
+    databaseId: { __type: 'Int!' },
+    date: { __type: 'String' },
+    dateGmt: { __type: 'String' },
+    dateOnSaleFrom: { __type: 'String' },
+    dateOnSaleTo: { __type: 'String' },
+    defaultAttributes: {
+      __type: 'ExternalProductToVariationAttributeConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    description: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    desiredSlug: { __type: 'String' },
+    editingLockedBy: { __type: 'ContentNodeToEditLockConnectionEdge' },
+    enclosure: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'ContentNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'ContentNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    externalUrl: { __type: 'String' },
+    featured: { __type: 'Boolean' },
+    featuredImage: { __type: 'NodeWithFeaturedImageToMediaItemConnectionEdge' },
+    featuredImageDatabaseId: { __type: 'Int' },
+    featuredImageId: { __type: 'ID' },
+    galleryImages: {
+      __type: 'ProductToMediaItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToMediaItemConnectionWhereArgs',
+      },
+    },
+    globalAttributes: {
+      __type: 'ProductToGlobalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToGlobalProductAttributeConnectionWhereArgs',
+      },
+    },
+    guid: { __type: 'String' },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    isContentNode: { __type: 'Boolean!' },
+    isPreview: { __type: 'Boolean' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    lastEditedBy: { __type: 'ContentNodeToEditLastConnectionEdge' },
+    link: { __type: 'String' },
+    localAttributes: {
+      __type: 'ProductToLocalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToLocalProductAttributeConnectionWhereArgs',
+      },
+    },
+    menuOrder: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    modifiedGmt: { __type: 'String' },
+    name: { __type: 'String' },
+    onSale: { __type: 'Boolean' },
+    parent: { __type: 'Product' },
+    previewRevisionDatabaseId: { __type: 'Int' },
+    previewRevisionId: { __type: 'ID' },
+    price: { __type: 'String', __args: { format: 'PricingFieldFormatEnum' } },
+    productCategories: {
+      __type: 'ProductToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductCategoryConnectionWhereArgs',
+      },
+    },
+    productTags: {
+      __type: 'ProductToProductTagConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTagConnectionWhereArgs',
+      },
+    },
+    productTypes: {
+      __type: 'ProductToProductTypeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTypeConnectionWhereArgs',
+      },
+    },
+    purchasable: { __type: 'Boolean' },
+    purchaseNote: { __type: 'String' },
+    regularPrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    related: {
+      __type: 'ProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductConnectionWhereArgs',
+      },
+    },
+    reviewCount: { __type: 'Int' },
+    reviews: {
+      __type: 'ProductToCommentConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToCommentConnectionWhereArgs',
+      },
+    },
+    reviewsAllowed: { __type: 'Boolean' },
+    salePrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    shippingClasses: {
+      __type: 'ProductToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToShippingClassConnectionWhereArgs',
+      },
+    },
+    shortDescription: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    sku: { __type: 'String' },
+    slug: { __type: 'String' },
+    status: { __type: 'String' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    template: { __type: 'ContentTemplate' },
+    templates: { __type: '[String]' },
+    totalSales: { __type: 'Int' },
+    type: { __type: 'ProductTypesEnum' },
+    upsell: {
+      __type: 'ProductToUpsellConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToUpsellConnectionWhereArgs',
+      },
+    },
+    uri: { __type: 'String' },
+    visibleProducts: {
+      __type: 'ProductToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToVisibleProductConnectionWhereArgs',
+      },
+    },
+  },
+  ExternalProductToVariationAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ExternalProductToVariationAttributeConnectionEdge]' },
+    nodes: { __type: '[VariationAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ExternalProductToVariationAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VariationAttribute' },
+  },
+  FeeLine: {
+    __typename: { __type: 'String!' },
+    amount: { __type: 'String' },
+    databaseId: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    name: { __type: 'String' },
+    orderId: { __type: 'Int' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    taxes: { __type: '[OrderItemTax]' },
+    total: { __type: 'String' },
+    totalTax: { __type: 'String' },
+  },
+  FeeLineInput: {
+    amount: { __type: 'String' },
+    id: { __type: 'ID' },
+    name: { __type: 'String' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    total: { __type: 'String' },
+  },
+  FillCartInput: {
+    clientMutationId: { __type: 'String' },
+    coupons: { __type: '[String]' },
+    items: { __type: '[CartItemInput]' },
+    shippingMethods: { __type: '[String]' },
+  },
+  FillCartPayload: {
+    __typename: { __type: 'String!' },
+    added: { __type: '[CartItem]' },
+    applied: { __type: '[AppliedCoupon]' },
+    cart: { __type: 'Cart' },
+    cartErrors: { __type: '[CartError]' },
+    chosenShippingMethods: { __type: '[String]' },
+    clientMutationId: { __type: 'String' },
+  },
   GeneralSettings: {
     __typename: { __type: 'String!' },
     dateFormat: { __type: 'String' },
@@ -4166,6 +9073,335 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     code: { __type: 'String' },
     error: { __type: 'String' },
+  },
+  GlobalProductAttribute: {
+    __typename: { __type: 'String!' },
+    attributeId: { __type: 'Int!' },
+    id: { __type: 'ID!' },
+    label: { __type: 'String!' },
+    name: { __type: 'String!' },
+    options: { __type: '[String]' },
+    position: { __type: 'Int!' },
+    scope: { __type: 'ProductAttributeTypesEnum!' },
+    slug: { __type: 'String!' },
+    terms: {
+      __type: 'GlobalProductAttributeToTermNodeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'GlobalProductAttributeToTermNodeConnectionWhereArgs',
+      },
+    },
+    variation: { __type: 'Boolean!' },
+    visible: { __type: 'Boolean!' },
+  },
+  GlobalProductAttributeToTermNodeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[GlobalProductAttributeToTermNodeConnectionEdge]' },
+    nodes: { __type: '[TermNode]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  GlobalProductAttributeToTermNodeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'TermNode' },
+  },
+  GlobalProductAttributeToTermNodeConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  GroupProduct: {
+    __typename: { __type: 'String!' },
+    addToCartDescription: { __type: 'String' },
+    addToCartText: { __type: 'String' },
+    attributes: {
+      __type: 'ProductToProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductAttributeConnectionWhereArgs',
+      },
+    },
+    averageRating: { __type: 'Float' },
+    catalogVisibility: { __type: 'CatalogVisibilityEnum' },
+    commentCount: { __type: 'Int' },
+    commentStatus: { __type: 'String' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    content: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    contentType: { __type: 'ContentNodeToContentTypeConnectionEdge' },
+    contentTypeName: { __type: 'String!' },
+    databaseId: { __type: 'Int!' },
+    date: { __type: 'String' },
+    dateGmt: { __type: 'String' },
+    dateOnSaleFrom: { __type: 'String' },
+    dateOnSaleTo: { __type: 'String' },
+    defaultAttributes: {
+      __type: 'GroupProductToVariationAttributeConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    description: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    desiredSlug: { __type: 'String' },
+    editingLockedBy: { __type: 'ContentNodeToEditLockConnectionEdge' },
+    enclosure: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'ContentNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'ContentNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    featured: { __type: 'Boolean' },
+    featuredImage: { __type: 'NodeWithFeaturedImageToMediaItemConnectionEdge' },
+    featuredImageDatabaseId: { __type: 'Int' },
+    featuredImageId: { __type: 'ID' },
+    galleryImages: {
+      __type: 'ProductToMediaItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToMediaItemConnectionWhereArgs',
+      },
+    },
+    globalAttributes: {
+      __type: 'ProductToGlobalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToGlobalProductAttributeConnectionWhereArgs',
+      },
+    },
+    guid: { __type: 'String' },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    isContentNode: { __type: 'Boolean!' },
+    isPreview: { __type: 'Boolean' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    lastEditedBy: { __type: 'ContentNodeToEditLastConnectionEdge' },
+    link: { __type: 'String' },
+    localAttributes: {
+      __type: 'ProductToLocalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToLocalProductAttributeConnectionWhereArgs',
+      },
+    },
+    menuOrder: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    modifiedGmt: { __type: 'String' },
+    name: { __type: 'String' },
+    onSale: { __type: 'Boolean' },
+    parent: { __type: 'Product' },
+    previewRevisionDatabaseId: { __type: 'Int' },
+    previewRevisionId: { __type: 'ID' },
+    price: { __type: 'String' },
+    productCategories: {
+      __type: 'ProductToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductCategoryConnectionWhereArgs',
+      },
+    },
+    productTags: {
+      __type: 'ProductToProductTagConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTagConnectionWhereArgs',
+      },
+    },
+    productTypes: {
+      __type: 'ProductToProductTypeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTypeConnectionWhereArgs',
+      },
+    },
+    products: {
+      __type: 'GroupProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'GroupProductToProductConnectionWhereArgs',
+      },
+    },
+    purchasable: { __type: 'Boolean' },
+    purchaseNote: { __type: 'String' },
+    related: {
+      __type: 'ProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductConnectionWhereArgs',
+      },
+    },
+    reviewCount: { __type: 'Int' },
+    reviews: {
+      __type: 'ProductToCommentConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToCommentConnectionWhereArgs',
+      },
+    },
+    reviewsAllowed: { __type: 'Boolean' },
+    shippingClasses: {
+      __type: 'ProductToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToShippingClassConnectionWhereArgs',
+      },
+    },
+    shortDescription: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    sku: { __type: 'String' },
+    slug: { __type: 'String' },
+    status: { __type: 'String' },
+    template: { __type: 'ContentTemplate' },
+    templates: { __type: '[String]' },
+    totalSales: { __type: 'Int' },
+    type: { __type: 'ProductTypesEnum' },
+    upsell: {
+      __type: 'ProductToUpsellConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToUpsellConnectionWhereArgs',
+      },
+    },
+    uri: { __type: 'String' },
+    visibleProducts: {
+      __type: 'ProductToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToVisibleProductConnectionWhereArgs',
+      },
+    },
+  },
+  GroupProductToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[GroupProductToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  GroupProductToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  GroupProductToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  GroupProductToVariationAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[GroupProductToVariationAttributeConnectionEdge]' },
+    nodes: { __type: '[VariationAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  GroupProductToVariationAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VariationAttribute' },
   },
   HierarchicalContentNode: {
     __typename: { __type: 'String!' },
@@ -4273,6 +9509,60 @@ export const generatedSchema = {
     parentDatabaseId: { __type: 'Int' },
     parentId: { __type: 'ID' },
     $on: { __type: '$HierarchicalTermNode!' },
+  },
+  LineItem: {
+    __typename: { __type: 'String!' },
+    databaseId: { __type: 'Int' },
+    itemDownloads: { __type: '[ProductDownload]' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    orderId: { __type: 'Int' },
+    product: { __type: 'LineItemToProductConnectionEdge' },
+    productId: { __type: 'Int' },
+    quantity: { __type: 'Int' },
+    subtotal: { __type: 'String' },
+    subtotalTax: { __type: 'String' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    taxes: { __type: '[OrderItemTax]' },
+    total: { __type: 'String' },
+    totalTax: { __type: 'String' },
+    variation: { __type: 'LineItemToProductVariationConnectionEdge' },
+    variationId: { __type: 'Int' },
+  },
+  LineItemInput: {
+    id: { __type: 'ID' },
+    metaData: { __type: '[MetaDataInput]' },
+    name: { __type: 'String' },
+    productId: { __type: 'Int' },
+    quantity: { __type: 'Int' },
+    sku: { __type: 'String' },
+    subtotal: { __type: 'String' },
+    taxClass: { __type: 'TaxClassEnum' },
+    total: { __type: 'String' },
+    variationId: { __type: 'Int' },
+  },
+  LineItemToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Product' },
+  },
+  LineItemToProductVariationConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'ProductVariation' },
+  },
+  LocalProductAttribute: {
+    __typename: { __type: 'String!' },
+    attributeId: { __type: 'Int!' },
+    id: { __type: 'ID!' },
+    label: { __type: 'String!' },
+    name: { __type: 'String!' },
+    options: { __type: '[String]' },
+    position: { __type: 'Int!' },
+    scope: { __type: 'ProductAttributeTypesEnum!' },
+    variation: { __type: 'Boolean!' },
+    visible: { __type: 'Boolean!' },
   },
   MediaDetails: {
     __typename: { __type: 'String!' },
@@ -4501,6 +9791,7 @@ export const generatedSchema = {
     path: { __type: 'String' },
     target: { __type: 'String' },
     title: { __type: 'String' },
+    uri: { __type: 'String' },
     url: { __type: 'String' },
   },
   MenuItemLinkable: {
@@ -4556,6 +9847,13 @@ export const generatedSchema = {
     parentDatabaseId: { __type: 'Int' },
     parentId: { __type: 'ID' },
   },
+  MetaData: {
+    __typename: { __type: 'String!' },
+    id: { __type: 'ID' },
+    key: { __type: 'String!' },
+    value: { __type: 'String' },
+  },
+  MetaDataInput: { key: { __type: 'String!' }, value: { __type: 'String!' } },
   Node: {
     __typename: { __type: 'String!' },
     id: { __type: 'ID!' },
@@ -4673,6 +9971,272 @@ export const generatedSchema = {
     pinged: { __type: '[String]' },
     toPing: { __type: '[String]' },
     $on: { __type: '$NodeWithTrackbacks!' },
+  },
+  Order: {
+    __typename: { __type: 'String!' },
+    billing: { __type: 'CustomerAddress' },
+    cartHash: { __type: 'String' },
+    cartTax: { __type: 'String', __args: { format: 'PricingFieldFormatEnum' } },
+    commentCount: { __type: 'Int' },
+    commentStatus: { __type: 'String' },
+    couponLines: {
+      __type: 'OrderToCouponLineConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    createdVia: { __type: 'String' },
+    currency: { __type: 'String' },
+    customer: { __type: 'Customer' },
+    customerIpAddress: { __type: 'String' },
+    customerNote: { __type: 'String' },
+    customerUserAgent: { __type: 'String' },
+    databaseId: { __type: 'Int' },
+    date: { __type: 'String' },
+    dateCompleted: { __type: 'String' },
+    datePaid: { __type: 'String' },
+    discountTax: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    discountTotal: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    downloadableItems: {
+      __type: 'OrderToDownloadableItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'OrderToDownloadableItemConnectionWhereArgs',
+      },
+    },
+    feeLines: {
+      __type: 'OrderToFeeLineConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    hasBillingAddress: { __type: 'Boolean' },
+    hasDownloadableItem: { __type: 'Boolean' },
+    hasShippingAddress: { __type: 'Boolean' },
+    id: { __type: 'ID!' },
+    isDownloadPermitted: { __type: 'Boolean' },
+    lineItems: {
+      __type: 'OrderToLineItemConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    needsPayment: { __type: 'Boolean' },
+    needsProcessing: { __type: 'Boolean' },
+    needsShippingAddress: { __type: 'Boolean' },
+    orderKey: { __type: 'String' },
+    orderNotes: {
+      __type: 'OrderToCommentConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'OrderToCommentConnectionWhereArgs',
+      },
+    },
+    orderNumber: { __type: 'String' },
+    orderVersion: { __type: 'String' },
+    parent: { __type: 'Order' },
+    paymentMethod: { __type: 'String' },
+    paymentMethodTitle: { __type: 'String' },
+    pricesIncludeTax: { __type: 'Boolean' },
+    refunds: {
+      __type: 'OrderToRefundConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'OrderToRefundConnectionWhereArgs',
+      },
+    },
+    shipping: { __type: 'CustomerAddress' },
+    shippingAddressMapUrl: { __type: 'String' },
+    shippingLines: {
+      __type: 'OrderToShippingLineConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    shippingTax: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    shippingTotal: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    status: { __type: 'OrderStatusEnum' },
+    subtotal: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    taxLines: {
+      __type: 'OrderToTaxLineConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    total: { __type: 'String', __args: { format: 'PricingFieldFormatEnum' } },
+    totalTax: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    transactionId: { __type: 'String' },
+  },
+  OrderItemTax: {
+    __typename: { __type: 'String!' },
+    amount: { __type: 'Float' },
+    subtotal: { __type: 'Float' },
+    taxLine: { __type: 'TaxLine' },
+    taxLineId: { __type: 'Int!' },
+    total: { __type: 'Float' },
+  },
+  OrderToCommentConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToCommentConnectionEdge]' },
+    nodes: { __type: '[Comment]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToCommentConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    isCustomerNote: { __type: 'Boolean' },
+    node: { __type: 'Comment' },
+  },
+  OrderToCommentConnectionWhereArgs: {
+    authorEmail: { __type: 'String' },
+    authorIn: { __type: '[ID]' },
+    authorNotIn: { __type: '[ID]' },
+    authorUrl: { __type: 'String' },
+    commentIn: { __type: '[ID]' },
+    commentNotIn: { __type: '[ID]' },
+    commentType: { __type: 'String' },
+    commentTypeIn: { __type: '[String]' },
+    commentTypeNotIn: { __type: 'String' },
+    contentAuthor: { __type: '[ID]' },
+    contentAuthorIn: { __type: '[ID]' },
+    contentAuthorNotIn: { __type: '[ID]' },
+    contentId: { __type: 'ID' },
+    contentIdIn: { __type: '[ID]' },
+    contentIdNotIn: { __type: '[ID]' },
+    contentName: { __type: 'String' },
+    contentParent: { __type: 'Int' },
+    contentStatus: { __type: '[PostStatusEnum]' },
+    contentType: { __type: '[ContentTypeEnum]' },
+    includeUnapproved: { __type: '[ID]' },
+    karma: { __type: 'Int' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'CommentsConnectionOrderbyEnum' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    search: { __type: 'String' },
+    status: { __type: 'String' },
+    userId: { __type: 'ID' },
+  },
+  OrderToCouponLineConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToCouponLineConnectionEdge]' },
+    nodes: { __type: '[CouponLine]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToCouponLineConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'CouponLine' },
+  },
+  OrderToDownloadableItemConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToDownloadableItemConnectionEdge]' },
+    nodes: { __type: '[DownloadableItem]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToDownloadableItemConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'DownloadableItem' },
+  },
+  OrderToDownloadableItemConnectionWhereArgs: {
+    active: { __type: 'Boolean' },
+    expired: { __type: 'Boolean' },
+    hasDownloadsRemaining: { __type: 'Boolean' },
+  },
+  OrderToFeeLineConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToFeeLineConnectionEdge]' },
+    nodes: { __type: '[FeeLine]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToFeeLineConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'FeeLine' },
+  },
+  OrderToLineItemConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToLineItemConnectionEdge]' },
+    nodes: { __type: '[LineItem]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToLineItemConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'LineItem' },
+  },
+  OrderToRefundConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToRefundConnectionEdge]' },
+    nodes: { __type: '[Refund]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToRefundConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Refund' },
+  },
+  OrderToRefundConnectionWhereArgs: {
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    orderIn: { __type: '[Int]' },
+    orderby: { __type: '[PostTypeOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    statuses: { __type: '[String]' },
+  },
+  OrderToShippingLineConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToShippingLineConnectionEdge]' },
+    nodes: { __type: '[ShippingLine]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToShippingLineConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ShippingLine' },
+  },
+  OrderToTaxLineConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[OrderToTaxLineConnectionEdge]' },
+    nodes: { __type: '[TaxLine]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  OrderToTaxLineConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'TaxLine' },
+  },
+  OrdersOrderbyInput: {
+    field: { __type: 'OrdersOrderByEnum!' },
+    order: { __type: 'OrderEnum' },
   },
   Page: {
     __typename: { __type: 'String!' },
@@ -4860,6 +10424,13 @@ export const generatedSchema = {
     search: { __type: 'String' },
     stati: { __type: '[PostStatusEnum]' },
     status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  PaymentGateway: {
+    __typename: { __type: 'String!' },
+    description: { __type: 'String' },
+    icon: { __type: 'String' },
+    id: { __type: 'String!' },
     title: { __type: 'String' },
   },
   Plugin: {
@@ -5412,9 +10983,1250 @@ export const generatedSchema = {
     viewItem: { __type: 'String' },
     viewItems: { __type: 'String' },
   },
+  PostTypeOrderbyInput: {
+    field: { __type: 'PostTypeOrderByEnum!' },
+    order: { __type: 'OrderEnum' },
+  },
+  Product: {
+    __typename: { __type: 'String!' },
+    attributes: {
+      __type: 'ProductToProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductAttributeConnectionWhereArgs',
+      },
+    },
+    averageRating: { __type: 'Float' },
+    catalogVisibility: { __type: 'CatalogVisibilityEnum' },
+    databaseId: { __type: 'Int!' },
+    date: { __type: 'String' },
+    dateOnSaleFrom: { __type: 'String' },
+    dateOnSaleTo: { __type: 'String' },
+    description: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    featured: { __type: 'Boolean' },
+    galleryImages: {
+      __type: 'ProductToMediaItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToMediaItemConnectionWhereArgs',
+      },
+    },
+    globalAttributes: {
+      __type: 'ProductToGlobalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToGlobalProductAttributeConnectionWhereArgs',
+      },
+    },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    link: { __type: 'String' },
+    localAttributes: {
+      __type: 'ProductToLocalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToLocalProductAttributeConnectionWhereArgs',
+      },
+    },
+    menuOrder: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    name: { __type: 'String' },
+    onSale: { __type: 'Boolean' },
+    parent: { __type: 'Product' },
+    productCategories: {
+      __type: 'ProductToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductCategoryConnectionWhereArgs',
+      },
+    },
+    productTags: {
+      __type: 'ProductToProductTagConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTagConnectionWhereArgs',
+      },
+    },
+    productTypes: {
+      __type: 'ProductToProductTypeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTypeConnectionWhereArgs',
+      },
+    },
+    purchasable: { __type: 'Boolean' },
+    purchaseNote: { __type: 'String' },
+    related: {
+      __type: 'ProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductConnectionWhereArgs',
+      },
+    },
+    reviewCount: { __type: 'Int' },
+    reviews: {
+      __type: 'ProductToCommentConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToCommentConnectionWhereArgs',
+      },
+    },
+    reviewsAllowed: { __type: 'Boolean' },
+    shippingClasses: {
+      __type: 'ProductToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToShippingClassConnectionWhereArgs',
+      },
+    },
+    shortDescription: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    sku: { __type: 'String' },
+    slug: { __type: 'String' },
+    status: { __type: 'String' },
+    totalSales: { __type: 'Int' },
+    type: { __type: 'ProductTypesEnum' },
+    upsell: {
+      __type: 'ProductToUpsellConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToUpsellConnectionWhereArgs',
+      },
+    },
+    visibleProducts: {
+      __type: 'ProductToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToVisibleProductConnectionWhereArgs',
+      },
+    },
+    $on: { __type: '$Product!' },
+  },
+  ProductAttribute: {
+    __typename: { __type: 'String!' },
+    attributeId: { __type: 'Int!' },
+    id: { __type: 'ID!' },
+    label: { __type: 'String!' },
+    name: { __type: 'String!' },
+    options: { __type: '[String]' },
+    position: { __type: 'Int!' },
+    scope: { __type: 'ProductAttributeTypesEnum!' },
+    variation: { __type: 'Boolean!' },
+    visible: { __type: 'Boolean!' },
+    $on: { __type: '$ProductAttribute!' },
+  },
+  ProductAttributeInput: {
+    attributeName: { __type: 'String!' },
+    attributeValue: { __type: 'String' },
+  },
+  ProductAttributeOutput: {
+    __typename: { __type: 'String!' },
+    attributeName: { __type: 'String' },
+    attributeValue: { __type: 'String' },
+  },
+  ProductCategory: {
+    __typename: { __type: 'String!' },
+    ancestors: {
+      __type: 'ProductCategoryToAncestorsProductCategoryConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    children: {
+      __type: 'ProductCategoryToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductCategoryToProductCategoryConnectionWhereArgs',
+      },
+    },
+    conditionalTags: { __type: 'ConditionalTags' },
+    contentNodes: {
+      __type: 'ProductCategoryToContentNodeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductCategoryToContentNodeConnectionWhereArgs',
+      },
+    },
+    count: { __type: 'Int' },
+    databaseId: { __type: 'Int!' },
+    description: { __type: 'String' },
+    display: { __type: 'ProductCategoryDisplay' },
+    enqueuedScripts: {
+      __type: 'TermNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'TermNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    isContentNode: { __type: 'Boolean!' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    link: { __type: 'String' },
+    menuOrder: { __type: 'Int' },
+    name: { __type: 'String' },
+    parent: { __type: 'ProductCategoryToParentProductCategoryConnectionEdge' },
+    parentDatabaseId: { __type: 'Int' },
+    parentId: { __type: 'ID' },
+    productCategoryId: { __type: 'Int' },
+    products: {
+      __type: 'ProductCategoryToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductCategoryToProductConnectionWhereArgs',
+      },
+    },
+    slug: { __type: 'String' },
+    taxonomy: { __type: 'ProductCategoryToTaxonomyConnectionEdge' },
+    taxonomyName: { __type: 'String' },
+    templates: { __type: '[String]' },
+    termGroupId: { __type: 'Int' },
+    termTaxonomyId: { __type: 'Int' },
+    uri: { __type: 'String' },
+  },
+  ProductCategoryToAncestorsProductCategoryConnection: {
+    __typename: { __type: 'String!' },
+    edges: {
+      __type: '[ProductCategoryToAncestorsProductCategoryConnectionEdge]',
+    },
+    nodes: { __type: '[ProductCategory]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductCategoryToAncestorsProductCategoryConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductCategory' },
+  },
+  ProductCategoryToContentNodeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductCategoryToContentNodeConnectionEdge]' },
+    nodes: { __type: '[ContentNode]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductCategoryToContentNodeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ContentNode' },
+  },
+  ProductCategoryToContentNodeConnectionWhereArgs: {
+    contentTypes: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    hasPassword: { __type: 'Boolean' },
+    id: { __type: 'Int' },
+    in: { __type: '[ID]' },
+    mimeType: { __type: 'MimeTypeEnum' },
+    name: { __type: 'String' },
+    nameIn: { __type: '[String]' },
+    notIn: { __type: '[ID]' },
+    orderby: { __type: '[PostObjectsConnectionOrderbyInput]' },
+    parent: { __type: 'ID' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    password: { __type: 'String' },
+    search: { __type: 'String' },
+    stati: { __type: '[PostStatusEnum]' },
+    status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  ProductCategoryToParentProductCategoryConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'ProductCategory' },
+  },
+  ProductCategoryToProductCategoryConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductCategoryToProductCategoryConnectionEdge]' },
+    nodes: { __type: '[ProductCategory]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductCategoryToProductCategoryConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductCategory' },
+  },
+  ProductCategoryToProductCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductCategoryToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductCategoryToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductCategoryToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  ProductCategoryToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  ProductCategoryToTaxonomyConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Taxonomy' },
+  },
+  ProductDownload: {
+    __typename: { __type: 'String!' },
+    allowedFileType: { __type: 'Boolean' },
+    downloadId: { __type: 'String!' },
+    file: { __type: 'String' },
+    fileExists: { __type: 'Boolean' },
+    fileExt: { __type: 'String' },
+    filePathType: { __type: 'String' },
+    fileType: { __type: 'String' },
+    name: { __type: 'String' },
+  },
+  ProductTag: {
+    __typename: { __type: 'String!' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    contentNodes: {
+      __type: 'ProductTagToContentNodeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductTagToContentNodeConnectionWhereArgs',
+      },
+    },
+    count: { __type: 'Int' },
+    databaseId: { __type: 'Int!' },
+    description: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'TermNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'TermNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    id: { __type: 'ID!' },
+    isContentNode: { __type: 'Boolean!' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    link: { __type: 'String' },
+    name: { __type: 'String' },
+    productTagId: { __type: 'Int' },
+    products: {
+      __type: 'ProductTagToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductTagToProductConnectionWhereArgs',
+      },
+    },
+    slug: { __type: 'String' },
+    taxonomy: { __type: 'ProductTagToTaxonomyConnectionEdge' },
+    taxonomyName: { __type: 'String' },
+    templates: { __type: '[String]' },
+    termGroupId: { __type: 'Int' },
+    termTaxonomyId: { __type: 'Int' },
+    uri: { __type: 'String' },
+  },
+  ProductTagToContentNodeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductTagToContentNodeConnectionEdge]' },
+    nodes: { __type: '[ContentNode]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductTagToContentNodeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ContentNode' },
+  },
+  ProductTagToContentNodeConnectionWhereArgs: {
+    contentTypes: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    hasPassword: { __type: 'Boolean' },
+    id: { __type: 'Int' },
+    in: { __type: '[ID]' },
+    mimeType: { __type: 'MimeTypeEnum' },
+    name: { __type: 'String' },
+    nameIn: { __type: '[String]' },
+    notIn: { __type: '[ID]' },
+    orderby: { __type: '[PostObjectsConnectionOrderbyInput]' },
+    parent: { __type: 'ID' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    password: { __type: 'String' },
+    search: { __type: 'String' },
+    stati: { __type: '[PostStatusEnum]' },
+    status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  ProductTagToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductTagToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductTagToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  ProductTagToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  ProductTagToTaxonomyConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Taxonomy' },
+  },
+  ProductTaxonomyFilterInput: {
+    ids: { __type: '[Int]' },
+    operator: { __type: 'TaxonomyOperatorEnum' },
+    taxonomy: { __type: 'ProductTaxonomyEnum!' },
+    terms: { __type: '[String]' },
+  },
+  ProductTaxonomyInput: {
+    filters: { __type: '[ProductTaxonomyFilterInput]' },
+    relation: { __type: 'RelationEnum' },
+  },
+  ProductToCommentConnection: {
+    __typename: { __type: 'String!' },
+    averageRating: { __type: 'Float' },
+    edges: { __type: '[ProductToCommentConnectionEdge]' },
+    nodes: { __type: '[Comment]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToCommentConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Comment' },
+    rating: { __type: 'Float' },
+  },
+  ProductToCommentConnectionWhereArgs: {
+    authorEmail: { __type: 'String' },
+    authorIn: { __type: '[ID]' },
+    authorNotIn: { __type: '[ID]' },
+    authorUrl: { __type: 'String' },
+    commentIn: { __type: '[ID]' },
+    commentNotIn: { __type: '[ID]' },
+    commentType: { __type: 'String' },
+    commentTypeIn: { __type: '[String]' },
+    commentTypeNotIn: { __type: 'String' },
+    contentAuthor: { __type: '[ID]' },
+    contentAuthorIn: { __type: '[ID]' },
+    contentAuthorNotIn: { __type: '[ID]' },
+    contentId: { __type: 'ID' },
+    contentIdIn: { __type: '[ID]' },
+    contentIdNotIn: { __type: '[ID]' },
+    contentName: { __type: 'String' },
+    contentParent: { __type: 'Int' },
+    contentStatus: { __type: '[PostStatusEnum]' },
+    contentType: { __type: '[ContentTypeEnum]' },
+    includeUnapproved: { __type: '[ID]' },
+    karma: { __type: 'Int' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'CommentsConnectionOrderbyEnum' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    search: { __type: 'String' },
+    status: { __type: 'String' },
+    userId: { __type: 'ID' },
+  },
+  ProductToGlobalProductAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToGlobalProductAttributeConnectionEdge]' },
+    nodes: { __type: '[GlobalProductAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToGlobalProductAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'GlobalProductAttribute' },
+  },
+  ProductToGlobalProductAttributeConnectionWhereArgs: {
+    type: { __type: 'ProductAttributeTypesEnum' },
+  },
+  ProductToLocalProductAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToLocalProductAttributeConnectionEdge]' },
+    nodes: { __type: '[LocalProductAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToLocalProductAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'LocalProductAttribute' },
+  },
+  ProductToLocalProductAttributeConnectionWhereArgs: {
+    type: { __type: 'ProductAttributeTypesEnum' },
+  },
+  ProductToMediaItemConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToMediaItemConnectionEdge]' },
+    nodes: { __type: '[MediaItem]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToMediaItemConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'MediaItem' },
+  },
+  ProductToMediaItemConnectionWhereArgs: {
+    author: { __type: 'Int' },
+    authorIn: { __type: '[ID]' },
+    authorName: { __type: 'String' },
+    authorNotIn: { __type: '[ID]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    hasPassword: { __type: 'Boolean' },
+    id: { __type: 'Int' },
+    in: { __type: '[ID]' },
+    mimeType: { __type: 'MimeTypeEnum' },
+    name: { __type: 'String' },
+    nameIn: { __type: '[String]' },
+    notIn: { __type: '[ID]' },
+    orderby: { __type: '[PostObjectsConnectionOrderbyInput]' },
+    parent: { __type: 'ID' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    password: { __type: 'String' },
+    search: { __type: 'String' },
+    stati: { __type: '[PostStatusEnum]' },
+    status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  ProductToProductAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToProductAttributeConnectionEdge]' },
+    nodes: { __type: '[ProductAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToProductAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductAttribute' },
+  },
+  ProductToProductAttributeConnectionWhereArgs: {
+    type: { __type: 'ProductAttributeTypesEnum' },
+  },
+  ProductToProductCategoryConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToProductCategoryConnectionEdge]' },
+    nodes: { __type: '[ProductCategory]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToProductCategoryConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductCategory' },
+  },
+  ProductToProductCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  ProductToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    shuffle: { __type: 'Boolean' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  ProductToProductTagConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToProductTagConnectionEdge]' },
+    nodes: { __type: '[ProductTag]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToProductTagConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductTag' },
+  },
+  ProductToProductTagConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductToProductTypeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToProductTypeConnectionEdge]' },
+    nodes: { __type: '[ProductType]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToProductTypeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductType' },
+  },
+  ProductToProductTypeConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductToShippingClassConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToShippingClassConnectionEdge]' },
+    nodes: { __type: '[ShippingClass]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToShippingClassConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ShippingClass' },
+  },
+  ProductToShippingClassConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductToUpsellConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToUpsellConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToUpsellConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  ProductToUpsellConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  ProductToVisibleProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductToVisibleProductConnectionEdge]' },
+    nodes: { __type: '[VisibleProduct]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductToVisibleProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VisibleProduct' },
+  },
+  ProductToVisibleProductConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductType: {
+    __typename: { __type: 'String!' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    contentNodes: {
+      __type: 'ProductTypeToContentNodeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductTypeToContentNodeConnectionWhereArgs',
+      },
+    },
+    count: { __type: 'Int' },
+    databaseId: { __type: 'Int!' },
+    description: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'TermNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'TermNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    id: { __type: 'ID!' },
+    isContentNode: { __type: 'Boolean!' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    link: { __type: 'String' },
+    name: { __type: 'String' },
+    productTypeId: { __type: 'Int' },
+    slug: { __type: 'String' },
+    taxonomy: { __type: 'ProductTypeToTaxonomyConnectionEdge' },
+    taxonomyName: { __type: 'String' },
+    templates: { __type: '[String]' },
+    termGroupId: { __type: 'Int' },
+    termTaxonomyId: { __type: 'Int' },
+    uri: { __type: 'String' },
+  },
+  ProductTypeToContentNodeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductTypeToContentNodeConnectionEdge]' },
+    nodes: { __type: '[ContentNode]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductTypeToContentNodeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ContentNode' },
+  },
+  ProductTypeToContentNodeConnectionWhereArgs: {
+    contentTypes: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    hasPassword: { __type: 'Boolean' },
+    id: { __type: 'Int' },
+    in: { __type: '[ID]' },
+    mimeType: { __type: 'MimeTypeEnum' },
+    name: { __type: 'String' },
+    nameIn: { __type: '[String]' },
+    notIn: { __type: '[ID]' },
+    orderby: { __type: '[PostObjectsConnectionOrderbyInput]' },
+    parent: { __type: 'ID' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    password: { __type: 'String' },
+    search: { __type: 'String' },
+    stati: { __type: '[PostStatusEnum]' },
+    status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  ProductTypeToTaxonomyConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Taxonomy' },
+  },
+  ProductVariation: {
+    __typename: { __type: 'String!' },
+    attributes: {
+      __type: 'ProductVariationToVariationAttributeConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    backorders: { __type: 'BackordersEnum' },
+    backordersAllowed: { __type: 'Boolean' },
+    catalogVisibility: { __type: 'CatalogVisibilityEnum' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    contentType: { __type: 'ContentNodeToContentTypeConnectionEdge' },
+    contentTypeName: { __type: 'String!' },
+    databaseId: { __type: 'Int!' },
+    date: { __type: 'String' },
+    dateGmt: { __type: 'String' },
+    dateOnSaleFrom: { __type: 'String' },
+    dateOnSaleTo: { __type: 'String' },
+    description: { __type: 'String' },
+    desiredSlug: { __type: 'String' },
+    downloadExpiry: { __type: 'Int' },
+    downloadLimit: { __type: 'Int' },
+    downloadable: { __type: 'Boolean' },
+    downloads: { __type: '[ProductDownload]' },
+    editingLockedBy: { __type: 'ContentNodeToEditLockConnectionEdge' },
+    enclosure: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'ContentNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'ContentNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    featuredImage: { __type: 'NodeWithFeaturedImageToMediaItemConnectionEdge' },
+    featuredImageDatabaseId: { __type: 'Int' },
+    featuredImageId: { __type: 'ID' },
+    guid: { __type: 'String' },
+    hasAttributes: { __type: 'Boolean' },
+    height: { __type: 'String' },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    isContentNode: { __type: 'Boolean!' },
+    isPreview: { __type: 'Boolean' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    lastEditedBy: { __type: 'ContentNodeToEditLastConnectionEdge' },
+    length: { __type: 'String' },
+    link: { __type: 'String' },
+    manageStock: { __type: 'ManageStockEnum' },
+    menuOrder: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    modifiedGmt: { __type: 'String' },
+    name: { __type: 'String' },
+    onSale: { __type: 'Boolean' },
+    parent: { __type: 'ProductVariationToVariableProductConnectionEdge' },
+    previewRevisionDatabaseId: { __type: 'Int' },
+    previewRevisionId: { __type: 'ID' },
+    price: { __type: 'String', __args: { format: 'PricingFieldFormatEnum' } },
+    purchasable: { __type: 'Boolean' },
+    purchaseNote: { __type: 'String' },
+    regularPrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    salePrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    shippingClass: { __type: 'String' },
+    shippingClasses: {
+      __type: 'ProductVariationToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductVariationToShippingClassConnectionWhereArgs',
+      },
+    },
+    sku: { __type: 'String' },
+    slug: { __type: 'String' },
+    status: { __type: 'String' },
+    stockQuantity: { __type: 'Int' },
+    stockStatus: { __type: 'StockStatusEnum' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    template: { __type: 'ContentTemplate' },
+    templates: { __type: '[String]' },
+    type: { __type: 'ProductTypesEnum' },
+    uri: { __type: 'String' },
+    virtual: { __type: 'Boolean' },
+    visibleProducts: {
+      __type: 'ProductVariationToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductVariationToVisibleProductConnectionWhereArgs',
+      },
+    },
+    weight: { __type: 'String' },
+    width: { __type: 'String' },
+  },
+  ProductVariationToShippingClassConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductVariationToShippingClassConnectionEdge]' },
+    nodes: { __type: '[ShippingClass]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductVariationToShippingClassConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ShippingClass' },
+  },
+  ProductVariationToShippingClassConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductVariationToVariableProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'VariableProduct' },
+  },
+  ProductVariationToVariationAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductVariationToVariationAttributeConnectionEdge]' },
+    nodes: { __type: '[VariationAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductVariationToVariationAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VariationAttribute' },
+  },
+  ProductVariationToVisibleProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ProductVariationToVisibleProductConnectionEdge]' },
+    nodes: { __type: '[VisibleProduct]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ProductVariationToVisibleProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VisibleProduct' },
+  },
+  ProductVariationToVisibleProductConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  ProductsOrderbyInput: {
+    field: { __type: 'ProductsOrderByEnum!' },
+    order: { __type: 'OrderEnum' },
+  },
   ReadingSettings: {
     __typename: { __type: 'String!' },
     postsPerPage: { __type: 'Int' },
+  },
+  Refund: {
+    __typename: { __type: 'String!' },
+    amount: { __type: 'Float' },
+    databaseId: { __type: 'Int' },
+    date: { __type: 'String' },
+    id: { __type: 'ID!' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    reason: { __type: 'String' },
+    refundedBy: { __type: 'User' },
+    title: { __type: 'String' },
+  },
+  RegisterCustomerInput: {
+    aim: { __type: 'String' },
+    billing: { __type: 'CustomerAddressInput' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    displayName: { __type: 'String' },
+    email: { __type: 'String' },
+    firstName: { __type: 'String' },
+    jabber: { __type: 'String' },
+    lastName: { __type: 'String' },
+    locale: { __type: 'String' },
+    metaData: { __type: '[MetaDataInput]' },
+    nicename: { __type: 'String' },
+    nickname: { __type: 'String' },
+    password: { __type: 'String' },
+    registered: { __type: 'String' },
+    richEditing: { __type: 'String' },
+    shipping: { __type: 'CustomerAddressInput' },
+    shippingSameAsBilling: { __type: 'Boolean' },
+    username: { __type: 'String' },
+    websiteUrl: { __type: 'String' },
+    yim: { __type: 'String' },
+  },
+  RegisterCustomerPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    customer: { __type: 'Customer' },
+    viewer: { __type: 'User' },
   },
   RegisterUserInput: {
     aim: { __type: 'String' },
@@ -5440,6 +12252,26 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     user: { __type: 'User' },
   },
+  RemoveCouponsInput: {
+    clientMutationId: { __type: 'String' },
+    codes: { __type: '[String]' },
+  },
+  RemoveCouponsPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    clientMutationId: { __type: 'String' },
+  },
+  RemoveItemsFromCartInput: {
+    all: { __type: 'Boolean' },
+    clientMutationId: { __type: 'String' },
+    keys: { __type: '[ID]' },
+  },
+  RemoveItemsFromCartPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    cartItems: { __type: '[CartItem]' },
+    clientMutationId: { __type: 'String' },
+  },
   ResetUserPasswordInput: {
     clientMutationId: { __type: 'String' },
     key: { __type: 'String' },
@@ -5451,6 +12283,16 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     user: { __type: 'User' },
   },
+  RestoreCartItemsInput: {
+    clientMutationId: { __type: 'String' },
+    keys: { __type: '[ID]' },
+  },
+  RestoreCartItemsPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    cartItems: { __type: '[CartItem]' },
+    clientMutationId: { __type: 'String' },
+  },
   RestoreCommentInput: {
     clientMutationId: { __type: 'String' },
     id: { __type: 'ID!' },
@@ -5460,6 +12302,17 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     comment: { __type: 'Comment' },
     restoredId: { __type: 'ID' },
+  },
+  RestoreReviewInput: {
+    clientMutationId: { __type: 'String' },
+    id: { __type: 'ID!' },
+  },
+  RestoreReviewPayload: {
+    __typename: { __type: 'String!' },
+    affectedId: { __type: 'ID' },
+    clientMutationId: { __type: 'String' },
+    rating: { __type: 'Float' },
+    review: { __type: 'Comment' },
   },
   RootQueryToCategoryConnection: {
     __typename: { __type: 'String!' },
@@ -5609,6 +12462,47 @@ export const generatedSchema = {
     cursor: { __type: 'String' },
     node: { __type: 'ContentType' },
   },
+  RootQueryToCouponConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToCouponConnectionEdge]' },
+    nodes: { __type: '[Coupon]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToCouponConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Coupon' },
+  },
+  RootQueryToCouponConnectionWhereArgs: {
+    code: { __type: 'String' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    orderby: { __type: '[PostTypeOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+  },
+  RootQueryToCustomerConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToCustomerConnectionEdge]' },
+    nodes: { __type: '[Customer]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToCustomerConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Customer' },
+  },
+  RootQueryToCustomerConnectionWhereArgs: {
+    email: { __type: 'String' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'CustomerConnectionOrderbyEnum' },
+    search: { __type: 'String' },
+  },
   RootQueryToEnqueuedScriptConnection: {
     __typename: { __type: 'String!' },
     edges: { __type: '[RootQueryToEnqueuedScriptConnectionEdge]' },
@@ -5698,6 +12592,31 @@ export const generatedSchema = {
     parentDatabaseId: { __type: 'Int' },
     parentId: { __type: 'ID' },
   },
+  RootQueryToOrderConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToOrderConnectionEdge]' },
+    nodes: { __type: '[Order]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToOrderConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Order' },
+  },
+  RootQueryToOrderConnectionWhereArgs: {
+    customerId: { __type: 'Int' },
+    customersIn: { __type: '[Int]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    orderby: { __type: '[OrdersOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    productId: { __type: 'Int' },
+    search: { __type: 'String' },
+    statuses: { __type: '[OrderStatusEnum]' },
+  },
   RootQueryToPageConnection: {
     __typename: { __type: 'String!' },
     edges: { __type: '[RootQueryToPageConnectionEdge]' },
@@ -5732,6 +12651,18 @@ export const generatedSchema = {
     status: { __type: 'PostStatusEnum' },
     title: { __type: 'String' },
   },
+  RootQueryToPaymentGatewayConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToPaymentGatewayConnectionEdge]' },
+    nodes: { __type: '[PaymentGateway]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToPaymentGatewayConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'PaymentGateway' },
+  },
+  RootQueryToPaymentGatewayConnectionWhereArgs: { all: { __type: 'Boolean' } },
   RootQueryToPluginConnection: {
     __typename: { __type: 'String!' },
     edges: { __type: '[RootQueryToPluginConnectionEdge]' },
@@ -5742,6 +12673,11 @@ export const generatedSchema = {
     __typename: { __type: 'String!' },
     cursor: { __type: 'String' },
     node: { __type: 'Plugin' },
+  },
+  RootQueryToPluginConnectionWhereArgs: {
+    search: { __type: 'String' },
+    stati: { __type: '[PluginStatusEnum]' },
+    status: { __type: 'PluginStatusEnum' },
   },
   RootQueryToPostConnection: {
     __typename: { __type: 'String!' },
@@ -5820,6 +12756,222 @@ export const generatedSchema = {
     termTaxonomId: { __type: '[ID]' },
     updateTermMetaCache: { __type: 'Boolean' },
   },
+  RootQueryToProductCategoryConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToProductCategoryConnectionEdge]' },
+    nodes: { __type: '[ProductCategory]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToProductCategoryConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductCategory' },
+  },
+  RootQueryToProductCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  RootQueryToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  RootQueryToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  RootQueryToProductTagConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToProductTagConnectionEdge]' },
+    nodes: { __type: '[ProductTag]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToProductTagConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductTag' },
+  },
+  RootQueryToProductTagConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  RootQueryToProductTypeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToProductTypeConnectionEdge]' },
+    nodes: { __type: '[ProductType]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToProductTypeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductType' },
+  },
+  RootQueryToProductTypeConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  RootQueryToRefundConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToRefundConnectionEdge]' },
+    nodes: { __type: '[Refund]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToRefundConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Refund' },
+  },
+  RootQueryToRefundConnectionWhereArgs: {
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    include: { __type: '[Int]' },
+    orderIn: { __type: '[Int]' },
+    orderby: { __type: '[PostTypeOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    statuses: { __type: '[String]' },
+  },
+  RootQueryToShippingClassConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToShippingClassConnectionEdge]' },
+    nodes: { __type: '[ShippingClass]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToShippingClassConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ShippingClass' },
+  },
+  RootQueryToShippingClassConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
+  RootQueryToShippingMethodConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToShippingMethodConnectionEdge]' },
+    nodes: { __type: '[ShippingMethod]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToShippingMethodConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ShippingMethod' },
+  },
   RootQueryToTagConnection: {
     __typename: { __type: 'String!' },
     edges: { __type: '[RootQueryToTagConnectionEdge]' },
@@ -5852,6 +13004,23 @@ export const generatedSchema = {
     slug: { __type: '[String]' },
     termTaxonomId: { __type: '[ID]' },
     updateTermMetaCache: { __type: 'Boolean' },
+  },
+  RootQueryToTaxRateConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToTaxRateConnectionEdge]' },
+    nodes: { __type: '[TaxRate]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToTaxRateConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'TaxRate' },
+  },
+  RootQueryToTaxRateConnectionWhereArgs: {
+    class: { __type: 'TaxClassEnum' },
+    orderby: { __type: '[TaxRateConnectionOrderbyInput]' },
+    postCode: { __type: 'String' },
+    postCodeIn: { __type: '[String]' },
   },
   RootQueryToTaxonomyConnection: {
     __typename: { __type: 'String!' },
@@ -5948,6 +13117,39 @@ export const generatedSchema = {
     cursor: { __type: 'String' },
     node: { __type: 'UserRole' },
   },
+  RootQueryToVisibleProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[RootQueryToVisibleProductConnectionEdge]' },
+    nodes: { __type: '[VisibleProduct]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  RootQueryToVisibleProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VisibleProduct' },
+  },
+  RootQueryToVisibleProductConnectionWhereArgs: {
+    cacheDomain: { __type: 'String' },
+    childOf: { __type: 'Int' },
+    childless: { __type: 'Boolean' },
+    descriptionLike: { __type: 'String' },
+    exclude: { __type: '[ID]' },
+    excludeTree: { __type: '[ID]' },
+    hideEmpty: { __type: 'Boolean' },
+    hierarchical: { __type: 'Boolean' },
+    include: { __type: '[ID]' },
+    name: { __type: '[String]' },
+    nameLike: { __type: 'String' },
+    objectIds: { __type: '[ID]' },
+    order: { __type: 'OrderEnum' },
+    orderby: { __type: 'TermObjectsConnectionOrderbyEnum' },
+    padCounts: { __type: 'Boolean' },
+    parent: { __type: 'Int' },
+    search: { __type: 'String' },
+    slug: { __type: '[String]' },
+    termTaxonomId: { __type: '[ID]' },
+    updateTermMetaCache: { __type: 'Boolean' },
+  },
   SendPasswordResetEmailInput: {
     clientMutationId: { __type: 'String' },
     username: { __type: 'String!' },
@@ -5974,6 +13176,428 @@ export const generatedSchema = {
     writingSettingsDefaultCategory: { __type: 'Int' },
     writingSettingsDefaultPostFormat: { __type: 'String' },
     writingSettingsUseSmilies: { __type: 'Boolean' },
+  },
+  ShippingClass: {
+    __typename: { __type: 'String!' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    contentNodes: {
+      __type: 'ShippingClassToContentNodeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ShippingClassToContentNodeConnectionWhereArgs',
+      },
+    },
+    count: { __type: 'Int' },
+    databaseId: { __type: 'Int!' },
+    description: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'TermNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'TermNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    id: { __type: 'ID!' },
+    isContentNode: { __type: 'Boolean!' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    link: { __type: 'String' },
+    name: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    slug: { __type: 'String' },
+    taxonomy: { __type: 'ShippingClassToTaxonomyConnectionEdge' },
+    taxonomyName: { __type: 'String' },
+    templates: { __type: '[String]' },
+    termGroupId: { __type: 'Int' },
+    termTaxonomyId: { __type: 'Int' },
+    uri: { __type: 'String' },
+  },
+  ShippingClassToContentNodeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[ShippingClassToContentNodeConnectionEdge]' },
+    nodes: { __type: '[ContentNode]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  ShippingClassToContentNodeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ContentNode' },
+  },
+  ShippingClassToContentNodeConnectionWhereArgs: {
+    contentTypes: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    hasPassword: { __type: 'Boolean' },
+    id: { __type: 'Int' },
+    in: { __type: '[ID]' },
+    mimeType: { __type: 'MimeTypeEnum' },
+    name: { __type: 'String' },
+    nameIn: { __type: '[String]' },
+    notIn: { __type: '[ID]' },
+    orderby: { __type: '[PostObjectsConnectionOrderbyInput]' },
+    parent: { __type: 'ID' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    password: { __type: 'String' },
+    search: { __type: 'String' },
+    stati: { __type: '[PostStatusEnum]' },
+    status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  ShippingClassToTaxonomyConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Taxonomy' },
+  },
+  ShippingLine: {
+    __typename: { __type: 'String!' },
+    databaseId: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    methodTitle: { __type: 'String' },
+    orderId: { __type: 'Int' },
+    shippingMethod: { __type: 'ShippingMethod' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxes: { __type: '[OrderItemTax]' },
+    total: { __type: 'String' },
+    totalTax: { __type: 'String' },
+  },
+  ShippingLineInput: {
+    id: { __type: 'ID' },
+    instanceId: { __type: 'String' },
+    metaData: { __type: '[MetaDataInput]' },
+    methodId: { __type: 'String!' },
+    methodTitle: { __type: 'String!' },
+    total: { __type: 'String!' },
+  },
+  ShippingMethod: {
+    __typename: { __type: 'String!' },
+    databaseId: { __type: 'ID!' },
+    description: { __type: 'String' },
+    id: { __type: 'ID!' },
+    title: { __type: 'String' },
+  },
+  ShippingPackage: {
+    __typename: { __type: 'String!' },
+    packageDetails: { __type: 'String' },
+    rates: { __type: '[ShippingRate]' },
+    supportsShippingCalculator: { __type: 'Boolean' },
+  },
+  ShippingRate: {
+    __typename: { __type: 'String!' },
+    cost: { __type: 'String' },
+    id: { __type: 'ID!' },
+    instanceId: { __type: 'Int' },
+    label: { __type: 'String' },
+    methodId: { __type: 'ID!' },
+  },
+  SimpleAttribute: {
+    __typename: { __type: 'String!' },
+    name: { __type: 'String' },
+    value: { __type: 'String' },
+  },
+  SimpleProduct: {
+    __typename: { __type: 'String!' },
+    attributes: {
+      __type: 'ProductToProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductAttributeConnectionWhereArgs',
+      },
+    },
+    averageRating: { __type: 'Float' },
+    backorders: { __type: 'BackordersEnum' },
+    backordersAllowed: { __type: 'Boolean' },
+    catalogVisibility: { __type: 'CatalogVisibilityEnum' },
+    commentCount: { __type: 'Int' },
+    commentStatus: { __type: 'String' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    content: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    contentType: { __type: 'ContentNodeToContentTypeConnectionEdge' },
+    contentTypeName: { __type: 'String!' },
+    crossSell: {
+      __type: 'SimpleProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'SimpleProductToProductConnectionWhereArgs',
+      },
+    },
+    databaseId: { __type: 'Int!' },
+    date: { __type: 'String' },
+    dateGmt: { __type: 'String' },
+    dateOnSaleFrom: { __type: 'String' },
+    dateOnSaleTo: { __type: 'String' },
+    defaultAttributes: {
+      __type: 'SimpleProductToVariationAttributeConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    description: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    desiredSlug: { __type: 'String' },
+    downloadExpiry: { __type: 'Int' },
+    downloadLimit: { __type: 'Int' },
+    downloadable: { __type: 'Boolean' },
+    downloads: { __type: '[ProductDownload]' },
+    editingLockedBy: { __type: 'ContentNodeToEditLockConnectionEdge' },
+    enclosure: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'ContentNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'ContentNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    featured: { __type: 'Boolean' },
+    featuredImage: { __type: 'NodeWithFeaturedImageToMediaItemConnectionEdge' },
+    featuredImageDatabaseId: { __type: 'Int' },
+    featuredImageId: { __type: 'ID' },
+    galleryImages: {
+      __type: 'ProductToMediaItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToMediaItemConnectionWhereArgs',
+      },
+    },
+    globalAttributes: {
+      __type: 'ProductToGlobalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToGlobalProductAttributeConnectionWhereArgs',
+      },
+    },
+    guid: { __type: 'String' },
+    height: { __type: 'String' },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    isContentNode: { __type: 'Boolean!' },
+    isPreview: { __type: 'Boolean' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    lastEditedBy: { __type: 'ContentNodeToEditLastConnectionEdge' },
+    length: { __type: 'String' },
+    link: { __type: 'String' },
+    localAttributes: {
+      __type: 'ProductToLocalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToLocalProductAttributeConnectionWhereArgs',
+      },
+    },
+    manageStock: { __type: 'Boolean' },
+    menuOrder: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    modifiedGmt: { __type: 'String' },
+    name: { __type: 'String' },
+    onSale: { __type: 'Boolean' },
+    parent: { __type: 'Product' },
+    previewRevisionDatabaseId: { __type: 'Int' },
+    previewRevisionId: { __type: 'ID' },
+    price: { __type: 'String', __args: { format: 'PricingFieldFormatEnum' } },
+    productCategories: {
+      __type: 'ProductToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductCategoryConnectionWhereArgs',
+      },
+    },
+    productTags: {
+      __type: 'ProductToProductTagConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTagConnectionWhereArgs',
+      },
+    },
+    productTypes: {
+      __type: 'ProductToProductTypeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTypeConnectionWhereArgs',
+      },
+    },
+    purchasable: { __type: 'Boolean' },
+    purchaseNote: { __type: 'String' },
+    regularPrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    related: {
+      __type: 'ProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductConnectionWhereArgs',
+      },
+    },
+    reviewCount: { __type: 'Int' },
+    reviews: {
+      __type: 'ProductToCommentConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToCommentConnectionWhereArgs',
+      },
+    },
+    reviewsAllowed: { __type: 'Boolean' },
+    salePrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    shippingClassId: { __type: 'Int' },
+    shippingClasses: {
+      __type: 'ProductToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToShippingClassConnectionWhereArgs',
+      },
+    },
+    shippingRequired: { __type: 'Boolean' },
+    shippingTaxable: { __type: 'Boolean' },
+    shortDescription: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    sku: { __type: 'String' },
+    slug: { __type: 'String' },
+    soldIndividually: { __type: 'Boolean' },
+    status: { __type: 'String' },
+    stockQuantity: { __type: 'Int' },
+    stockStatus: { __type: 'StockStatusEnum' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    template: { __type: 'ContentTemplate' },
+    templates: { __type: '[String]' },
+    totalSales: { __type: 'Int' },
+    type: { __type: 'ProductTypesEnum' },
+    upsell: {
+      __type: 'ProductToUpsellConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToUpsellConnectionWhereArgs',
+      },
+    },
+    uri: { __type: 'String' },
+    virtual: { __type: 'Boolean' },
+    visibleProducts: {
+      __type: 'ProductToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToVisibleProductConnectionWhereArgs',
+      },
+    },
+    weight: { __type: 'String' },
+    width: { __type: 'String' },
+  },
+  SimpleProductToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[SimpleProductToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  SimpleProductToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  SimpleProductToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  SimpleProductToVariationAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[SimpleProductToVariationAttributeConnectionEdge]' },
+    nodes: { __type: '[VariationAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  SimpleProductToVariationAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VariationAttribute' },
   },
   Tag: {
     __typename: { __type: 'String!' },
@@ -6102,6 +13726,41 @@ export const generatedSchema = {
   TagToTaxonomyConnectionEdge: {
     __typename: { __type: 'String!' },
     node: { __type: 'Taxonomy' },
+  },
+  TaxLine: {
+    __typename: { __type: 'String!' },
+    databaseId: { __type: 'Int' },
+    isCompound: { __type: 'Boolean' },
+    label: { __type: 'String' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    orderId: { __type: 'Int' },
+    rateCode: { __type: 'String' },
+    shippingTaxTotal: { __type: 'String' },
+    taxRate: { __type: 'TaxRate' },
+    taxTotal: { __type: 'String' },
+  },
+  TaxRate: {
+    __typename: { __type: 'String!' },
+    city: { __type: '[String]' },
+    class: { __type: 'TaxClassEnum' },
+    compound: { __type: 'Boolean' },
+    country: { __type: 'String' },
+    databaseId: { __type: 'Int' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String' },
+    order: { __type: 'Int' },
+    postcode: { __type: '[String]' },
+    priority: { __type: 'Int' },
+    rate: { __type: 'String' },
+    shipping: { __type: 'Boolean' },
+    state: { __type: 'String' },
+  },
+  TaxRateConnectionOrderbyInput: {
+    field: { __type: 'TaxRateConnectionOrderbyEnum!' },
+    order: { __type: 'OrderEnum' },
   },
   Taxonomy: {
     __typename: { __type: 'String!' },
@@ -6263,6 +13922,77 @@ export const generatedSchema = {
     comment: { __type: 'Comment' },
     success: { __type: 'Boolean' },
   },
+  UpdateCouponInput: {
+    amount: { __type: 'Float' },
+    clientMutationId: { __type: 'String' },
+    code: { __type: 'String' },
+    dateExpires: { __type: 'String' },
+    dateExpiresGmt: { __type: 'String' },
+    description: { __type: 'String' },
+    discountType: { __type: 'DiscountTypeEnum' },
+    emailRestrictions: { __type: '[String]' },
+    excludeSaleItems: { __type: 'Boolean' },
+    excludedProductCategories: { __type: '[Int]' },
+    excludedProductIds: { __type: '[Int]' },
+    freeShipping: { __type: 'Boolean' },
+    id: { __type: 'ID!' },
+    individualUse: { __type: 'Boolean' },
+    limitUsageToXItems: { __type: 'Int' },
+    maximumAmount: { __type: 'String' },
+    metaData: { __type: '[MetaDataInput]' },
+    minimumAmount: { __type: 'String' },
+    productCategories: { __type: '[Int]' },
+    productIds: { __type: '[Int]' },
+    usageLimit: { __type: 'Int' },
+    usageLimitPerUser: { __type: 'Int' },
+  },
+  UpdateCouponPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    code: { __type: 'String' },
+    coupon: { __type: 'Coupon' },
+  },
+  UpdateCustomerInput: {
+    aim: { __type: 'String' },
+    billing: { __type: 'CustomerAddressInput' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    displayName: { __type: 'String' },
+    email: { __type: 'String' },
+    firstName: { __type: 'String' },
+    id: { __type: 'ID' },
+    jabber: { __type: 'String' },
+    lastName: { __type: 'String' },
+    locale: { __type: 'String' },
+    metaData: { __type: '[MetaDataInput]' },
+    nicename: { __type: 'String' },
+    nickname: { __type: 'String' },
+    password: { __type: 'String' },
+    registered: { __type: 'String' },
+    richEditing: { __type: 'String' },
+    roles: { __type: '[String]' },
+    shipping: { __type: 'CustomerAddressInput' },
+    shippingSameAsBilling: { __type: 'Boolean' },
+    websiteUrl: { __type: 'String' },
+    yim: { __type: 'String' },
+  },
+  UpdateCustomerPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    customer: { __type: 'Customer' },
+  },
+  UpdateItemQuantitiesInput: {
+    clientMutationId: { __type: 'String' },
+    items: { __type: '[CartItemQuantityInput]' },
+  },
+  UpdateItemQuantitiesPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    clientMutationId: { __type: 'String' },
+    items: { __type: '[CartItem]' },
+    removed: { __type: '[CartItem]' },
+    updated: { __type: '[CartItem]' },
+  },
   UpdateMediaItemInput: {
     altText: { __type: 'String' },
     authorId: { __type: 'ID' },
@@ -6285,6 +14015,32 @@ export const generatedSchema = {
     __typename: { __type: 'String!' },
     clientMutationId: { __type: 'String' },
     mediaItem: { __type: 'MediaItem' },
+  },
+  UpdateOrderInput: {
+    billing: { __type: 'CustomerAddressInput' },
+    clientMutationId: { __type: 'String' },
+    coupons: { __type: '[String]' },
+    currency: { __type: 'String' },
+    customerId: { __type: 'Int' },
+    customerNote: { __type: 'String' },
+    feeLines: { __type: '[FeeLineInput]' },
+    id: { __type: 'ID' },
+    isPaid: { __type: 'Boolean' },
+    lineItems: { __type: '[LineItemInput]' },
+    metaData: { __type: '[MetaDataInput]' },
+    orderId: { __type: 'Int' },
+    parentId: { __type: 'Int' },
+    paymentMethod: { __type: 'String' },
+    paymentMethodTitle: { __type: 'String' },
+    shipping: { __type: 'CustomerAddressInput' },
+    shippingLines: { __type: '[ShippingLineInput]' },
+    status: { __type: 'OrderStatusEnum' },
+    transactionId: { __type: 'String' },
+  },
+  UpdateOrderPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    order: { __type: 'Order' },
   },
   UpdatePageInput: {
     authorId: { __type: 'ID' },
@@ -6343,6 +14099,65 @@ export const generatedSchema = {
     clientMutationId: { __type: 'String' },
     post: { __type: 'Post' },
   },
+  UpdateProductCategoryInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String' },
+    parentId: { __type: 'ID' },
+    slug: { __type: 'String' },
+  },
+  UpdateProductCategoryPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    productCategory: { __type: 'ProductCategory' },
+  },
+  UpdateProductTagInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String' },
+    slug: { __type: 'String' },
+  },
+  UpdateProductTagPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    productTag: { __type: 'ProductTag' },
+  },
+  UpdateProductTypeInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String' },
+    slug: { __type: 'String' },
+  },
+  UpdateProductTypePayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    productType: { __type: 'ProductType' },
+  },
+  UpdateReviewInput: {
+    approved: { __type: 'String' },
+    author: { __type: 'String' },
+    authorEmail: { __type: 'String' },
+    authorUrl: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    commentOn: { __type: 'Int' },
+    content: { __type: 'String' },
+    date: { __type: 'String' },
+    id: { __type: 'ID!' },
+    parent: { __type: 'ID' },
+    rating: { __type: 'Int!' },
+  },
+  UpdateReviewPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    rating: { __type: 'Float' },
+    review: { __type: 'Comment' },
+  },
   UpdateSettingsInput: {
     clientMutationId: { __type: 'String' },
     discussionSettingsDefaultCommentStatus: { __type: 'String' },
@@ -6369,6 +14184,28 @@ export const generatedSchema = {
     generalSettings: { __type: 'GeneralSettings' },
     readingSettings: { __type: 'ReadingSettings' },
     writingSettings: { __type: 'WritingSettings' },
+  },
+  UpdateShippingClassInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String' },
+    slug: { __type: 'String' },
+  },
+  UpdateShippingClassPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    shippingClass: { __type: 'ShippingClass' },
+  },
+  UpdateShippingMethodInput: {
+    clientMutationId: { __type: 'String' },
+    shippingMethods: { __type: '[String]' },
+  },
+  UpdateShippingMethodPayload: {
+    __typename: { __type: 'String!' },
+    cart: { __type: 'Cart' },
+    clientMutationId: { __type: 'String' },
   },
   UpdateTagInput: {
     aliasOf: { __type: 'String' },
@@ -6407,6 +14244,19 @@ export const generatedSchema = {
     __typename: { __type: 'String!' },
     clientMutationId: { __type: 'String' },
     user: { __type: 'User' },
+  },
+  UpdateVisibleProductInput: {
+    aliasOf: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    description: { __type: 'String' },
+    id: { __type: 'ID!' },
+    name: { __type: 'String' },
+    slug: { __type: 'String' },
+  },
+  UpdateVisibleProductPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    visibleProduct: { __type: 'VisibleProduct' },
   },
   User: {
     __typename: { __type: 'String!' },
@@ -6504,6 +14354,7 @@ export const generatedSchema = {
     url: { __type: 'String' },
     userId: { __type: 'Int' },
     username: { __type: 'String' },
+    wooSessionToken: { __type: 'String' },
   },
   UserRole: {
     __typename: { __type: 'String!' },
@@ -6735,12 +14586,466 @@ export const generatedSchema = {
     field: { __type: 'UsersConnectionOrderbyEnum!' },
     order: { __type: 'OrderEnum' },
   },
+  VariableProduct: {
+    __typename: { __type: 'String!' },
+    attributes: {
+      __type: 'ProductToProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductAttributeConnectionWhereArgs',
+      },
+    },
+    averageRating: { __type: 'Float' },
+    backorders: { __type: 'BackordersEnum' },
+    backordersAllowed: { __type: 'Boolean' },
+    catalogVisibility: { __type: 'CatalogVisibilityEnum' },
+    commentCount: { __type: 'Int' },
+    commentStatus: { __type: 'String' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    content: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    contentType: { __type: 'ContentNodeToContentTypeConnectionEdge' },
+    contentTypeName: { __type: 'String!' },
+    crossSell: {
+      __type: 'VariableProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'VariableProductToProductConnectionWhereArgs',
+      },
+    },
+    databaseId: { __type: 'Int!' },
+    date: { __type: 'String' },
+    dateGmt: { __type: 'String' },
+    dateOnSaleFrom: { __type: 'String' },
+    dateOnSaleTo: { __type: 'String' },
+    defaultAttributes: {
+      __type: 'VariableProductToVariationAttributeConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    description: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    desiredSlug: { __type: 'String' },
+    editingLockedBy: { __type: 'ContentNodeToEditLockConnectionEdge' },
+    enclosure: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'ContentNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'ContentNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    featured: { __type: 'Boolean' },
+    featuredImage: { __type: 'NodeWithFeaturedImageToMediaItemConnectionEdge' },
+    featuredImageDatabaseId: { __type: 'Int' },
+    featuredImageId: { __type: 'ID' },
+    galleryImages: {
+      __type: 'ProductToMediaItemConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToMediaItemConnectionWhereArgs',
+      },
+    },
+    globalAttributes: {
+      __type: 'ProductToGlobalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToGlobalProductAttributeConnectionWhereArgs',
+      },
+    },
+    guid: { __type: 'String' },
+    height: { __type: 'String' },
+    id: { __type: 'ID!' },
+    image: { __type: 'MediaItem' },
+    isContentNode: { __type: 'Boolean!' },
+    isPreview: { __type: 'Boolean' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    lastEditedBy: { __type: 'ContentNodeToEditLastConnectionEdge' },
+    length: { __type: 'String' },
+    link: { __type: 'String' },
+    localAttributes: {
+      __type: 'ProductToLocalProductAttributeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToLocalProductAttributeConnectionWhereArgs',
+      },
+    },
+    manageStock: { __type: 'Boolean' },
+    menuOrder: { __type: 'Int' },
+    metaData: {
+      __type: '[MetaData]',
+      __args: { key: 'String', keysIn: '[String]', multiple: 'Boolean' },
+    },
+    modified: { __type: 'String' },
+    modifiedGmt: { __type: 'String' },
+    name: { __type: 'String' },
+    onSale: { __type: 'Boolean' },
+    parent: { __type: 'Product' },
+    previewRevisionDatabaseId: { __type: 'Int' },
+    previewRevisionId: { __type: 'ID' },
+    price: { __type: 'String', __args: { format: 'PricingFieldFormatEnum' } },
+    productCategories: {
+      __type: 'ProductToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductCategoryConnectionWhereArgs',
+      },
+    },
+    productTags: {
+      __type: 'ProductToProductTagConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTagConnectionWhereArgs',
+      },
+    },
+    productTypes: {
+      __type: 'ProductToProductTypeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductTypeConnectionWhereArgs',
+      },
+    },
+    purchasable: { __type: 'Boolean' },
+    purchaseNote: { __type: 'String' },
+    regularPrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    related: {
+      __type: 'ProductToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToProductConnectionWhereArgs',
+      },
+    },
+    reviewCount: { __type: 'Int' },
+    reviews: {
+      __type: 'ProductToCommentConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToCommentConnectionWhereArgs',
+      },
+    },
+    reviewsAllowed: { __type: 'Boolean' },
+    salePrice: {
+      __type: 'String',
+      __args: { format: 'PricingFieldFormatEnum' },
+    },
+    shippingClassId: { __type: 'Int' },
+    shippingClasses: {
+      __type: 'ProductToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToShippingClassConnectionWhereArgs',
+      },
+    },
+    shippingRequired: { __type: 'Boolean' },
+    shippingTaxable: { __type: 'Boolean' },
+    shortDescription: {
+      __type: 'String',
+      __args: { format: 'PostObjectFieldFormatEnum' },
+    },
+    sku: { __type: 'String' },
+    slug: { __type: 'String' },
+    soldIndividually: { __type: 'Boolean' },
+    status: { __type: 'String' },
+    stockQuantity: { __type: 'Int' },
+    stockStatus: { __type: 'StockStatusEnum' },
+    taxClass: { __type: 'TaxClassEnum' },
+    taxStatus: { __type: 'TaxStatusEnum' },
+    template: { __type: 'ContentTemplate' },
+    templates: { __type: '[String]' },
+    totalSales: { __type: 'Int' },
+    type: { __type: 'ProductTypesEnum' },
+    upsell: {
+      __type: 'ProductToUpsellConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToUpsellConnectionWhereArgs',
+      },
+    },
+    uri: { __type: 'String' },
+    variations: {
+      __type: 'VariableProductToProductVariationConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'VariableProductToProductVariationConnectionWhereArgs',
+      },
+    },
+    visibleProducts: {
+      __type: 'ProductToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'ProductToVisibleProductConnectionWhereArgs',
+      },
+    },
+    weight: { __type: 'String' },
+    width: { __type: 'String' },
+  },
+  VariableProductToProductConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[VariableProductToProductConnectionEdge]' },
+    nodes: { __type: '[Product]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  VariableProductToProductConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'Product' },
+  },
+  VariableProductToProductConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  VariableProductToProductVariationConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[VariableProductToProductVariationConnectionEdge]' },
+    nodes: { __type: '[ProductVariation]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  VariableProductToProductVariationConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ProductVariation' },
+  },
+  VariableProductToProductVariationConnectionWhereArgs: {
+    attribute: { __type: 'String' },
+    attributeTerm: { __type: 'String' },
+    category: { __type: 'String' },
+    categoryId: { __type: 'Int' },
+    categoryIdIn: { __type: '[Int]' },
+    categoryIdNotIn: { __type: '[Int]' },
+    categoryIn: { __type: '[String]' },
+    categoryNotIn: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    exclude: { __type: '[Int]' },
+    featured: { __type: 'Boolean' },
+    include: { __type: '[Int]' },
+    maxPrice: { __type: 'Float' },
+    minPrice: { __type: 'Float' },
+    onSale: { __type: 'Boolean' },
+    orderby: { __type: '[ProductsOrderbyInput]' },
+    parent: { __type: 'Int' },
+    parentIn: { __type: '[Int]' },
+    parentNotIn: { __type: '[Int]' },
+    search: { __type: 'String' },
+    shippingClassId: { __type: 'Int' },
+    sku: { __type: 'String' },
+    slugIn: { __type: '[String]' },
+    status: { __type: 'String' },
+    stockStatus: { __type: '[StockStatusEnum]' },
+    supportedTypesOnly: { __type: 'Boolean' },
+    tag: { __type: 'String' },
+    tagId: { __type: 'Int' },
+    tagIdIn: { __type: '[Int]' },
+    tagIdNotIn: { __type: '[Int]' },
+    tagIn: { __type: '[String]' },
+    tagNotIn: { __type: '[String]' },
+    taxonomyFilter: { __type: 'ProductTaxonomyInput' },
+    type: { __type: 'ProductTypesEnum' },
+    typeIn: { __type: '[ProductTypesEnum]' },
+    typeNotIn: { __type: '[ProductTypesEnum]' },
+    visibility: { __type: 'CatalogVisibilityEnum' },
+  },
+  VariableProductToVariationAttributeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[VariableProductToVariationAttributeConnectionEdge]' },
+    nodes: { __type: '[VariationAttribute]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  VariableProductToVariationAttributeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'VariationAttribute' },
+  },
+  VariationAttribute: {
+    __typename: { __type: 'String!' },
+    attributeId: { __type: 'Int' },
+    id: { __type: 'ID!' },
+    label: { __type: 'String' },
+    name: { __type: 'String' },
+    value: { __type: 'String' },
+  },
+  VisibleProduct: {
+    __typename: { __type: 'String!' },
+    conditionalTags: { __type: 'ConditionalTags' },
+    contentNodes: {
+      __type: 'VisibleProductToContentNodeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'VisibleProductToContentNodeConnectionWhereArgs',
+      },
+    },
+    count: { __type: 'Int' },
+    databaseId: { __type: 'Int!' },
+    description: { __type: 'String' },
+    enqueuedScripts: {
+      __type: 'TermNodeToEnqueuedScriptConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    enqueuedStylesheets: {
+      __type: 'TermNodeToEnqueuedStylesheetConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    id: { __type: 'ID!' },
+    isContentNode: { __type: 'Boolean!' },
+    isRestricted: { __type: 'Boolean' },
+    isTermNode: { __type: 'Boolean!' },
+    link: { __type: 'String' },
+    name: { __type: 'String' },
+    slug: { __type: 'String' },
+    taxonomy: { __type: 'VisibleProductToTaxonomyConnectionEdge' },
+    taxonomyName: { __type: 'String' },
+    templates: { __type: '[String]' },
+    termGroupId: { __type: 'Int' },
+    termTaxonomyId: { __type: 'Int' },
+    uri: { __type: 'String' },
+    visibleProductId: { __type: 'Int' },
+  },
+  VisibleProductToContentNodeConnection: {
+    __typename: { __type: 'String!' },
+    edges: { __type: '[VisibleProductToContentNodeConnectionEdge]' },
+    nodes: { __type: '[ContentNode]' },
+    pageInfo: { __type: 'WPPageInfo' },
+  },
+  VisibleProductToContentNodeConnectionEdge: {
+    __typename: { __type: 'String!' },
+    cursor: { __type: 'String' },
+    node: { __type: 'ContentNode' },
+  },
+  VisibleProductToContentNodeConnectionWhereArgs: {
+    contentTypes: { __type: '[String]' },
+    dateQuery: { __type: 'DateQueryInput' },
+    hasPassword: { __type: 'Boolean' },
+    id: { __type: 'Int' },
+    in: { __type: '[ID]' },
+    mimeType: { __type: 'MimeTypeEnum' },
+    name: { __type: 'String' },
+    nameIn: { __type: '[String]' },
+    notIn: { __type: '[ID]' },
+    orderby: { __type: '[PostObjectsConnectionOrderbyInput]' },
+    parent: { __type: 'ID' },
+    parentIn: { __type: '[ID]' },
+    parentNotIn: { __type: '[ID]' },
+    password: { __type: 'String' },
+    search: { __type: 'String' },
+    stati: { __type: '[PostStatusEnum]' },
+    status: { __type: 'PostStatusEnum' },
+    title: { __type: 'String' },
+  },
+  VisibleProductToTaxonomyConnectionEdge: {
+    __typename: { __type: 'String!' },
+    node: { __type: 'Taxonomy' },
+  },
   WPPageInfo: {
     __typename: { __type: 'String!' },
     endCursor: { __type: 'String' },
     hasNextPage: { __type: 'Boolean!' },
     hasPreviousPage: { __type: 'Boolean!' },
     startCursor: { __type: 'String' },
+  },
+  WriteReviewInput: {
+    approved: { __type: 'String' },
+    author: { __type: 'String' },
+    authorEmail: { __type: 'String' },
+    authorUrl: { __type: 'String' },
+    clientMutationId: { __type: 'String' },
+    commentOn: { __type: 'Int' },
+    content: { __type: 'String' },
+    date: { __type: 'String' },
+    parent: { __type: 'ID' },
+    rating: { __type: 'Int!' },
+  },
+  WriteReviewPayload: {
+    __typename: { __type: 'String!' },
+    clientMutationId: { __type: 'String' },
+    rating: { __type: 'Float' },
+    review: { __type: 'Comment' },
   },
   WritingSettings: {
     __typename: { __type: 'String!' },
@@ -6750,6 +15055,23 @@ export const generatedSchema = {
   },
   mutation: {
     __typename: { __type: 'String!' },
+    addCartItems: {
+      __type: 'AddCartItemsPayload',
+      __args: { input: 'AddCartItemsInput!' },
+    },
+    addFee: { __type: 'AddFeePayload', __args: { input: 'AddFeeInput!' } },
+    addToCart: {
+      __type: 'AddToCartPayload',
+      __args: { input: 'AddToCartInput!' },
+    },
+    applyCoupon: {
+      __type: 'ApplyCouponPayload',
+      __args: { input: 'ApplyCouponInput!' },
+    },
+    checkout: {
+      __type: 'CheckoutPayload',
+      __args: { input: 'CheckoutInput!' },
+    },
     createCategory: {
       __type: 'CreateCategoryPayload',
       __args: { input: 'CreateCategoryInput!' },
@@ -6758,9 +15080,17 @@ export const generatedSchema = {
       __type: 'CreateCommentPayload',
       __args: { input: 'CreateCommentInput!' },
     },
+    createCoupon: {
+      __type: 'CreateCouponPayload',
+      __args: { input: 'CreateCouponInput!' },
+    },
     createMediaItem: {
       __type: 'CreateMediaItemPayload',
       __args: { input: 'CreateMediaItemInput!' },
+    },
+    createOrder: {
+      __type: 'CreateOrderPayload',
+      __args: { input: 'CreateOrderInput!' },
     },
     createPage: {
       __type: 'CreatePagePayload',
@@ -6774,6 +15104,22 @@ export const generatedSchema = {
       __type: 'CreatePostFormatPayload',
       __args: { input: 'CreatePostFormatInput!' },
     },
+    createProductCategory: {
+      __type: 'CreateProductCategoryPayload',
+      __args: { input: 'CreateProductCategoryInput!' },
+    },
+    createProductTag: {
+      __type: 'CreateProductTagPayload',
+      __args: { input: 'CreateProductTagInput!' },
+    },
+    createProductType: {
+      __type: 'CreateProductTypePayload',
+      __args: { input: 'CreateProductTypeInput!' },
+    },
+    createShippingClass: {
+      __type: 'CreateShippingClassPayload',
+      __args: { input: 'CreateShippingClassInput!' },
+    },
     createTag: {
       __type: 'CreateTagPayload',
       __args: { input: 'CreateTagInput!' },
@@ -6781,6 +15127,10 @@ export const generatedSchema = {
     createUser: {
       __type: 'CreateUserPayload',
       __args: { input: 'CreateUserInput!' },
+    },
+    createVisibleProduct: {
+      __type: 'CreateVisibleProductPayload',
+      __args: { input: 'CreateVisibleProductInput!' },
     },
     deleteCategory: {
       __type: 'DeleteCategoryPayload',
@@ -6790,9 +15140,21 @@ export const generatedSchema = {
       __type: 'DeleteCommentPayload',
       __args: { input: 'DeleteCommentInput!' },
     },
+    deleteCoupon: {
+      __type: 'DeleteCouponPayload',
+      __args: { input: 'DeleteCouponInput!' },
+    },
     deleteMediaItem: {
       __type: 'DeleteMediaItemPayload',
       __args: { input: 'DeleteMediaItemInput!' },
+    },
+    deleteOrder: {
+      __type: 'DeleteOrderPayload',
+      __args: { input: 'DeleteOrderInput!' },
+    },
+    deleteOrderItems: {
+      __type: 'DeleteOrderItemsPayload',
+      __args: { input: 'DeleteOrderItemsInput!' },
     },
     deletePage: {
       __type: 'DeletePagePayload',
@@ -6806,6 +15168,26 @@ export const generatedSchema = {
       __type: 'DeletePostFormatPayload',
       __args: { input: 'DeletePostFormatInput!' },
     },
+    deleteProductCategory: {
+      __type: 'DeleteProductCategoryPayload',
+      __args: { input: 'DeleteProductCategoryInput!' },
+    },
+    deleteProductTag: {
+      __type: 'DeleteProductTagPayload',
+      __args: { input: 'DeleteProductTagInput!' },
+    },
+    deleteProductType: {
+      __type: 'DeleteProductTypePayload',
+      __args: { input: 'DeleteProductTypeInput!' },
+    },
+    deleteReview: {
+      __type: 'DeleteReviewPayload',
+      __args: { input: 'DeleteReviewInput!' },
+    },
+    deleteShippingClass: {
+      __type: 'DeleteShippingClassPayload',
+      __args: { input: 'DeleteShippingClassInput!' },
+    },
     deleteTag: {
       __type: 'DeleteTagPayload',
       __args: { input: 'DeleteTagInput!' },
@@ -6814,22 +15196,54 @@ export const generatedSchema = {
       __type: 'DeleteUserPayload',
       __args: { input: 'DeleteUserInput!' },
     },
+    deleteVisibleProduct: {
+      __type: 'DeleteVisibleProductPayload',
+      __args: { input: 'DeleteVisibleProductInput!' },
+    },
+    emptyCart: {
+      __type: 'EmptyCartPayload',
+      __args: { input: 'EmptyCartInput!' },
+    },
+    fillCart: {
+      __type: 'FillCartPayload',
+      __args: { input: 'FillCartInput!' },
+    },
     generateAuthorizationCode: {
       __type: 'GenerateAuthorizationCodePayload',
       __args: { input: 'GenerateAuthorizationCodeInput!' },
     },
     increaseCount: { __type: 'Int', __args: { count: 'Int' } },
+    registerCustomer: {
+      __type: 'RegisterCustomerPayload',
+      __args: { input: 'RegisterCustomerInput!' },
+    },
     registerUser: {
       __type: 'RegisterUserPayload',
       __args: { input: 'RegisterUserInput!' },
+    },
+    removeCoupons: {
+      __type: 'RemoveCouponsPayload',
+      __args: { input: 'RemoveCouponsInput!' },
+    },
+    removeItemsFromCart: {
+      __type: 'RemoveItemsFromCartPayload',
+      __args: { input: 'RemoveItemsFromCartInput!' },
     },
     resetUserPassword: {
       __type: 'ResetUserPasswordPayload',
       __args: { input: 'ResetUserPasswordInput!' },
     },
+    restoreCartItems: {
+      __type: 'RestoreCartItemsPayload',
+      __args: { input: 'RestoreCartItemsInput!' },
+    },
     restoreComment: {
       __type: 'RestoreCommentPayload',
       __args: { input: 'RestoreCommentInput!' },
+    },
+    restoreReview: {
+      __type: 'RestoreReviewPayload',
+      __args: { input: 'RestoreReviewInput!' },
     },
     sendPasswordResetEmail: {
       __type: 'SendPasswordResetEmailPayload',
@@ -6843,9 +15257,25 @@ export const generatedSchema = {
       __type: 'UpdateCommentPayload',
       __args: { input: 'UpdateCommentInput!' },
     },
+    updateCoupon: {
+      __type: 'UpdateCouponPayload',
+      __args: { input: 'UpdateCouponInput!' },
+    },
+    updateCustomer: {
+      __type: 'UpdateCustomerPayload',
+      __args: { input: 'UpdateCustomerInput!' },
+    },
+    updateItemQuantities: {
+      __type: 'UpdateItemQuantitiesPayload',
+      __args: { input: 'UpdateItemQuantitiesInput!' },
+    },
     updateMediaItem: {
       __type: 'UpdateMediaItemPayload',
       __args: { input: 'UpdateMediaItemInput!' },
+    },
+    updateOrder: {
+      __type: 'UpdateOrderPayload',
+      __args: { input: 'UpdateOrderInput!' },
     },
     updatePage: {
       __type: 'UpdatePagePayload',
@@ -6859,9 +15289,33 @@ export const generatedSchema = {
       __type: 'UpdatePostFormatPayload',
       __args: { input: 'UpdatePostFormatInput!' },
     },
+    updateProductCategory: {
+      __type: 'UpdateProductCategoryPayload',
+      __args: { input: 'UpdateProductCategoryInput!' },
+    },
+    updateProductTag: {
+      __type: 'UpdateProductTagPayload',
+      __args: { input: 'UpdateProductTagInput!' },
+    },
+    updateProductType: {
+      __type: 'UpdateProductTypePayload',
+      __args: { input: 'UpdateProductTypeInput!' },
+    },
+    updateReview: {
+      __type: 'UpdateReviewPayload',
+      __args: { input: 'UpdateReviewInput!' },
+    },
     updateSettings: {
       __type: 'UpdateSettingsPayload',
       __args: { input: 'UpdateSettingsInput!' },
+    },
+    updateShippingClass: {
+      __type: 'UpdateShippingClassPayload',
+      __args: { input: 'UpdateShippingClassInput!' },
+    },
+    updateShippingMethod: {
+      __type: 'UpdateShippingMethodPayload',
+      __args: { input: 'UpdateShippingMethodInput!' },
     },
     updateTag: {
       __type: 'UpdateTagPayload',
@@ -6871,10 +15325,21 @@ export const generatedSchema = {
       __type: 'UpdateUserPayload',
       __args: { input: 'UpdateUserInput!' },
     },
+    updateVisibleProduct: {
+      __type: 'UpdateVisibleProductPayload',
+      __args: { input: 'UpdateVisibleProductInput!' },
+    },
+    writeReview: {
+      __type: 'WriteReviewPayload',
+      __args: { input: 'WriteReviewInput!' },
+    },
   },
   query: {
     __typename: { __type: 'String!' },
     allSettings: { __type: 'Settings' },
+    cart: { __type: 'Cart', __args: { recalculateTotals: 'Boolean' } },
+    cartFee: { __type: 'CartFee', __args: { id: 'ID!' } },
+    cartItem: { __type: 'CartItem', __args: { key: 'ID!' } },
     categories: {
       __type: 'RootQueryToCategoryConnection',
       __args: {
@@ -6927,8 +15392,41 @@ export const generatedSchema = {
       __type: 'RootQueryToContentTypeConnection',
       __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
     },
+    coupon: {
+      __type: 'Coupon',
+      __args: { id: 'ID!', idType: 'CouponIdTypeEnum' },
+    },
+    coupons: {
+      __type: 'RootQueryToCouponConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToCouponConnectionWhereArgs',
+      },
+    },
+    customer: { __type: 'Customer', __args: { customerId: 'Int', id: 'ID' } },
+    customers: {
+      __type: 'RootQueryToCustomerConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToCustomerConnectionWhereArgs',
+      },
+    },
     discussionSettings: { __type: 'DiscussionSettings' },
+    externalProduct: {
+      __type: 'ExternalProduct',
+      __args: { id: 'ID', idType: 'ProductIdTypeEnum' },
+    },
     generalSettings: { __type: 'GeneralSettings' },
+    groupedProduct: {
+      __type: 'GroupProduct',
+      __args: { id: 'ID', idType: 'ProductIdTypeEnum' },
+    },
     mediaItem: {
       __type: 'MediaItem',
       __args: { asPreview: 'Boolean', id: 'ID!', idType: 'MediaItemIdType' },
@@ -6980,6 +15478,17 @@ export const generatedSchema = {
       __type: 'UniformResourceIdentifiable',
       __args: { uri: 'String!' },
     },
+    order: { __type: 'Order', __args: { id: 'ID', idType: 'OrderIdTypeEnum' } },
+    orders: {
+      __type: 'RootQueryToOrderConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToOrderConnectionWhereArgs',
+      },
+    },
     page: {
       __type: 'Page',
       __args: { asPreview: 'Boolean', id: 'ID!', idType: 'PageIdType' },
@@ -6998,10 +15507,26 @@ export const generatedSchema = {
         where: 'RootQueryToPageConnectionWhereArgs',
       },
     },
+    paymentGateways: {
+      __type: 'RootQueryToPaymentGatewayConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToPaymentGatewayConnectionWhereArgs',
+      },
+    },
     plugin: { __type: 'Plugin', __args: { id: 'ID!' } },
     plugins: {
       __type: 'RootQueryToPluginConnection',
-      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToPluginConnectionWhereArgs',
+      },
     },
     post: {
       __type: 'Post',
@@ -7035,7 +15560,81 @@ export const generatedSchema = {
         where: 'RootQueryToPostConnectionWhereArgs',
       },
     },
+    product: {
+      __type: 'Product',
+      __args: { id: 'ID!', idType: 'ProductIdTypeEnum' },
+    },
+    productCategories: {
+      __type: 'RootQueryToProductCategoryConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToProductCategoryConnectionWhereArgs',
+      },
+    },
+    productCategory: {
+      __type: 'ProductCategory',
+      __args: { id: 'ID!', idType: 'ProductCategoryIdType' },
+    },
+    productTag: {
+      __type: 'ProductTag',
+      __args: { id: 'ID!', idType: 'ProductTagIdType' },
+    },
+    productTags: {
+      __type: 'RootQueryToProductTagConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToProductTagConnectionWhereArgs',
+      },
+    },
+    productType: {
+      __type: 'ProductType',
+      __args: { id: 'ID!', idType: 'ProductTypeIdType' },
+    },
+    productTypes: {
+      __type: 'RootQueryToProductTypeConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToProductTypeConnectionWhereArgs',
+      },
+    },
+    productVariation: {
+      __type: 'ProductVariation',
+      __args: { id: 'ID', idType: 'ProductVariationIdTypeEnum' },
+    },
+    products: {
+      __type: 'RootQueryToProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToProductConnectionWhereArgs',
+      },
+    },
     readingSettings: { __type: 'ReadingSettings' },
+    refund: {
+      __type: 'Refund',
+      __args: { id: 'ID!', idType: 'RefundIdTypeEnum' },
+    },
+    refunds: {
+      __type: 'RootQueryToRefundConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToRefundConnectionWhereArgs',
+      },
+    },
     registeredScripts: {
       __type: 'RootQueryToEnqueuedScriptConnection',
       __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
@@ -7054,6 +15653,32 @@ export const generatedSchema = {
         where: 'RootQueryToContentRevisionUnionConnectionWhereArgs',
       },
     },
+    shippingClass: {
+      __type: 'ShippingClass',
+      __args: { id: 'ID!', idType: 'ShippingClassIdType' },
+    },
+    shippingClasses: {
+      __type: 'RootQueryToShippingClassConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToShippingClassConnectionWhereArgs',
+      },
+    },
+    shippingMethod: {
+      __type: 'ShippingMethod',
+      __args: { id: 'ID', idType: 'ShippingMethodIdTypeEnum' },
+    },
+    shippingMethods: {
+      __type: 'RootQueryToShippingMethodConnection',
+      __args: { after: 'String', before: 'String', first: 'Int', last: 'Int' },
+    },
+    simpleProduct: {
+      __type: 'SimpleProduct',
+      __args: { id: 'ID', idType: 'ProductIdTypeEnum' },
+    },
     tag: { __type: 'Tag', __args: { id: 'ID!', idType: 'TagIdType' } },
     tags: {
       __type: 'RootQueryToTagConnection',
@@ -7063,6 +15688,20 @@ export const generatedSchema = {
         first: 'Int',
         last: 'Int',
         where: 'RootQueryToTagConnectionWhereArgs',
+      },
+    },
+    taxRate: {
+      __type: 'TaxRate',
+      __args: { id: 'ID', idType: 'TaxRateIdTypeEnum' },
+    },
+    taxRates: {
+      __type: 'RootQueryToTaxRateConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToTaxRateConnectionWhereArgs',
       },
     },
     taxonomies: {
@@ -7115,55 +15754,126 @@ export const generatedSchema = {
         where: 'RootQueryToUserConnectionWhereArgs',
       },
     },
+    variableProduct: {
+      __type: 'VariableProduct',
+      __args: { id: 'ID', idType: 'ProductIdTypeEnum' },
+    },
     viewer: { __type: 'User' },
+    visibleProduct: {
+      __type: 'VisibleProduct',
+      __args: { id: 'ID!', idType: 'VisibleProductIdType' },
+    },
+    visibleProducts: {
+      __type: 'RootQueryToVisibleProductConnection',
+      __args: {
+        after: 'String',
+        before: 'String',
+        first: 'Int',
+        last: 'Int',
+        where: 'RootQueryToVisibleProductConnectionWhereArgs',
+      },
+    },
     writingSettings: { __type: 'WritingSettings' },
   },
   subscription: {},
   [SchemaUnionsKey]: {
+    CartError: ['CartItemError'],
     DatabaseIdentifier: [
       'Category',
       'Comment',
+      'ExternalProduct',
+      'GroupProduct',
       'MediaItem',
       'Menu',
       'MenuItem',
       'Page',
       'Post',
       'PostFormat',
+      'ProductCategory',
+      'ProductTag',
+      'ProductType',
+      'ProductVariation',
+      'ShippingClass',
+      'SimpleProduct',
       'Tag',
       'User',
+      'VariableProduct',
+      'VisibleProduct',
     ],
-    HierarchicalTermNode: ['Category'],
-    MenuItemLinkable: ['Category', 'Page', 'Post', 'Tag'],
+    HierarchicalTermNode: ['Category', 'ProductCategory'],
+    MenuItemLinkable: [
+      'Category',
+      'Page',
+      'Post',
+      'ProductCategory',
+      'ProductTag',
+      'Tag',
+    ],
     Node: [
       'Category',
       'Comment',
       'CommentAuthor',
       'ContentType',
+      'Coupon',
+      'Customer',
       'EnqueuedScript',
       'EnqueuedStylesheet',
+      'ExternalProduct',
+      'GroupProduct',
       'MediaItem',
       'Menu',
       'MenuItem',
+      'Order',
       'Page',
       'Plugin',
       'Post',
       'PostFormat',
+      'ProductCategory',
+      'ProductTag',
+      'ProductType',
+      'ProductVariation',
+      'Refund',
+      'ShippingClass',
+      'ShippingMethod',
+      'SimpleProduct',
       'Tag',
+      'TaxRate',
       'Taxonomy',
       'Theme',
       'User',
       'UserRole',
+      'VariableProduct',
+      'VisibleProduct',
     ],
-    TermNode: ['Category', 'PostFormat', 'Tag'],
+    TermNode: [
+      'Category',
+      'PostFormat',
+      'ProductCategory',
+      'ProductTag',
+      'ProductType',
+      'ShippingClass',
+      'Tag',
+      'VisibleProduct',
+    ],
     UniformResourceIdentifiable: [
       'Category',
       'ContentType',
+      'ExternalProduct',
+      'GroupProduct',
       'MediaItem',
       'Page',
       'Post',
       'PostFormat',
+      'ProductCategory',
+      'ProductTag',
+      'ProductType',
+      'ProductVariation',
+      'ShippingClass',
+      'SimpleProduct',
       'Tag',
       'User',
+      'VariableProduct',
+      'VisibleProduct',
     ],
     Commenter: ['CommentAuthor', 'User'],
     ContentRevisionUnion: ['Page', 'Post'],
@@ -7175,21 +15885,166 @@ export const generatedSchema = {
       'Template_SinglePostNoSeparators',
     ],
     EnqueuedAsset: ['EnqueuedScript', 'EnqueuedStylesheet'],
-    ContentNode: ['MediaItem', 'Page', 'Post'],
+    ContentNode: [
+      'ExternalProduct',
+      'GroupProduct',
+      'MediaItem',
+      'Page',
+      'Post',
+      'ProductVariation',
+      'SimpleProduct',
+      'VariableProduct',
+    ],
+    NodeWithComments: [
+      'ExternalProduct',
+      'GroupProduct',
+      'MediaItem',
+      'Order',
+      'Page',
+      'Post',
+      'SimpleProduct',
+      'VariableProduct',
+    ],
+    NodeWithContentEditor: [
+      'ExternalProduct',
+      'GroupProduct',
+      'Page',
+      'Post',
+      'SimpleProduct',
+      'VariableProduct',
+    ],
+    NodeWithFeaturedImage: [
+      'ExternalProduct',
+      'GroupProduct',
+      'Page',
+      'Post',
+      'ProductVariation',
+      'SimpleProduct',
+      'VariableProduct',
+    ],
+    Product: [
+      'ExternalProduct',
+      'GroupProduct',
+      'SimpleProduct',
+      'VariableProduct',
+    ],
+    ProductAttribute: ['GlobalProductAttribute', 'LocalProductAttribute'],
     HierarchicalContentNode: ['MediaItem', 'Page'],
     NodeWithAuthor: ['MediaItem', 'Page', 'Post'],
-    NodeWithComments: ['MediaItem', 'Page', 'Post'],
     NodeWithTemplate: ['MediaItem', 'Page', 'Post'],
     NodeWithTitle: ['MediaItem', 'Page', 'Post'],
-    MenuItemObjectUnion: ['Category', 'Page', 'Post', 'Tag'],
-    NodeWithContentEditor: ['Page', 'Post'],
-    NodeWithFeaturedImage: ['Page', 'Post'],
+    MenuItemObjectUnion: [
+      'Category',
+      'Page',
+      'Post',
+      'ProductCategory',
+      'ProductTag',
+      'Tag',
+    ],
     NodeWithPageAttributes: ['Page'],
     NodeWithRevisions: ['Page', 'Post'],
     NodeWithExcerpt: ['Post'],
     NodeWithTrackbacks: ['Post'],
+    Attribute: ['SimpleAttribute', 'VariationAttribute'],
   },
 } as const;
+
+/**
+ * The payload for the addCartItems mutation
+ */
+export interface AddCartItemsPayload {
+  __typename?: 'AddCartItemsPayload';
+  added?: Maybe<Array<Maybe<CartItem>>>;
+  cart?: Maybe<Cart>;
+  cartErrors?: Maybe<Array<Maybe<CartItemError>>>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The payload for the addFee mutation
+ */
+export interface AddFeePayload {
+  __typename?: 'AddFeePayload';
+  cart?: Maybe<Cart>;
+  cartFee?: Maybe<CartFee>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The payload for the addToCart mutation
+ */
+export interface AddToCartPayload {
+  __typename?: 'AddToCartPayload';
+  cart?: Maybe<Cart>;
+  cartItem?: Maybe<CartItem>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Coupon applied to the shopping cart.
+ */
+export interface AppliedCoupon {
+  __typename?: 'AppliedCoupon';
+  /**
+   * Coupon code
+   */
+  code: ScalarsEnums['String'];
+  /**
+   * Description of applied coupon
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Discount applied with this coupon
+   */
+  discountAmount: (args?: {
+    /**
+     * Exclude Taxes (Default "true")
+     */
+    excludeTax?: Maybe<Scalars['Boolean']>;
+  }) => ScalarsEnums['String'];
+  /**
+   * Taxes on discount applied with this coupon
+   */
+  discountTax: ScalarsEnums['String'];
+}
+
+/**
+ * The payload for the applyCoupon mutation
+ */
+export interface ApplyCouponPayload {
+  __typename?: 'ApplyCouponPayload';
+  applied?: Maybe<AppliedCoupon>;
+  cart?: Maybe<Cart>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Attribute object
+ */
+export interface Attribute {
+  __typename?: 'SimpleAttribute' | 'VariationAttribute';
+  /**
+   * Name of attribute
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Selected value of attribute
+   */
+  value?: Maybe<ScalarsEnums['String']>;
+  $on: $Attribute;
+}
 
 /**
  * Avatars are profile images for users. WordPress by default uses the Gravatar service to host and fetch avatars from.
@@ -7240,6 +16095,347 @@ export interface Avatar {
    * Width of the avatar image.
    */
   width?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * The cart object
+ */
+export interface Cart {
+  __typename?: 'Cart';
+  /**
+   * Coupons applied to the cart
+   */
+  appliedCoupons?: Maybe<Array<Maybe<AppliedCoupon>>>;
+  /**
+   * Available shipping methods for this order.
+   */
+  availableShippingMethods?: Maybe<Array<Maybe<ShippingPackage>>>;
+  /**
+   * Shipping method chosen for this order.
+   */
+  chosenShippingMethods?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Connection between the Cart type and the CartItem type
+   */
+  contents: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CartToCartItemConnectionWhereArgs>;
+  }) => Maybe<CartToCartItemConnection>;
+  /**
+   * Cart contents tax
+   */
+  contentsTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart contents total
+   */
+  contentsTotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart discount tax
+   */
+  discountTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart discount total
+   */
+  discountTotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Do display prices include taxes
+   */
+  displayPricesIncludeTax?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Cart fee tax
+   */
+  feeTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart fee total
+   */
+  feeTotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Additional fees on the cart.
+   */
+  fees?: Maybe<Array<Maybe<CartFee>>>;
+  /**
+   * Is cart empty
+   */
+  isEmpty?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Is customer shipping address needed
+   */
+  needsShippingAddress?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Cart shipping tax
+   */
+  shippingTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart shipping total
+   */
+  shippingTotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart subtotal
+   */
+  subtotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart subtotal tax
+   */
+  subtotalTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart total after calculation
+   */
+  total?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart total tax amount
+   */
+  totalTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart total taxes itemized
+   */
+  totalTaxes?: Maybe<Array<Maybe<CartTax>>>;
+}
+
+/**
+ * An error that occurred when updating the cart
+ */
+export interface CartError {
+  __typename?: 'CartItemError';
+  /**
+   * Reason for error
+   */
+  reasons?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Type of error
+   */
+  type: ScalarsEnums['CartErrorType'];
+  $on: $CartError;
+}
+
+/**
+ * An additional fee
+ */
+export interface CartFee {
+  __typename?: 'CartFee';
+  /**
+   * Fee amount
+   */
+  amount?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Fee ID
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Fee name
+   */
+  name: ScalarsEnums['String'];
+  /**
+   * Fee tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Is fee taxable?
+   */
+  taxable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Fee total
+   */
+  total?: Maybe<ScalarsEnums['Float']>;
+}
+
+/**
+ * A item in the cart
+ */
+export interface CartItem {
+  __typename?: 'CartItem';
+  /**
+   * Object meta data
+   */
+  extraData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * CartItem ID
+   */
+  key: ScalarsEnums['ID'];
+  /**
+   * Connection between the CartItem type and the Product type
+   */
+  product?: Maybe<CartItemToProductConnectionEdge>;
+  /**
+   * Quantity of the product
+   */
+  quantity?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Item&#039;s subtotal
+   */
+  subtotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Item&#039;s subtotal tax
+   */
+  subtotalTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Item&#039;s tax
+   */
+  tax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Item&#039;s total
+   */
+  total?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the CartItem type and the ProductVariation type
+   */
+  variation?: Maybe<CartItemToProductVariationConnectionEdge>;
+}
+
+/**
+ * Error that occurred when adding an item to the cart.
+ */
+export interface CartItemError {
+  __typename?: 'CartItemError';
+  /**
+   * JSON string representation of extra cart item data
+   */
+  extraData?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart item product database ID or global ID
+   */
+  productId: ScalarsEnums['Int'];
+  /**
+   * Cart item quantity
+   */
+  quantity?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Reason for error
+   */
+  reasons?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Type of error
+   */
+  type: ScalarsEnums['CartErrorType'];
+  /**
+   * Cart item product variation attributes
+   */
+  variation?: Maybe<Array<Maybe<ProductAttributeOutput>>>;
+  /**
+   * Cart item product variation database ID or global ID
+   */
+  variationId?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * Connection between the CartItem type and the Product type
+ */
+export interface CartItemToProductConnectionEdge {
+  __typename?: 'CartItemToProductConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Product>;
+  /**
+   * Simple variation attribute data
+   */
+  simpleVariations?: Maybe<Array<Maybe<SimpleAttribute>>>;
+}
+
+/**
+ * Connection between the CartItem type and the ProductVariation type
+ */
+export interface CartItemToProductVariationConnectionEdge {
+  __typename?: 'CartItemToProductVariationConnectionEdge';
+  /**
+   * Attributes of the variation.
+   */
+  attributes?: Maybe<Array<Maybe<VariationAttribute>>>;
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<ProductVariation>;
+}
+
+/**
+ * An itemized cart tax item
+ */
+export interface CartTax {
+  __typename?: 'CartTax';
+  /**
+   * Tax amount
+   */
+  amount?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Tax Rate ID
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Is tax compound?
+   */
+  isCompound?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Tax label
+   */
+  label: ScalarsEnums['String'];
+}
+
+/**
+ * Connection between the Cart type and the CartItem type
+ */
+export interface CartToCartItemConnection {
+  __typename?: 'CartToCartItemConnection';
+  /**
+   * Edges for the CartToCartItemConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CartToCartItemConnectionEdge>>>;
+  /**
+   * Total number of items in the cart.
+   */
+  itemCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<CartItem>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+  /**
+   * Total number of different products in the cart
+   */
+  productCount?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CartToCartItemConnectionEdge {
+  __typename?: 'CartToCartItemConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<CartItem>;
 }
 
 /**
@@ -7298,6 +16494,9 @@ export interface Category {
      */
     where?: Maybe<CategoryToCategoryConnectionWhereArgs>;
   }) => Maybe<CategoryToCategoryConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the category type and the ContentNode type
@@ -7625,6 +16824,21 @@ export interface CategoryToTaxonomyConnectionEdge {
 }
 
 /**
+ * The payload for the checkout mutation
+ */
+export interface CheckoutPayload {
+  __typename?: 'CheckoutPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  customer?: Maybe<Customer>;
+  order?: Maybe<Order>;
+  redirect?: Maybe<ScalarsEnums['String']>;
+  result?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
  * A Comment object
  */
 export interface Comment {
@@ -7741,6 +16955,24 @@ export interface Comment {
 export interface CommentAuthor {
   __typename?: 'CommentAuthor';
   /**
+   * Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument.
+   */
+  avatar: (args?: {
+    /**
+     * Whether to always show the default image, never the Gravatar. Default false
+     */
+    forceDefault?: Maybe<Scalars['Boolean']>;
+    /**
+     * The rating level of the avatar.
+     */
+    rating?: Maybe<AvatarRatingEnum>;
+    /**
+     * The size attribute of the avatar field can be used to fetch avatars of different sizes. The value corresponds to the dimension in pixels to fetch. The default is 96 pixels.
+     * @defaultValue `96`
+     */
+    size?: Maybe<Scalars['Int']>;
+  }) => Maybe<Avatar>;
+  /**
    * Identifies the primary key from the database.
    */
   databaseId: ScalarsEnums['Int'];
@@ -7839,6 +17071,10 @@ export interface CommentToParentCommentConnectionEdge {
 export interface Commenter {
   __typename?: 'CommentAuthor' | 'User';
   /**
+   * Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument.
+   */
+  avatar?: Maybe<Avatar>;
+  /**
    * Identifies the primary key from the database.
    */
   databaseId: ScalarsEnums['Int'];
@@ -7872,90 +17108,112 @@ export interface ConditionalTags {
   __typename?: 'ConditionalTags';
   /**
    * Determines whether the query is for an existing archive page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isArchive?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing attachment page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isAttachment?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing author archive page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isAuthor?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing category archive page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isCategory?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing date archive.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isDate?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing day archive.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isDay?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for the front page of the site.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isFrontPage?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for the blog homepage.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isHome?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing month archive.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isMonth?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether this site has more than one author.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isMultiAuthor?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing single page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isPage?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether currently in a page template.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isPageTemplate?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing post type archive page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isPostTypeArchive?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for a post or page preview.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isPreview?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for the Privacy Policy page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isPrivacyPolicy?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for a search.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isSearch?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing single post.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isSingle?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing single post of any post type (post, attachment, page, custom post types).
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isSingular?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether a post is sticky.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isSticky?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing tag archive page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isTag?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing custom taxonomy archive page.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isTax?: Maybe<ScalarsEnums['Boolean']>;
   /**
    * Determines whether the query is for an existing year archive.
+   * @deprecated Deprecated in favor of using Next.js pages
    */
   isYear?: Maybe<ScalarsEnums['Boolean']>;
 }
@@ -7964,7 +17222,18 @@ export interface ConditionalTags {
  * Nodes used to manage content
  */
 export interface ContentNode {
-  __typename?: 'MediaItem' | 'Page' | 'Post';
+  __typename?:
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'MediaItem'
+  | 'Page'
+  | 'Post'
+  | 'ProductVariation'
+  | 'SimpleProduct'
+  | 'VariableProduct';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the ContentNode type and the ContentType type
@@ -8226,11 +17495,11 @@ export interface ContentRevisionUnion {
  */
 export interface ContentTemplate {
   __typename?:
-    | 'DefaultTemplate'
-    | 'Template_Blank'
-    | 'Template_PageLargeHeader'
-    | 'Template_PageNoSeparators'
-    | 'Template_SinglePostNoSeparators';
+  | 'DefaultTemplate'
+  | 'Template_Blank'
+  | 'Template_PageLargeHeader'
+  | 'Template_PageNoSeparators'
+  | 'Template_SinglePostNoSeparators';
   /**
    * The name of the template
    */
@@ -8247,6 +17516,9 @@ export interface ContentType {
    * Whether this content type should can be exported.
    */
   canExport?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the ContentType type and the Taxonomy type
@@ -8482,6 +17754,449 @@ export interface ContentTypeToTaxonomyConnectionEdge {
 }
 
 /**
+ * A coupon object
+ */
+export interface Coupon {
+  __typename?: 'Coupon';
+  /**
+   * Amount off provided by the coupon
+   */
+  amount?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Coupon code
+   */
+  code?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the coupon in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Date coupon created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date coupon expires
+   */
+  dateExpiry?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Explanation of what the coupon does
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Type of discount
+   */
+  discountType?: Maybe<ScalarsEnums['DiscountTypeEnum']>;
+  /**
+   * Only customers with a matching email address can use the coupon
+   */
+  emailRestrictions?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Excluding sale items mean this coupon cannot be used on items that are on sale (or carts that contain on sale items)
+   */
+  excludeSaleItems?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Coupon type and the productCategory type
+   */
+  excludedProductCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CouponToExcludedProductCategoriesConnectionWhereArgs>;
+  }) => Maybe<CouponToExcludedProductCategoriesConnection>;
+  /**
+   * Connection between the Coupon type and the Product type
+   */
+  excludedProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CouponToExcludedProductsConnectionWhereArgs>;
+  }) => Maybe<CouponToExcludedProductsConnection>;
+  /**
+   * Does this coupon grant free shipping?
+   */
+  freeShipping?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The globally unique identifier for the coupon
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Individual use means this coupon cannot be used in conjunction with other coupons
+   */
+  individualUse?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The number of products in your cart this coupon can apply to (for product discounts)
+   */
+  limitUsageToXItems?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Maximum spend amount that must be met before this coupon can be used
+   */
+  maximumAmount?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Minimum spend amount that must be met before this coupon can be used
+   */
+  minimumAmount?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Date coupon modified
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Coupon type and the productCategory type
+   */
+  productCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CouponToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<CouponToProductCategoryConnection>;
+  /**
+   * Connection between the Coupon type and the Product type
+   */
+  products: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CouponToProductConnectionWhereArgs>;
+  }) => Maybe<CouponToProductConnection>;
+  /**
+   * How many times the coupon has been used
+   */
+  usageCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Amount of times this coupon can be used globally
+   */
+  usageLimit?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Amount of times this coupon can be used by a customer
+   */
+  usageLimitPerUser?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Coupon type and the Customer type
+   */
+  usedBy: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CouponToCustomerConnectionWhereArgs>;
+  }) => Maybe<CouponToCustomerConnection>;
+}
+
+/**
+ * a coupon line object
+ */
+export interface CouponLine {
+  __typename?: 'CouponLine';
+  /**
+   * Line&#039;s Coupon code
+   */
+  code?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line&#039;s Coupon
+   */
+  coupon?: Maybe<Coupon>;
+  /**
+   * The ID of the order item in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Line&#039;s Discount total
+   */
+  discount?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line&#039;s Discount total tax
+   */
+  discountTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * The Id of the order the order item belongs to.
+   */
+  orderId?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * Connection between the Coupon type and the Customer type
+ */
+export interface CouponToCustomerConnection {
+  __typename?: 'CouponToCustomerConnection';
+  /**
+   * Edges for the CouponToCustomerConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CouponToCustomerConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Customer>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CouponToCustomerConnectionEdge {
+  __typename?: 'CouponToCustomerConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Customer>;
+}
+
+/**
+ * Connection between the Coupon type and the productCategory type
+ */
+export interface CouponToExcludedProductCategoriesConnection {
+  __typename?: 'CouponToExcludedProductCategoriesConnection';
+  /**
+   * Edges for the CouponToExcludedProductCategoriesConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CouponToExcludedProductCategoriesConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CouponToExcludedProductCategoriesConnectionEdge {
+  __typename?: 'CouponToExcludedProductCategoriesConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the Coupon type and the Product type
+ */
+export interface CouponToExcludedProductsConnection {
+  __typename?: 'CouponToExcludedProductsConnection';
+  /**
+   * Edges for the CouponToExcludedProductsConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CouponToExcludedProductsConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CouponToExcludedProductsConnectionEdge {
+  __typename?: 'CouponToExcludedProductsConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the Coupon type and the productCategory type
+ */
+export interface CouponToProductCategoryConnection {
+  __typename?: 'CouponToProductCategoryConnection';
+  /**
+   * Edges for the CouponToProductCategoryConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CouponToProductCategoryConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CouponToProductCategoryConnectionEdge {
+  __typename?: 'CouponToProductCategoryConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the Coupon type and the Product type
+ */
+export interface CouponToProductConnection {
+  __typename?: 'CouponToProductConnection';
+  /**
+   * Edges for the CouponToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CouponToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CouponToProductConnectionEdge {
+  __typename?: 'CouponToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
  * The payload for the createCategory mutation
  */
 export interface CreateCategoryPayload {
@@ -8516,6 +18231,19 @@ export interface CreateCommentPayload {
 }
 
 /**
+ * The payload for the createCoupon mutation
+ */
+export interface CreateCouponPayload {
+  __typename?: 'CreateCouponPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  code?: Maybe<ScalarsEnums['String']>;
+  coupon?: Maybe<Coupon>;
+}
+
+/**
  * The payload for the createMediaItem mutation
  */
 export interface CreateMediaItemPayload {
@@ -8528,6 +18256,19 @@ export interface CreateMediaItemPayload {
    * The MediaItem object mutation type.
    */
   mediaItem?: Maybe<MediaItem>;
+}
+
+/**
+ * The payload for the createOrder mutation
+ */
+export interface CreateOrderPayload {
+  __typename?: 'CreateOrderPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  order?: Maybe<Order>;
+  orderId?: Maybe<ScalarsEnums['Int']>;
 }
 
 /**
@@ -8576,6 +18317,66 @@ export interface CreatePostPayload {
 }
 
 /**
+ * The payload for the createProductCategory mutation
+ */
+export interface CreateProductCategoryPayload {
+  __typename?: 'CreateProductCategoryPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_cat
+   */
+  productCategory?: Maybe<ProductCategory>;
+}
+
+/**
+ * The payload for the createProductTag mutation
+ */
+export interface CreateProductTagPayload {
+  __typename?: 'CreateProductTagPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_tag
+   */
+  productTag?: Maybe<ProductTag>;
+}
+
+/**
+ * The payload for the createProductType mutation
+ */
+export interface CreateProductTypePayload {
+  __typename?: 'CreateProductTypePayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_type
+   */
+  productType?: Maybe<ProductType>;
+}
+
+/**
+ * The payload for the createShippingClass mutation
+ */
+export interface CreateShippingClassPayload {
+  __typename?: 'CreateShippingClassPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_shipping_class
+   */
+  shippingClass?: Maybe<ShippingClass>;
+}
+
+/**
  * The payload for the createTag mutation
  */
 export interface CreateTagPayload {
@@ -8606,20 +18407,377 @@ export interface CreateUserPayload {
 }
 
 /**
+ * The payload for the createVisibleProduct mutation
+ */
+export interface CreateVisibleProductPayload {
+  __typename?: 'CreateVisibleProductPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_visibility
+   */
+  visibleProduct?: Maybe<VisibleProduct>;
+}
+
+/**
+ * A customer object
+ */
+export interface Customer {
+  __typename?: 'Customer';
+  /**
+   * Return the date customer billing address properties
+   */
+  billing?: Maybe<CustomerAddress>;
+  /**
+   * Has customer calculated shipping?
+   */
+  calculatedShipping?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The ID of the customer in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Return the date customer was created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Return the customer&#039;s display name.
+   */
+  displayName?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Customer type and the DownloadableItem type
+   */
+  downloadableItems: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CustomerToDownloadableItemConnectionWhereArgs>;
+  }) => Maybe<CustomerToDownloadableItemConnection>;
+  /**
+   * Return the customer&#039;s email.
+   */
+  email?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Return the customer&#039;s first name.
+   */
+  firstName?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Has calculated shipping?
+   */
+  hasCalculatedShipping?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The globally unique identifier for the customer
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Return the date customer was last updated
+   */
+  isPayingCustomer?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Is customer VAT exempt?
+   */
+  isVatExempt?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Return the customer&#039;s last name.
+   */
+  lastName?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Gets the customers last order.
+   */
+  lastOrder?: Maybe<Order>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Return the date customer was last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Return the number of orders this customer has.
+   */
+  orderCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Customer type and the Order type
+   */
+  orders: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CustomerToOrderConnectionWhereArgs>;
+  }) => Maybe<CustomerToOrderConnection>;
+  /**
+   * Connection between the Customer type and the Refund type
+   */
+  refunds: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<CustomerToRefundConnectionWhereArgs>;
+  }) => Maybe<CustomerToRefundConnection>;
+  /**
+   * Return the customer&#039;s user role.
+   */
+  role?: Maybe<ScalarsEnums['String']>;
+  /**
+   * A JWT token that can be used in future requests to for WooCommerce session identification
+   */
+  sessionToken?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Return the date customer shipping address properties
+   */
+  shipping?: Maybe<CustomerAddress>;
+  /**
+   * Return how much money this customer has spent.
+   */
+  totalSpent?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Return the customer&#039;s username.
+   */
+  username?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * A customer address object
+ */
+export interface CustomerAddress {
+  __typename?: 'CustomerAddress';
+  /**
+   * Address 1
+   */
+  address1?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Address 2
+   */
+  address2?: Maybe<ScalarsEnums['String']>;
+  /**
+   * City
+   */
+  city?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Company
+   */
+  company?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Country
+   */
+  country?: Maybe<ScalarsEnums['CountriesEnum']>;
+  /**
+   * E-mail
+   */
+  email?: Maybe<ScalarsEnums['String']>;
+  /**
+   * First name
+   */
+  firstName?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Last name
+   */
+  lastName?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Phone
+   */
+  phone?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Zip Postal Code
+   */
+  postcode?: Maybe<ScalarsEnums['String']>;
+  /**
+   * State
+   */
+  state?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the Customer type and the DownloadableItem type
+ */
+export interface CustomerToDownloadableItemConnection {
+  __typename?: 'CustomerToDownloadableItemConnection';
+  /**
+   * Edges for the CustomerToDownloadableItemConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CustomerToDownloadableItemConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<DownloadableItem>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CustomerToDownloadableItemConnectionEdge {
+  __typename?: 'CustomerToDownloadableItemConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<DownloadableItem>;
+}
+
+/**
+ * Connection between the Customer type and the Order type
+ */
+export interface CustomerToOrderConnection {
+  __typename?: 'CustomerToOrderConnection';
+  /**
+   * Edges for the CustomerToOrderConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CustomerToOrderConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Order>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CustomerToOrderConnectionEdge {
+  __typename?: 'CustomerToOrderConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Order>;
+}
+
+/**
+ * Connection between the Customer type and the Refund type
+ */
+export interface CustomerToRefundConnection {
+  __typename?: 'CustomerToRefundConnection';
+  /**
+   * Edges for the CustomerToRefundConnection connection
+   */
+  edges?: Maybe<Array<Maybe<CustomerToRefundConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Refund>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface CustomerToRefundConnectionEdge {
+  __typename?: 'CustomerToRefundConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Refund>;
+}
+
+/**
  * Object that can be identified with a Database ID
  */
 export interface DatabaseIdentifier {
   __typename?:
-    | 'Category'
-    | 'Comment'
-    | 'MediaItem'
-    | 'Menu'
-    | 'MenuItem'
-    | 'Page'
-    | 'Post'
-    | 'PostFormat'
-    | 'Tag'
-    | 'User';
+  | 'Category'
+  | 'Comment'
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'MediaItem'
+  | 'Menu'
+  | 'MenuItem'
+  | 'Page'
+  | 'Post'
+  | 'PostFormat'
+  | 'ProductCategory'
+  | 'ProductTag'
+  | 'ProductType'
+  | 'ProductVariation'
+  | 'ShippingClass'
+  | 'SimpleProduct'
+  | 'Tag'
+  | 'User'
+  | 'VariableProduct'
+  | 'VisibleProduct';
   /**
    * The unique identifier stored in the database
    */
@@ -8677,6 +18835,19 @@ export interface DeleteCommentPayload {
 }
 
 /**
+ * The payload for the deleteCoupon mutation
+ */
+export interface DeleteCouponPayload {
+  __typename?: 'DeleteCouponPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  code?: Maybe<ScalarsEnums['String']>;
+  coupon?: Maybe<Coupon>;
+}
+
+/**
  * The payload for the deleteMediaItem mutation
  */
 export interface DeleteMediaItemPayload {
@@ -8693,6 +18864,30 @@ export interface DeleteMediaItemPayload {
    * The mediaItem before it was deleted
    */
   mediaItem?: Maybe<MediaItem>;
+}
+
+/**
+ * The payload for the deleteOrderItems mutation
+ */
+export interface DeleteOrderItemsPayload {
+  __typename?: 'DeleteOrderItemsPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  order?: Maybe<Order>;
+}
+
+/**
+ * The payload for the deleteOrder mutation
+ */
+export interface DeleteOrderPayload {
+  __typename?: 'DeleteOrderPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  order?: Maybe<Order>;
 }
 
 /**
@@ -8753,6 +18948,105 @@ export interface DeletePostPayload {
 }
 
 /**
+ * The payload for the deleteProductCategory mutation
+ */
+export interface DeleteProductCategoryPayload {
+  __typename?: 'DeleteProductCategoryPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The deteted term object
+   */
+  productCategory?: Maybe<ProductCategory>;
+}
+
+/**
+ * The payload for the deleteProductTag mutation
+ */
+export interface DeleteProductTagPayload {
+  __typename?: 'DeleteProductTagPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The deteted term object
+   */
+  productTag?: Maybe<ProductTag>;
+}
+
+/**
+ * The payload for the deleteProductType mutation
+ */
+export interface DeleteProductTypePayload {
+  __typename?: 'DeleteProductTypePayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The deteted term object
+   */
+  productType?: Maybe<ProductType>;
+}
+
+/**
+ * The payload for the deleteReview mutation
+ */
+export interface DeleteReviewPayload {
+  __typename?: 'DeleteReviewPayload';
+  /**
+   * The affected product review ID
+   */
+  affectedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The product rating of the affected product review
+   */
+  rating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * The affected product review
+   */
+  review?: Maybe<Comment>;
+}
+
+/**
+ * The payload for the deleteShippingClass mutation
+ */
+export interface DeleteShippingClassPayload {
+  __typename?: 'DeleteShippingClassPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The deteted term object
+   */
+  shippingClass?: Maybe<ShippingClass>;
+}
+
+/**
  * The payload for the deleteTag mutation
  */
 export interface DeleteTagPayload {
@@ -8791,6 +19085,25 @@ export interface DeleteUserPayload {
 }
 
 /**
+ * The payload for the deleteVisibleProduct mutation
+ */
+export interface DeleteVisibleProductPayload {
+  __typename?: 'DeleteVisibleProductPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The deteted term object
+   */
+  visibleProduct?: Maybe<VisibleProduct>;
+}
+
+/**
  * The discussion setting type
  */
 export interface DiscussionSettings {
@@ -8803,6 +19116,54 @@ export interface DiscussionSettings {
    * Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.
    */
   defaultPingStatus?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * A downloadable item
+ */
+export interface DownloadableItem {
+  __typename?: 'DownloadableItem';
+  /**
+   * The date the downloadable item expires
+   */
+  accessExpires?: Maybe<ScalarsEnums['String']>;
+  /**
+   * ProductDownload of the downloadable item
+   */
+  download?: Maybe<ProductDownload>;
+  /**
+   * Downloadable item unique identifier
+   */
+  downloadId: ScalarsEnums['String'];
+  /**
+   * Number of times the item can be downloaded.
+   */
+  downloadsRemaining?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Name of the downloadable item.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product of downloadable item.
+   */
+  product?: Maybe<Product>;
+  /**
+   * Download URL of the downloadable item.
+   */
+  url?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The payload for the emptyCart mutation
+ */
+export interface EmptyCartPayload {
+  __typename?: 'EmptyCartPayload';
+  cart?: Maybe<Cart>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  deletedCart?: Maybe<Cart>;
 }
 
 /**
@@ -8912,6 +19273,764 @@ export interface EnqueuedStylesheet {
 }
 
 /**
+ * A external product object
+ */
+export interface ExternalProduct {
+  __typename?: 'ExternalProduct';
+  /**
+   * Connection between the Product type and the ProductAttribute type
+   */
+  attributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductAttributeConnection>;
+  /**
+   * Product average count
+   */
+  averageRating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * External product Buy button text
+   */
+  buttonText?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Catalog visibility
+   */
+  catalogVisibility?: Maybe<ScalarsEnums['CatalogVisibilityEnum']>;
+  /**
+   * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
+   */
+  commentCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the comments are open or closed for this particular post.
+   */
+  commentStatus?: Maybe<ScalarsEnums['String']>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums['String'];
+  /**
+   * The ID of the product in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * Date product created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale from
+   */
+  dateOnSaleFrom?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale to
+   */
+  dateOnSaleTo?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ExternalProduct type and the VariationAttribute type
+   */
+  defaultAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ExternalProductToVariationAttributeConnection>;
+  /**
+   * Product description
+   */
+  description: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * External product url
+   */
+  externalUrl?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If the product is featured
+   */
+  featured?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Connection between the Product type and the MediaItem type
+   */
+  galleryImages: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToMediaItemConnectionWhereArgs>;
+  }) => Maybe<ProductToMediaItemConnection>;
+  /**
+   * Connection between the Product type and the GlobalProductAttribute type
+   */
+  globalAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToGlobalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToGlobalProductAttributeConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the product
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Main image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the LocalProductAttribute type
+   */
+  localAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToLocalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToLocalProductAttributeConnection>;
+  /**
+   * Menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date product last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product on sale?
+   */
+  onSale?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Parent product
+   */
+  parent?: Maybe<Product>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Product&#039;s active price
+   */
+  price: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the productCategory type
+   */
+  productCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<ProductToProductCategoryConnection>;
+  /**
+   * Connection between the Product type and the productTag type
+   */
+  productTags: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTagConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTagConnection>;
+  /**
+   * Connection between the Product type and the productType type
+   */
+  productTypes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTypeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTypeConnection>;
+  /**
+   * Can product be purchased?
+   */
+  purchasable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Purchase note
+   */
+  purchaseNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s regular price
+   */
+  regularPrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  related: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductConnectionWhereArgs>;
+  }) => Maybe<ProductToProductConnection>;
+  /**
+   * Product review count
+   */
+  reviewCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the Comment type
+   */
+  reviews: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToCommentConnectionWhereArgs>;
+  }) => Maybe<ProductToCommentConnection>;
+  /**
+   * If reviews are allowed
+   */
+  reviewsAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product&#039;s sale price
+   */
+  salePrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the shippingClass type
+   */
+  shippingClasses: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToShippingClassConnectionWhereArgs>;
+  }) => Maybe<ProductToShippingClassConnection>;
+  /**
+   * Product short description
+   */
+  shortDescription: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product SKU
+   */
+  sku?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product slug
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product status
+   */
+  status?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Tax status
+   */
+  taxStatus?: Maybe<ScalarsEnums['TaxStatusEnum']>;
+  /**
+   * The template assigned to a node of content
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Number total of sales
+   */
+  totalSales?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product type
+   */
+  type?: Maybe<ScalarsEnums['ProductTypesEnum']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  upsell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToUpsellConnectionWhereArgs>;
+  }) => Maybe<ProductToUpsellConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the visibleProduct type
+   */
+  visibleProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<ProductToVisibleProductConnection>;
+}
+
+/**
+ * Connection between the ExternalProduct type and the VariationAttribute type
+ */
+export interface ExternalProductToVariationAttributeConnection {
+  __typename?: 'ExternalProductToVariationAttributeConnection';
+  /**
+   * Edges for the ExternalProductToVariationAttributeConnection connection
+   */
+  edges?: Maybe<
+    Array<Maybe<ExternalProductToVariationAttributeConnectionEdge>>
+  >;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VariationAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ExternalProductToVariationAttributeConnectionEdge {
+  __typename?: 'ExternalProductToVariationAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VariationAttribute>;
+}
+
+/**
+ * a fee line object
+ */
+export interface FeeLine {
+  __typename?: 'FeeLine';
+  /**
+   * Fee amount
+   */
+  amount?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the order item in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Fee name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The Id of the order the order item belongs to.
+   */
+  orderId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Line tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Tax status of fee
+   */
+  taxStatus?: Maybe<ScalarsEnums['TaxStatusEnum']>;
+  /**
+   * Line taxes
+   */
+  taxes?: Maybe<Array<Maybe<OrderItemTax>>>;
+  /**
+   * Line total (after discounts)
+   */
+  total?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line total tax (after discounts)
+   */
+  totalTax?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The payload for the fillCart mutation
+ */
+export interface FillCartPayload {
+  __typename?: 'FillCartPayload';
+  added?: Maybe<Array<Maybe<CartItem>>>;
+  applied?: Maybe<Array<Maybe<AppliedCoupon>>>;
+  cart?: Maybe<Cart>;
+  cartErrors?: Maybe<Array<Maybe<CartError>>>;
+  chosenShippingMethods?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
  * The general setting type
  */
 export interface GeneralSettings {
@@ -8971,6 +20090,820 @@ export interface GenerateAuthorizationCodePayload {
    * Error encountered during user authentication, if any
    */
   error?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * A product attribute object
+ */
+export interface GlobalProductAttribute {
+  __typename?: 'GlobalProductAttribute';
+  /**
+   * Attribute ID
+   */
+  attributeId: ScalarsEnums['Int'];
+  /**
+   * Attribute Global ID
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Attribute label
+   */
+  label: ScalarsEnums['String'];
+  /**
+   * Product attribute name
+   */
+  name: ScalarsEnums['String'];
+  /**
+   * Attribute options
+   */
+  options?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Attribute position
+   */
+  position: ScalarsEnums['Int'];
+  /**
+   * Product attribute scope.
+   */
+  scope: ScalarsEnums['ProductAttributeTypesEnum'];
+  /**
+   * Product attribute slug
+   */
+  slug: ScalarsEnums['String'];
+  /**
+   * Connection between the GlobalProductAttribute type and the TermNode type
+   */
+  terms: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<GlobalProductAttributeToTermNodeConnectionWhereArgs>;
+  }) => Maybe<GlobalProductAttributeToTermNodeConnection>;
+  /**
+   * Is attribute on product variation
+   */
+  variation: ScalarsEnums['Boolean'];
+  /**
+   * Is attribute visible
+   */
+  visible: ScalarsEnums['Boolean'];
+}
+
+/**
+ * Connection between the GlobalProductAttribute type and the TermNode type
+ */
+export interface GlobalProductAttributeToTermNodeConnection {
+  __typename?: 'GlobalProductAttributeToTermNodeConnection';
+  /**
+   * Edges for the GlobalProductAttributeToTermNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<GlobalProductAttributeToTermNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<TermNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface GlobalProductAttributeToTermNodeConnectionEdge {
+  __typename?: 'GlobalProductAttributeToTermNodeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<TermNode>;
+}
+
+/**
+ * A group product object
+ */
+export interface GroupProduct {
+  __typename?: 'GroupProduct';
+  /**
+   * Product&#039;s add to cart button text description
+   */
+  addToCartDescription?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s add to cart button text description
+   */
+  addToCartText?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the ProductAttribute type
+   */
+  attributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductAttributeConnection>;
+  /**
+   * Product average count
+   */
+  averageRating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Catalog visibility
+   */
+  catalogVisibility?: Maybe<ScalarsEnums['CatalogVisibilityEnum']>;
+  /**
+   * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
+   */
+  commentCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the comments are open or closed for this particular post.
+   */
+  commentStatus?: Maybe<ScalarsEnums['String']>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums['String'];
+  /**
+   * The ID of the product in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * Date product created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale from
+   */
+  dateOnSaleFrom?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale to
+   */
+  dateOnSaleTo?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the GroupProduct type and the VariationAttribute type
+   */
+  defaultAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<GroupProductToVariationAttributeConnection>;
+  /**
+   * Product description
+   */
+  description: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * If the product is featured
+   */
+  featured?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Connection between the Product type and the MediaItem type
+   */
+  galleryImages: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToMediaItemConnectionWhereArgs>;
+  }) => Maybe<ProductToMediaItemConnection>;
+  /**
+   * Connection between the Product type and the GlobalProductAttribute type
+   */
+  globalAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToGlobalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToGlobalProductAttributeConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the product
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Main image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the LocalProductAttribute type
+   */
+  localAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToLocalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToLocalProductAttributeConnection>;
+  /**
+   * Menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date product last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product on sale?
+   */
+  onSale?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Parent product
+   */
+  parent?: Maybe<Product>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Products&#039; price range
+   */
+  price?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the productCategory type
+   */
+  productCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<ProductToProductCategoryConnection>;
+  /**
+   * Connection between the Product type and the productTag type
+   */
+  productTags: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTagConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTagConnection>;
+  /**
+   * Connection between the Product type and the productType type
+   */
+  productTypes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTypeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTypeConnection>;
+  /**
+   * Connection between the GroupProduct type and the Product type
+   */
+  products: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<GroupProductToProductConnectionWhereArgs>;
+  }) => Maybe<GroupProductToProductConnection>;
+  /**
+   * Can product be purchased?
+   */
+  purchasable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Purchase note
+   */
+  purchaseNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  related: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductConnectionWhereArgs>;
+  }) => Maybe<ProductToProductConnection>;
+  /**
+   * Product review count
+   */
+  reviewCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the Comment type
+   */
+  reviews: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToCommentConnectionWhereArgs>;
+  }) => Maybe<ProductToCommentConnection>;
+  /**
+   * If reviews are allowed
+   */
+  reviewsAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Product type and the shippingClass type
+   */
+  shippingClasses: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToShippingClassConnectionWhereArgs>;
+  }) => Maybe<ProductToShippingClassConnection>;
+  /**
+   * Product short description
+   */
+  shortDescription: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product SKU
+   */
+  sku?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product slug
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product status
+   */
+  status?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The template assigned to a node of content
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Number total of sales
+   */
+  totalSales?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product type
+   */
+  type?: Maybe<ScalarsEnums['ProductTypesEnum']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  upsell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToUpsellConnectionWhereArgs>;
+  }) => Maybe<ProductToUpsellConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the visibleProduct type
+   */
+  visibleProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<ProductToVisibleProductConnection>;
+}
+
+/**
+ * Connection between the GroupProduct type and the Product type
+ */
+export interface GroupProductToProductConnection {
+  __typename?: 'GroupProductToProductConnection';
+  /**
+   * Edges for the GroupProductToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<GroupProductToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface GroupProductToProductConnectionEdge {
+  __typename?: 'GroupProductToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the GroupProduct type and the VariationAttribute type
+ */
+export interface GroupProductToVariationAttributeConnection {
+  __typename?: 'GroupProductToVariationAttributeConnection';
+  /**
+   * Edges for the GroupProductToVariationAttributeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<GroupProductToVariationAttributeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VariationAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface GroupProductToVariationAttributeConnectionEdge {
+  __typename?: 'GroupProductToVariationAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VariationAttribute>;
 }
 
 /**
@@ -9130,7 +21063,7 @@ export interface HierarchicalContentNodeToParentContentNodeConnectionEdge {
  * Term node with hierarchical (parent/child) relationships
  */
 export interface HierarchicalTermNode {
-  __typename?: 'Category';
+  __typename?: 'Category' | 'ProductCategory';
   /**
    * Database id of the parent node
    */
@@ -9140,6 +21073,155 @@ export interface HierarchicalTermNode {
    */
   parentId?: Maybe<ScalarsEnums['ID']>;
   $on: $HierarchicalTermNode;
+}
+
+/**
+ * a line item object
+ */
+export interface LineItem {
+  __typename?: 'LineItem';
+  /**
+   * The ID of the order item in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Line item&#039;s taxes
+   */
+  itemDownloads?: Maybe<Array<Maybe<ProductDownload>>>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * The Id of the order the order item belongs to.
+   */
+  orderId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the LineItem type and the Product type
+   */
+  product?: Maybe<LineItemToProductConnectionEdge>;
+  /**
+   * Line item&#039;s product ID
+   */
+  productId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Line item&#039;s product quantity
+   */
+  quantity?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Line item&#039;s subtotal
+   */
+  subtotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line item&#039;s subtotal tax
+   */
+  subtotalTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line item&#039;s tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Line item&#039;s taxes
+   */
+  taxStatus?: Maybe<ScalarsEnums['TaxStatusEnum']>;
+  /**
+   * Line item&#039;s taxes
+   */
+  taxes?: Maybe<Array<Maybe<OrderItemTax>>>;
+  /**
+   * Line item&#039;s total
+   */
+  total?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line item&#039;s total tax
+   */
+  totalTax?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the LineItem type and the ProductVariation type
+   */
+  variation?: Maybe<LineItemToProductVariationConnectionEdge>;
+  /**
+   * Line item&#039;s product variation ID
+   */
+  variationId?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * Connection between the LineItem type and the Product type
+ */
+export interface LineItemToProductConnectionEdge {
+  __typename?: 'LineItemToProductConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the LineItem type and the ProductVariation type
+ */
+export interface LineItemToProductVariationConnectionEdge {
+  __typename?: 'LineItemToProductVariationConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<ProductVariation>;
+}
+
+/**
+ * A product attribute object
+ */
+export interface LocalProductAttribute {
+  __typename?: 'LocalProductAttribute';
+  /**
+   * Attribute ID
+   */
+  attributeId: ScalarsEnums['Int'];
+  /**
+   * Attribute Global ID
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Attribute label
+   */
+  label: ScalarsEnums['String'];
+  /**
+   * Attribute name
+   */
+  name: ScalarsEnums['String'];
+  /**
+   * Attribute options
+   */
+  options?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Attribute position
+   */
+  position: ScalarsEnums['Int'];
+  /**
+   * Product attribute scope.
+   */
+  scope: ScalarsEnums['ProductAttributeTypesEnum'];
+  /**
+   * Is attribute on product variation
+   */
+  variation: ScalarsEnums['Boolean'];
+  /**
+   * Is attribute visible
+   */
+  visible: ScalarsEnums['Boolean'];
 }
 
 /**
@@ -9282,6 +21364,9 @@ export interface MediaItem {
      */
     where?: Maybe<MediaItemToCommentConnectionWhereArgs>;
   }) => Maybe<MediaItemToCommentConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the ContentNode type and the ContentType type
@@ -9805,6 +21890,10 @@ export interface MenuItem {
    */
   title?: Maybe<ScalarsEnums['String']>;
   /**
+   * The uri of the resource the menu item links to
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
    * URL or destination of the menu item.
    */
   url?: Maybe<ScalarsEnums['String']>;
@@ -9814,7 +21903,13 @@ export interface MenuItem {
  * Nodes that can be linked to as Menu Items
  */
 export interface MenuItemLinkable {
-  __typename?: 'Category' | 'Page' | 'Post' | 'Tag';
+  __typename?:
+  | 'Category'
+  | 'Page'
+  | 'Post'
+  | 'ProductCategory'
+  | 'ProductTag'
+  | 'Tag';
   /**
    * The unique resource identifier path
    */
@@ -9834,7 +21929,13 @@ export interface MenuItemLinkable {
  * Deprecated in favor of MenuItemLinkeable Interface
  */
 export interface MenuItemObjectUnion {
-  __typename?: 'Category' | 'Page' | 'Post' | 'Tag';
+  __typename?:
+  | 'Category'
+  | 'Page'
+  | 'Post'
+  | 'ProductCategory'
+  | 'ProductTag'
+  | 'Tag';
   $on: $MenuItemObjectUnion;
 }
 
@@ -9929,28 +22030,63 @@ export interface MenuToMenuItemConnectionEdge {
 }
 
 /**
+ * Extra data defined on the WC object
+ */
+export interface MetaData {
+  __typename?: 'MetaData';
+  /**
+   * Meta ID.
+   */
+  id?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Meta key.
+   */
+  key: ScalarsEnums['String'];
+  /**
+   * Meta value.
+   */
+  value?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
  * An object with an ID
  */
 export interface Node {
   __typename?:
-    | 'Category'
-    | 'Comment'
-    | 'CommentAuthor'
-    | 'ContentType'
-    | 'EnqueuedScript'
-    | 'EnqueuedStylesheet'
-    | 'MediaItem'
-    | 'Menu'
-    | 'MenuItem'
-    | 'Page'
-    | 'Plugin'
-    | 'Post'
-    | 'PostFormat'
-    | 'Tag'
-    | 'Taxonomy'
-    | 'Theme'
-    | 'User'
-    | 'UserRole';
+  | 'Category'
+  | 'Comment'
+  | 'CommentAuthor'
+  | 'ContentType'
+  | 'Coupon'
+  | 'Customer'
+  | 'EnqueuedScript'
+  | 'EnqueuedStylesheet'
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'MediaItem'
+  | 'Menu'
+  | 'MenuItem'
+  | 'Order'
+  | 'Page'
+  | 'Plugin'
+  | 'Post'
+  | 'PostFormat'
+  | 'ProductCategory'
+  | 'ProductTag'
+  | 'ProductType'
+  | 'ProductVariation'
+  | 'Refund'
+  | 'ShippingClass'
+  | 'ShippingMethod'
+  | 'SimpleProduct'
+  | 'Tag'
+  | 'TaxRate'
+  | 'Taxonomy'
+  | 'Theme'
+  | 'User'
+  | 'UserRole'
+  | 'VariableProduct'
+  | 'VisibleProduct';
   /**
    * The globally unique ID for the object
    */
@@ -9993,7 +22129,15 @@ export interface NodeWithAuthorToUserConnectionEdge {
  * A node that can have comments associated with it
  */
 export interface NodeWithComments {
-  __typename?: 'MediaItem' | 'Page' | 'Post';
+  __typename?:
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'MediaItem'
+  | 'Order'
+  | 'Page'
+  | 'Post'
+  | 'SimpleProduct'
+  | 'VariableProduct';
   /**
    * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
    */
@@ -10009,7 +22153,13 @@ export interface NodeWithComments {
  * A node that supports the content editor
  */
 export interface NodeWithContentEditor {
-  __typename?: 'Page' | 'Post';
+  __typename?:
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'Page'
+  | 'Post'
+  | 'SimpleProduct'
+  | 'VariableProduct';
   /**
    * The content of the post.
    */
@@ -10043,7 +22193,17 @@ export interface NodeWithExcerpt {
  * A node that can have a featured image set
  */
 export interface NodeWithFeaturedImage {
-  __typename?: 'Page' | 'Post';
+  __typename?:
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'Page'
+  | 'Post'
+  | 'ProductVariation'
+  | 'SimpleProduct'
+  | 'VariableProduct';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the ContentNode type and the ContentType type
@@ -10299,6 +22459,721 @@ export interface NodeWithTrackbacks {
 }
 
 /**
+ * A order object
+ */
+export interface Order {
+  __typename?: 'Order';
+  /**
+   * Order billing properties
+   */
+  billing?: Maybe<CustomerAddress>;
+  /**
+   * Cart hash
+   */
+  cartHash?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Cart tax amount
+   */
+  cartTax: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
+   */
+  commentCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the comments are open or closed for this particular post.
+   */
+  commentStatus?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Order type and the CouponLine type
+   */
+  couponLines: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<OrderToCouponLineConnection>;
+  /**
+   * How order was created
+   */
+  createdVia?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Order currency
+   */
+  currency?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Order customer
+   */
+  customer?: Maybe<Customer>;
+  /**
+   * Customer IP Address
+   */
+  customerIpAddress?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Customer note
+   */
+  customerNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Customer User Agent
+   */
+  customerUserAgent?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the order in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Date order was created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date order was completed
+   */
+  dateCompleted?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date order was paid
+   */
+  datePaid?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Discount tax amount
+   */
+  discountTax: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Discount total amount
+   */
+  discountTotal: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Order type and the DownloadableItem type
+   */
+  downloadableItems: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<OrderToDownloadableItemConnectionWhereArgs>;
+  }) => Maybe<OrderToDownloadableItemConnection>;
+  /**
+   * Connection between the Order type and the FeeLine type
+   */
+  feeLines: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<OrderToFeeLineConnection>;
+  /**
+   * Order has a billing address?
+   */
+  hasBillingAddress?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * If order contains a downloadable product
+   */
+  hasDownloadableItem?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Order has a shipping address?
+   */
+  hasShippingAddress?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The globally unique identifier for the order
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Is product download is permitted
+   */
+  isDownloadPermitted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Order type and the LineItem type
+   */
+  lineItems: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<OrderToLineItemConnection>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date order was last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If order needs payment
+   */
+  needsPayment?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * If order needs processing before it can be completed
+   */
+  needsProcessing?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * If order needs shipping address
+   */
+  needsShippingAddress?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Order key
+   */
+  orderKey?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Order type and the Comment type
+   */
+  orderNotes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<OrderToCommentConnectionWhereArgs>;
+  }) => Maybe<OrderToCommentConnection>;
+  /**
+   * Order number
+   */
+  orderNumber?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Order version
+   */
+  orderVersion?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Parent order
+   */
+  parent?: Maybe<Order>;
+  /**
+   * Payment method
+   */
+  paymentMethod?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Payment method title
+   */
+  paymentMethodTitle?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Prices include taxes?
+   */
+  pricesIncludeTax?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Order type and the Refund type
+   */
+  refunds: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<OrderToRefundConnectionWhereArgs>;
+  }) => Maybe<OrderToRefundConnection>;
+  /**
+   * Order shipping properties
+   */
+  shipping?: Maybe<CustomerAddress>;
+  /**
+   * Order customer
+   */
+  shippingAddressMapUrl?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Order type and the ShippingLine type
+   */
+  shippingLines: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<OrderToShippingLineConnection>;
+  /**
+   * Shipping tax amount
+   */
+  shippingTax: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Shipping total amount
+   */
+  shippingTotal: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Order status
+   */
+  status?: Maybe<ScalarsEnums['OrderStatusEnum']>;
+  /**
+   * Order subtotal
+   */
+  subtotal: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Order type and the TaxLine type
+   */
+  taxLines: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<OrderToTaxLineConnection>;
+  /**
+   * Order grand total
+   */
+  total: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Order taxes
+   */
+  totalTax: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Transaction ID
+   */
+  transactionId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Order item tax statement
+ */
+export interface OrderItemTax {
+  __typename?: 'OrderItemTax';
+  /**
+   * Amount taxed
+   */
+  amount?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Subtotal
+   */
+  subtotal?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Tax line connected to this statement
+   */
+  taxLine?: Maybe<TaxLine>;
+  /**
+   * Order item ID for tax line connected to this statement
+   */
+  taxLineId: ScalarsEnums['Int'];
+  /**
+   * Total
+   */
+  total?: Maybe<ScalarsEnums['Float']>;
+}
+
+/**
+ * Connection between the Order type and the Comment type
+ */
+export interface OrderToCommentConnection {
+  __typename?: 'OrderToCommentConnection';
+  /**
+   * Edges for the OrderToCommentConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToCommentConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Comment>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToCommentConnectionEdge {
+  __typename?: 'OrderToCommentConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is this a customer note?
+   */
+  isCustomerNote?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Comment>;
+}
+
+/**
+ * Connection between the Order type and the CouponLine type
+ */
+export interface OrderToCouponLineConnection {
+  __typename?: 'OrderToCouponLineConnection';
+  /**
+   * Edges for the OrderToCouponLineConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToCouponLineConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<CouponLine>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToCouponLineConnectionEdge {
+  __typename?: 'OrderToCouponLineConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<CouponLine>;
+}
+
+/**
+ * Connection between the Order type and the DownloadableItem type
+ */
+export interface OrderToDownloadableItemConnection {
+  __typename?: 'OrderToDownloadableItemConnection';
+  /**
+   * Edges for the OrderToDownloadableItemConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToDownloadableItemConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<DownloadableItem>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToDownloadableItemConnectionEdge {
+  __typename?: 'OrderToDownloadableItemConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<DownloadableItem>;
+}
+
+/**
+ * Connection between the Order type and the FeeLine type
+ */
+export interface OrderToFeeLineConnection {
+  __typename?: 'OrderToFeeLineConnection';
+  /**
+   * Edges for the OrderToFeeLineConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToFeeLineConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<FeeLine>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToFeeLineConnectionEdge {
+  __typename?: 'OrderToFeeLineConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<FeeLine>;
+}
+
+/**
+ * Connection between the Order type and the LineItem type
+ */
+export interface OrderToLineItemConnection {
+  __typename?: 'OrderToLineItemConnection';
+  /**
+   * Edges for the OrderToLineItemConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToLineItemConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<LineItem>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToLineItemConnectionEdge {
+  __typename?: 'OrderToLineItemConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<LineItem>;
+}
+
+/**
+ * Connection between the Order type and the Refund type
+ */
+export interface OrderToRefundConnection {
+  __typename?: 'OrderToRefundConnection';
+  /**
+   * Edges for the OrderToRefundConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToRefundConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Refund>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToRefundConnectionEdge {
+  __typename?: 'OrderToRefundConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Refund>;
+}
+
+/**
+ * Connection between the Order type and the ShippingLine type
+ */
+export interface OrderToShippingLineConnection {
+  __typename?: 'OrderToShippingLineConnection';
+  /**
+   * Edges for the OrderToShippingLineConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToShippingLineConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ShippingLine>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToShippingLineConnectionEdge {
+  __typename?: 'OrderToShippingLineConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ShippingLine>;
+}
+
+/**
+ * Connection between the Order type and the TaxLine type
+ */
+export interface OrderToTaxLineConnection {
+  __typename?: 'OrderToTaxLineConnection';
+  /**
+   * Edges for the OrderToTaxLineConnection connection
+   */
+  edges?: Maybe<Array<Maybe<OrderToTaxLineConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<TaxLine>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface OrderToTaxLineConnectionEdge {
+  __typename?: 'OrderToTaxLineConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<TaxLine>;
+}
+
+/**
  * The page type
  */
 export interface Page {
@@ -10398,6 +23273,9 @@ export interface Page {
      */
     where?: Maybe<PageToCommentConnectionWhereArgs>;
   }) => Maybe<PageToCommentConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * The content of the post.
@@ -10720,6 +23598,29 @@ export interface PageToRevisionConnectionEdge {
 }
 
 /**
+ * A payment gateway object
+ */
+export interface PaymentGateway {
+  __typename?: 'PaymentGateway';
+  /**
+   * gateway&#039;s description
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * gateway&#039;s icon
+   */
+  icon?: Maybe<ScalarsEnums['String']>;
+  /**
+   * gateway&#039;s title
+   */
+  id: ScalarsEnums['String'];
+  /**
+   * gateway&#039;s title
+   */
+  title?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
  * An plugin object
  */
 export interface Plugin {
@@ -10837,6 +23738,9 @@ export interface Post {
      */
     where?: Maybe<PostToCommentConnectionWhereArgs>;
   }) => Maybe<PostToCommentConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * The content of the post.
@@ -11156,6 +24060,9 @@ export interface Post {
  */
 export interface PostFormat {
   __typename?: 'PostFormat';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the postFormat type and the ContentNode type
@@ -11719,6 +24626,2315 @@ export interface PostTypeLabelDetails {
 }
 
 /**
+ * Product object
+ */
+export interface Product {
+  __typename?:
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'SimpleProduct'
+  | 'VariableProduct';
+  /**
+   * Connection between the Product type and the ProductAttribute type
+   */
+  attributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductAttributeConnection>;
+  /**
+   * Product average count
+   */
+  averageRating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Catalog visibility
+   */
+  catalogVisibility?: Maybe<ScalarsEnums['CatalogVisibilityEnum']>;
+  /**
+   * The ID of the product in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * Date product created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale from
+   */
+  dateOnSaleFrom?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale to
+   */
+  dateOnSaleTo?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product description
+   */
+  description: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * If the product is featured
+   */
+  featured?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Product type and the MediaItem type
+   */
+  galleryImages: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToMediaItemConnectionWhereArgs>;
+  }) => Maybe<ProductToMediaItemConnection>;
+  /**
+   * Connection between the Product type and the GlobalProductAttribute type
+   */
+  globalAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToGlobalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToGlobalProductAttributeConnection>;
+  /**
+   * The globally unique identifier for the product
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Main image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the LocalProductAttribute type
+   */
+  localAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToLocalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToLocalProductAttributeConnection>;
+  /**
+   * Menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date product last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product on sale?
+   */
+  onSale?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Parent product
+   */
+  parent?: Maybe<Product>;
+  /**
+   * Connection between the Product type and the productCategory type
+   */
+  productCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<ProductToProductCategoryConnection>;
+  /**
+   * Connection between the Product type and the productTag type
+   */
+  productTags: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTagConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTagConnection>;
+  /**
+   * Connection between the Product type and the productType type
+   */
+  productTypes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTypeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTypeConnection>;
+  /**
+   * Can product be purchased?
+   */
+  purchasable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Purchase note
+   */
+  purchaseNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  related: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductConnectionWhereArgs>;
+  }) => Maybe<ProductToProductConnection>;
+  /**
+   * Product review count
+   */
+  reviewCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the Comment type
+   */
+  reviews: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToCommentConnectionWhereArgs>;
+  }) => Maybe<ProductToCommentConnection>;
+  /**
+   * If reviews are allowed
+   */
+  reviewsAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Product type and the shippingClass type
+   */
+  shippingClasses: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToShippingClassConnectionWhereArgs>;
+  }) => Maybe<ProductToShippingClassConnection>;
+  /**
+   * Product short description
+   */
+  shortDescription: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product SKU
+   */
+  sku?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product slug
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product status
+   */
+  status?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Number total of sales
+   */
+  totalSales?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product type
+   */
+  type?: Maybe<ScalarsEnums['ProductTypesEnum']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  upsell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToUpsellConnectionWhereArgs>;
+  }) => Maybe<ProductToUpsellConnection>;
+  /**
+   * Connection between the Product type and the visibleProduct type
+   */
+  visibleProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<ProductToVisibleProductConnection>;
+  $on: $Product;
+}
+
+/**
+ * Product attribute object
+ */
+export interface ProductAttribute {
+  __typename?: 'GlobalProductAttribute' | 'LocalProductAttribute';
+  /**
+   * Attribute ID
+   */
+  attributeId: ScalarsEnums['Int'];
+  /**
+   * Attribute Global ID
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Attribute label
+   */
+  label: ScalarsEnums['String'];
+  /**
+   * Attribute name
+   */
+  name: ScalarsEnums['String'];
+  /**
+   * Attribute options
+   */
+  options?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Attribute position
+   */
+  position: ScalarsEnums['Int'];
+  /**
+   * Product attribute scope.
+   */
+  scope: ScalarsEnums['ProductAttributeTypesEnum'];
+  /**
+   * Is attribute on product variation
+   */
+  variation: ScalarsEnums['Boolean'];
+  /**
+   * Is attribute visible
+   */
+  visible: ScalarsEnums['Boolean'];
+  $on: $ProductAttribute;
+}
+
+/**
+ * A simple product attribute object
+ */
+export interface ProductAttributeOutput {
+  __typename?: 'ProductAttributeOutput';
+  /**
+   * Attribute name.
+   */
+  attributeName?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Attribute value.
+   */
+  attributeValue?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The productCategory type
+ */
+export interface ProductCategory {
+  __typename?: 'ProductCategory';
+  /**
+   * The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root).
+   */
+  ancestors: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ProductCategoryToAncestorsProductCategoryConnection>;
+  /**
+   * Connection between the productCategory type and the productCategory type
+   */
+  children: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductCategoryToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<ProductCategoryToProductCategoryConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the productCategory type and the ContentNode type
+   */
+  contentNodes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductCategoryToContentNodeConnectionWhereArgs>;
+  }) => Maybe<ProductCategoryToContentNodeConnection>;
+  /**
+   * The number of objects connected to the object
+   */
+  count?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * The description of the object
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product category display type
+   */
+  display?: Maybe<ScalarsEnums['ProductCategoryDisplay']>;
+  /**
+   * Connection between the TermNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the TermNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Product category image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The link to the term
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product category menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The human friendly name of the object.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the productCategory type and the productCategory type
+   */
+  parent?: Maybe<ProductCategoryToParentProductCategoryConnectionEdge>;
+  /**
+   * Database id of the parent node
+   */
+  parentDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The globally unique identifier of the parent node.
+   */
+  parentId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  productCategoryId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the ProductCategory type and the Product type
+   */
+  products: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductCategoryToProductConnectionWhereArgs>;
+  }) => Maybe<ProductCategoryToProductConnection>;
+  /**
+   * An alphanumeric identifier for the object unique to its type.
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the productCategory type and the Taxonomy type
+   */
+  taxonomy?: Maybe<ProductCategoryToTaxonomyConnectionEdge>;
+  /**
+   * The name of the taxonomy that the object is associated with
+   */
+  taxonomyName?: Maybe<ScalarsEnums['String']>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * The ID of the term group that this term object belongs to
+   */
+  termGroupId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The taxonomy ID that the object is associated with
+   */
+  termTaxonomyId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the productCategory type and the productCategory type
+ */
+export interface ProductCategoryToAncestorsProductCategoryConnection {
+  __typename?: 'ProductCategoryToAncestorsProductCategoryConnection';
+  /**
+   * Edges for the ProductCategoryToAncestorsProductCategoryConnection connection
+   */
+  edges?: Maybe<
+    Array<Maybe<ProductCategoryToAncestorsProductCategoryConnectionEdge>>
+  >;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductCategoryToAncestorsProductCategoryConnectionEdge {
+  __typename?: 'ProductCategoryToAncestorsProductCategoryConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the productCategory type and the ContentNode type
+ */
+export interface ProductCategoryToContentNodeConnection {
+  __typename?: 'ProductCategoryToContentNodeConnection';
+  /**
+   * Edges for the ProductCategoryToContentNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductCategoryToContentNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductCategoryToContentNodeConnectionEdge {
+  __typename?: 'ProductCategoryToContentNodeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ContentNode>;
+}
+
+/**
+ * Connection between the productCategory type and the productCategory type
+ */
+export interface ProductCategoryToParentProductCategoryConnectionEdge {
+  __typename?: 'ProductCategoryToParentProductCategoryConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the productCategory type and the productCategory type
+ */
+export interface ProductCategoryToProductCategoryConnection {
+  __typename?: 'ProductCategoryToProductCategoryConnection';
+  /**
+   * Edges for the ProductCategoryToProductCategoryConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductCategoryToProductCategoryConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductCategoryToProductCategoryConnectionEdge {
+  __typename?: 'ProductCategoryToProductCategoryConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the ProductCategory type and the Product type
+ */
+export interface ProductCategoryToProductConnection {
+  __typename?: 'ProductCategoryToProductConnection';
+  /**
+   * Edges for the ProductCategoryToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductCategoryToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductCategoryToProductConnectionEdge {
+  __typename?: 'ProductCategoryToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the productCategory type and the Taxonomy type
+ */
+export interface ProductCategoryToTaxonomyConnectionEdge {
+  __typename?: 'ProductCategoryToTaxonomyConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Taxonomy>;
+}
+
+/**
+ * A product object
+ */
+export interface ProductDownload {
+  __typename?: 'ProductDownload';
+  /**
+   * Is file allowed
+   */
+  allowedFileType?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product download ID
+   */
+  downloadId: ScalarsEnums['String'];
+  /**
+   * Download file
+   */
+  file?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Validate file exists
+   */
+  fileExists?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * File extension
+   */
+  fileExt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Type of file path set
+   */
+  filePathType?: Maybe<ScalarsEnums['String']>;
+  /**
+   * File type
+   */
+  fileType?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product download name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The productTag type
+ */
+export interface ProductTag {
+  __typename?: 'ProductTag';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the productTag type and the ContentNode type
+   */
+  contentNodes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductTagToContentNodeConnectionWhereArgs>;
+  }) => Maybe<ProductTagToContentNodeConnection>;
+  /**
+   * The number of objects connected to the object
+   */
+  count?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * The description of the object
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the TermNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the TermNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The link to the term
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The human friendly name of the object.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  productTagId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the ProductTag type and the Product type
+   */
+  products: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductTagToProductConnectionWhereArgs>;
+  }) => Maybe<ProductTagToProductConnection>;
+  /**
+   * An alphanumeric identifier for the object unique to its type.
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the productTag type and the Taxonomy type
+   */
+  taxonomy?: Maybe<ProductTagToTaxonomyConnectionEdge>;
+  /**
+   * The name of the taxonomy that the object is associated with
+   */
+  taxonomyName?: Maybe<ScalarsEnums['String']>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * The ID of the term group that this term object belongs to
+   */
+  termGroupId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The taxonomy ID that the object is associated with
+   */
+  termTaxonomyId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the productTag type and the ContentNode type
+ */
+export interface ProductTagToContentNodeConnection {
+  __typename?: 'ProductTagToContentNodeConnection';
+  /**
+   * Edges for the ProductTagToContentNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductTagToContentNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductTagToContentNodeConnectionEdge {
+  __typename?: 'ProductTagToContentNodeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ContentNode>;
+}
+
+/**
+ * Connection between the ProductTag type and the Product type
+ */
+export interface ProductTagToProductConnection {
+  __typename?: 'ProductTagToProductConnection';
+  /**
+   * Edges for the ProductTagToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductTagToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductTagToProductConnectionEdge {
+  __typename?: 'ProductTagToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the productTag type and the Taxonomy type
+ */
+export interface ProductTagToTaxonomyConnectionEdge {
+  __typename?: 'ProductTagToTaxonomyConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Taxonomy>;
+}
+
+/**
+ * Connection between the Product type and the Comment type
+ */
+export interface ProductToCommentConnection {
+  __typename?: 'ProductToCommentConnection';
+  /**
+   * Average review rating for this product.
+   */
+  averageRating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Edges for the ProductToCommentConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToCommentConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Comment>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToCommentConnectionEdge {
+  __typename?: 'ProductToCommentConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Comment>;
+  /**
+   * Review rating
+   */
+  rating?: Maybe<ScalarsEnums['Float']>;
+}
+
+/**
+ * Connection between the Product type and the GlobalProductAttribute type
+ */
+export interface ProductToGlobalProductAttributeConnection {
+  __typename?: 'ProductToGlobalProductAttributeConnection';
+  /**
+   * Edges for the ProductToGlobalProductAttributeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToGlobalProductAttributeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<GlobalProductAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToGlobalProductAttributeConnectionEdge {
+  __typename?: 'ProductToGlobalProductAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<GlobalProductAttribute>;
+}
+
+/**
+ * Connection between the Product type and the LocalProductAttribute type
+ */
+export interface ProductToLocalProductAttributeConnection {
+  __typename?: 'ProductToLocalProductAttributeConnection';
+  /**
+   * Edges for the ProductToLocalProductAttributeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToLocalProductAttributeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<LocalProductAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToLocalProductAttributeConnectionEdge {
+  __typename?: 'ProductToLocalProductAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<LocalProductAttribute>;
+}
+
+/**
+ * Connection between the Product type and the MediaItem type
+ */
+export interface ProductToMediaItemConnection {
+  __typename?: 'ProductToMediaItemConnection';
+  /**
+   * Edges for the ProductToMediaItemConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToMediaItemConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<MediaItem>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToMediaItemConnectionEdge {
+  __typename?: 'ProductToMediaItemConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<MediaItem>;
+}
+
+/**
+ * Connection between the Product type and the ProductAttribute type
+ */
+export interface ProductToProductAttributeConnection {
+  __typename?: 'ProductToProductAttributeConnection';
+  /**
+   * Edges for the ProductToProductAttributeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToProductAttributeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToProductAttributeConnectionEdge {
+  __typename?: 'ProductToProductAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductAttribute>;
+}
+
+/**
+ * Connection between the Product type and the productCategory type
+ */
+export interface ProductToProductCategoryConnection {
+  __typename?: 'ProductToProductCategoryConnection';
+  /**
+   * Edges for the ProductToProductCategoryConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToProductCategoryConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToProductCategoryConnectionEdge {
+  __typename?: 'ProductToProductCategoryConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the Product type and the Product type
+ */
+export interface ProductToProductConnection {
+  __typename?: 'ProductToProductConnection';
+  /**
+   * Edges for the ProductToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToProductConnectionEdge {
+  __typename?: 'ProductToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the Product type and the productTag type
+ */
+export interface ProductToProductTagConnection {
+  __typename?: 'ProductToProductTagConnection';
+  /**
+   * Edges for the ProductToProductTagConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToProductTagConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductTag>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToProductTagConnectionEdge {
+  __typename?: 'ProductToProductTagConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductTag>;
+}
+
+/**
+ * Connection between the Product type and the productType type
+ */
+export interface ProductToProductTypeConnection {
+  __typename?: 'ProductToProductTypeConnection';
+  /**
+   * Edges for the ProductToProductTypeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToProductTypeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductType>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToProductTypeConnectionEdge {
+  __typename?: 'ProductToProductTypeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductType>;
+}
+
+/**
+ * Connection between the Product type and the shippingClass type
+ */
+export interface ProductToShippingClassConnection {
+  __typename?: 'ProductToShippingClassConnection';
+  /**
+   * Edges for the ProductToShippingClassConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToShippingClassConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ShippingClass>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToShippingClassConnectionEdge {
+  __typename?: 'ProductToShippingClassConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ShippingClass>;
+}
+
+/**
+ * Connection between the Product type and the Product type
+ */
+export interface ProductToUpsellConnection {
+  __typename?: 'ProductToUpsellConnection';
+  /**
+   * Edges for the ProductToUpsellConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToUpsellConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToUpsellConnectionEdge {
+  __typename?: 'ProductToUpsellConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the Product type and the visibleProduct type
+ */
+export interface ProductToVisibleProductConnection {
+  __typename?: 'ProductToVisibleProductConnection';
+  /**
+   * Edges for the ProductToVisibleProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductToVisibleProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VisibleProduct>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductToVisibleProductConnectionEdge {
+  __typename?: 'ProductToVisibleProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VisibleProduct>;
+}
+
+/**
+ * The productType type
+ */
+export interface ProductType {
+  __typename?: 'ProductType';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the productType type and the ContentNode type
+   */
+  contentNodes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductTypeToContentNodeConnectionWhereArgs>;
+  }) => Maybe<ProductTypeToContentNodeConnection>;
+  /**
+   * The number of objects connected to the object
+   */
+  count?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * The description of the object
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the TermNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the TermNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The link to the term
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The human friendly name of the object.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  productTypeId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * An alphanumeric identifier for the object unique to its type.
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the productType type and the Taxonomy type
+   */
+  taxonomy?: Maybe<ProductTypeToTaxonomyConnectionEdge>;
+  /**
+   * The name of the taxonomy that the object is associated with
+   */
+  taxonomyName?: Maybe<ScalarsEnums['String']>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * The ID of the term group that this term object belongs to
+   */
+  termGroupId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The taxonomy ID that the object is associated with
+   */
+  termTaxonomyId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the productType type and the ContentNode type
+ */
+export interface ProductTypeToContentNodeConnection {
+  __typename?: 'ProductTypeToContentNodeConnection';
+  /**
+   * Edges for the ProductTypeToContentNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductTypeToContentNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductTypeToContentNodeConnectionEdge {
+  __typename?: 'ProductTypeToContentNodeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ContentNode>;
+}
+
+/**
+ * Connection between the productType type and the Taxonomy type
+ */
+export interface ProductTypeToTaxonomyConnectionEdge {
+  __typename?: 'ProductTypeToTaxonomyConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Taxonomy>;
+}
+
+/**
+ * A product variation object
+ */
+export interface ProductVariation {
+  __typename?: 'ProductVariation';
+  /**
+   * Connection between the ProductVariation type and the VariationAttribute type
+   */
+  attributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ProductVariationToVariationAttributeConnection>;
+  /**
+   * Product variation backorders
+   */
+  backorders?: Maybe<ScalarsEnums['BackordersEnum']>;
+  /**
+   * Can product be backordered?
+   */
+  backordersAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product variation catalog visibility
+   */
+  catalogVisibility?: Maybe<ScalarsEnums['CatalogVisibilityEnum']>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums['String'];
+  /**
+   * The ID of the refund in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * Date variation created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale from
+   */
+  dateOnSaleFrom?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale to
+   */
+  dateOnSaleTo?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product description
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Download expiry
+   */
+  downloadExpiry?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Download limit
+   */
+  downloadLimit?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Is downloadable?
+   */
+  downloadable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product downloads
+   */
+  downloads?: Maybe<Array<Maybe<ProductDownload>>>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Does product variation have any visible attributes
+   */
+  hasAttributes?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product variation height
+   */
+  height?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the product variation
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Product variation main image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * Product variation length
+   */
+  length?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * if/how product variation stock is managed
+   */
+  manageStock?: Maybe<ScalarsEnums['ManageStockEnum']>;
+  /**
+   * Menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date variation last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is variation on sale?
+   */
+  onSale?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * The parent of the node. The parent object can be of various types
+   */
+  parent?: Maybe<ProductVariationToVariableProductConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Product variation&#039;s active price
+   */
+  price: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * If product variation can be bought
+   */
+  purchasable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product variation purchase_note
+   */
+  purchaseNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product variation&#039;s regular price
+   */
+  regularPrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product variation&#039;s sale price
+   */
+  salePrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product variation shipping class
+   */
+  shippingClass?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ProductVariation type and the shippingClass type
+   */
+  shippingClasses: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductVariationToShippingClassConnectionWhereArgs>;
+  }) => Maybe<ProductVariationToShippingClassConnection>;
+  /**
+   * Product variation SKU (Stock-keeping unit)
+   */
+  sku?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Variation status
+   */
+  status?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product variation stock quantity
+   */
+  stockQuantity?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product stock status
+   */
+  stockStatus?: Maybe<ScalarsEnums['StockStatusEnum']>;
+  /**
+   * Product variation tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Tax status
+   */
+  taxStatus?: Maybe<ScalarsEnums['TaxStatusEnum']>;
+  /**
+   * The template assigned to a node of content
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Product type
+   */
+  type?: Maybe<ScalarsEnums['ProductTypesEnum']>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product virtual?
+   */
+  virtual?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the ProductVariation type and the visibleProduct type
+   */
+  visibleProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductVariationToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<ProductVariationToVisibleProductConnection>;
+  /**
+   * Product variation weight
+   */
+  weight?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product variation width
+   */
+  width?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the ProductVariation type and the shippingClass type
+ */
+export interface ProductVariationToShippingClassConnection {
+  __typename?: 'ProductVariationToShippingClassConnection';
+  /**
+   * Edges for the ProductVariationToShippingClassConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductVariationToShippingClassConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ShippingClass>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductVariationToShippingClassConnectionEdge {
+  __typename?: 'ProductVariationToShippingClassConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ShippingClass>;
+}
+
+/**
+ * Connection between the ProductVariation type and the VariableProduct type
+ */
+export interface ProductVariationToVariableProductConnectionEdge {
+  __typename?: 'ProductVariationToVariableProductConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<VariableProduct>;
+}
+
+/**
+ * Connection between the ProductVariation type and the VariationAttribute type
+ */
+export interface ProductVariationToVariationAttributeConnection {
+  __typename?: 'ProductVariationToVariationAttributeConnection';
+  /**
+   * Edges for the ProductVariationToVariationAttributeConnection connection
+   */
+  edges?: Maybe<
+    Array<Maybe<ProductVariationToVariationAttributeConnectionEdge>>
+  >;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VariationAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductVariationToVariationAttributeConnectionEdge {
+  __typename?: 'ProductVariationToVariationAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VariationAttribute>;
+}
+
+/**
+ * Connection between the ProductVariation type and the visibleProduct type
+ */
+export interface ProductVariationToVisibleProductConnection {
+  __typename?: 'ProductVariationToVisibleProductConnection';
+  /**
+   * Edges for the ProductVariationToVisibleProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ProductVariationToVisibleProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VisibleProduct>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ProductVariationToVisibleProductConnectionEdge {
+  __typename?: 'ProductVariationToVisibleProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VisibleProduct>;
+}
+
+/**
  * The reading setting type
  */
 export interface ReadingSettings {
@@ -11727,6 +26943,71 @@ export interface ReadingSettings {
    * Blog pages show at most.
    */
   postsPerPage?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * A refund object
+ */
+export interface Refund {
+  __typename?: 'Refund';
+  /**
+   * Refunded amount
+   */
+  amount?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * The ID of the refund in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The date of the refund
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the refund
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Reason for refund
+   */
+  reason?: Maybe<ScalarsEnums['String']>;
+  /**
+   * User who completed the refund
+   */
+  refundedBy?: Maybe<User>;
+  /**
+   * A title for the new post type
+   */
+  title?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The payload for the registerCustomer mutation
+ */
+export interface RegisterCustomerPayload {
+  __typename?: 'RegisterCustomerPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  customer?: Maybe<Customer>;
+  viewer?: Maybe<User>;
 }
 
 /**
@@ -11745,6 +27026,31 @@ export interface RegisterUserPayload {
 }
 
 /**
+ * The payload for the removeCoupons mutation
+ */
+export interface RemoveCouponsPayload {
+  __typename?: 'RemoveCouponsPayload';
+  cart?: Maybe<Cart>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The payload for the removeItemsFromCart mutation
+ */
+export interface RemoveItemsFromCartPayload {
+  __typename?: 'RemoveItemsFromCartPayload';
+  cart?: Maybe<Cart>;
+  cartItems?: Maybe<Array<Maybe<CartItem>>>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
  * The payload for the resetUserPassword mutation
  */
 export interface ResetUserPasswordPayload {
@@ -11757,6 +27063,19 @@ export interface ResetUserPasswordPayload {
    * The User object mutation type.
    */
   user?: Maybe<User>;
+}
+
+/**
+ * The payload for the restoreCartItems mutation
+ */
+export interface RestoreCartItemsPayload {
+  __typename?: 'RestoreCartItemsPayload';
+  cart?: Maybe<Cart>;
+  cartItems?: Maybe<Array<Maybe<CartItem>>>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
 }
 
 /**
@@ -11776,6 +27095,29 @@ export interface RestoreCommentPayload {
    * The ID of the restored comment
    */
   restoredId?: Maybe<ScalarsEnums['ID']>;
+}
+
+/**
+ * The payload for the restoreReview mutation
+ */
+export interface RestoreReviewPayload {
+  __typename?: 'RestoreReviewPayload';
+  /**
+   * The affected product review ID
+   */
+  affectedId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The product rating of the affected product review
+   */
+  rating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * The affected product review
+   */
+  review?: Maybe<Comment>;
 }
 
 /**
@@ -11949,6 +27291,74 @@ export interface RootQueryToContentTypeConnectionEdge {
 }
 
 /**
+ * Connection between the RootQuery type and the Coupon type
+ */
+export interface RootQueryToCouponConnection {
+  __typename?: 'RootQueryToCouponConnection';
+  /**
+   * Edges for the RootQueryToCouponConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToCouponConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Coupon>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToCouponConnectionEdge {
+  __typename?: 'RootQueryToCouponConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Coupon>;
+}
+
+/**
+ * Connection between the RootQuery type and the Customer type
+ */
+export interface RootQueryToCustomerConnection {
+  __typename?: 'RootQueryToCustomerConnection';
+  /**
+   * Edges for the RootQueryToCustomerConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToCustomerConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Customer>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToCustomerConnectionEdge {
+  __typename?: 'RootQueryToCustomerConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Customer>;
+}
+
+/**
  * Connection between the RootQuery type and the EnqueuedScript type
  */
 export interface RootQueryToEnqueuedScriptConnection {
@@ -12119,6 +27529,40 @@ export interface RootQueryToMenuItemConnectionEdge {
 }
 
 /**
+ * Connection between the RootQuery type and the Order type
+ */
+export interface RootQueryToOrderConnection {
+  __typename?: 'RootQueryToOrderConnection';
+  /**
+   * Edges for the RootQueryToOrderConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToOrderConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Order>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToOrderConnectionEdge {
+  __typename?: 'RootQueryToOrderConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Order>;
+}
+
+/**
  * Connection between the RootQuery type and the page type
  */
 export interface RootQueryToPageConnection {
@@ -12150,6 +27594,40 @@ export interface RootQueryToPageConnectionEdge {
    * The item at the end of the edge
    */
   node?: Maybe<Page>;
+}
+
+/**
+ * Connection between the RootQuery type and the PaymentGateway type
+ */
+export interface RootQueryToPaymentGatewayConnection {
+  __typename?: 'RootQueryToPaymentGatewayConnection';
+  /**
+   * Edges for the RootQueryToPaymentGatewayConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToPaymentGatewayConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<PaymentGateway>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToPaymentGatewayConnectionEdge {
+  __typename?: 'RootQueryToPaymentGatewayConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<PaymentGateway>;
 }
 
 /**
@@ -12255,6 +27733,244 @@ export interface RootQueryToPostFormatConnectionEdge {
 }
 
 /**
+ * Connection between the RootQuery type and the productCategory type
+ */
+export interface RootQueryToProductCategoryConnection {
+  __typename?: 'RootQueryToProductCategoryConnection';
+  /**
+   * Edges for the RootQueryToProductCategoryConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToProductCategoryConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToProductCategoryConnectionEdge {
+  __typename?: 'RootQueryToProductCategoryConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductCategory>;
+}
+
+/**
+ * Connection between the RootQuery type and the Product type
+ */
+export interface RootQueryToProductConnection {
+  __typename?: 'RootQueryToProductConnection';
+  /**
+   * Edges for the RootQueryToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToProductConnectionEdge {
+  __typename?: 'RootQueryToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the RootQuery type and the productTag type
+ */
+export interface RootQueryToProductTagConnection {
+  __typename?: 'RootQueryToProductTagConnection';
+  /**
+   * Edges for the RootQueryToProductTagConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToProductTagConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductTag>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToProductTagConnectionEdge {
+  __typename?: 'RootQueryToProductTagConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductTag>;
+}
+
+/**
+ * Connection between the RootQuery type and the productType type
+ */
+export interface RootQueryToProductTypeConnection {
+  __typename?: 'RootQueryToProductTypeConnection';
+  /**
+   * Edges for the RootQueryToProductTypeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToProductTypeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductType>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToProductTypeConnectionEdge {
+  __typename?: 'RootQueryToProductTypeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductType>;
+}
+
+/**
+ * Connection between the RootQuery type and the Refund type
+ */
+export interface RootQueryToRefundConnection {
+  __typename?: 'RootQueryToRefundConnection';
+  /**
+   * Edges for the RootQueryToRefundConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToRefundConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Refund>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToRefundConnectionEdge {
+  __typename?: 'RootQueryToRefundConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Refund>;
+}
+
+/**
+ * Connection between the RootQuery type and the shippingClass type
+ */
+export interface RootQueryToShippingClassConnection {
+  __typename?: 'RootQueryToShippingClassConnection';
+  /**
+   * Edges for the RootQueryToShippingClassConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToShippingClassConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ShippingClass>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToShippingClassConnectionEdge {
+  __typename?: 'RootQueryToShippingClassConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ShippingClass>;
+}
+
+/**
+ * Connection between the RootQuery type and the ShippingMethod type
+ */
+export interface RootQueryToShippingMethodConnection {
+  __typename?: 'RootQueryToShippingMethodConnection';
+  /**
+   * Edges for the RootQueryToShippingMethodConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToShippingMethodConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ShippingMethod>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToShippingMethodConnectionEdge {
+  __typename?: 'RootQueryToShippingMethodConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ShippingMethod>;
+}
+
+/**
  * Connection between the RootQuery type and the tag type
  */
 export interface RootQueryToTagConnection {
@@ -12286,6 +28002,40 @@ export interface RootQueryToTagConnectionEdge {
    * The item at the end of the edge
    */
   node?: Maybe<Tag>;
+}
+
+/**
+ * Connection between the RootQuery type and the TaxRate type
+ */
+export interface RootQueryToTaxRateConnection {
+  __typename?: 'RootQueryToTaxRateConnection';
+  /**
+   * Edges for the RootQueryToTaxRateConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToTaxRateConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<TaxRate>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToTaxRateConnectionEdge {
+  __typename?: 'RootQueryToTaxRateConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<TaxRate>;
 }
 
 /**
@@ -12459,6 +28209,40 @@ export interface RootQueryToUserRoleConnectionEdge {
 }
 
 /**
+ * Connection between the RootQuery type and the visibleProduct type
+ */
+export interface RootQueryToVisibleProductConnection {
+  __typename?: 'RootQueryToVisibleProductConnection';
+  /**
+   * Edges for the RootQueryToVisibleProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToVisibleProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VisibleProduct>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToVisibleProductConnectionEdge {
+  __typename?: 'RootQueryToVisibleProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VisibleProduct>;
+}
+
+/**
  * The payload for the sendPasswordResetEmail mutation
  */
 export interface SendPasswordResetEmailPayload {
@@ -12541,10 +28325,1145 @@ export interface Settings {
 }
 
 /**
+ * The shippingClass type
+ */
+export interface ShippingClass {
+  __typename?: 'ShippingClass';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the shippingClass type and the ContentNode type
+   */
+  contentNodes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ShippingClassToContentNodeConnectionWhereArgs>;
+  }) => Maybe<ShippingClassToContentNodeConnection>;
+  /**
+   * The number of objects connected to the object
+   */
+  count?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * The description of the object
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the TermNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the TermNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The link to the term
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The human friendly name of the object.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  shippingClassId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * An alphanumeric identifier for the object unique to its type.
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the shippingClass type and the Taxonomy type
+   */
+  taxonomy?: Maybe<ShippingClassToTaxonomyConnectionEdge>;
+  /**
+   * The name of the taxonomy that the object is associated with
+   */
+  taxonomyName?: Maybe<ScalarsEnums['String']>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * The ID of the term group that this term object belongs to
+   */
+  termGroupId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The taxonomy ID that the object is associated with
+   */
+  termTaxonomyId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the shippingClass type and the ContentNode type
+ */
+export interface ShippingClassToContentNodeConnection {
+  __typename?: 'ShippingClassToContentNodeConnection';
+  /**
+   * Edges for the ShippingClassToContentNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<ShippingClassToContentNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface ShippingClassToContentNodeConnectionEdge {
+  __typename?: 'ShippingClassToContentNodeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ContentNode>;
+}
+
+/**
+ * Connection between the shippingClass type and the Taxonomy type
+ */
+export interface ShippingClassToTaxonomyConnectionEdge {
+  __typename?: 'ShippingClassToTaxonomyConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Taxonomy>;
+}
+
+/**
+ * a shipping line object
+ */
+export interface ShippingLine {
+  __typename?: 'ShippingLine';
+  /**
+   * The ID of the order item in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Shipping Line&#039;s shipping method name
+   */
+  methodTitle?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The Id of the order the order item belongs to.
+   */
+  orderId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Shipping Line&#039;s shipping method
+   */
+  shippingMethod?: Maybe<ShippingMethod>;
+  /**
+   * Line tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Line taxes
+   */
+  taxes?: Maybe<Array<Maybe<OrderItemTax>>>;
+  /**
+   * Line total (after discounts)
+   */
+  total?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Line total tax (after discounts)
+   */
+  totalTax?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * A shipping method object
+ */
+export interface ShippingMethod {
+  __typename?: 'ShippingMethod';
+  /**
+   * The ID of the shipping method in the database
+   */
+  databaseId: ScalarsEnums['ID'];
+  /**
+   * Shipping method description.
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the tax rate.
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Shipping method title.
+   */
+  title?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Shipping package object
+ */
+export interface ShippingPackage {
+  __typename?: 'ShippingPackage';
+  /**
+   * Shipping package details
+   */
+  packageDetails?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Shipping package rates
+   */
+  rates?: Maybe<Array<Maybe<ShippingRate>>>;
+  /**
+   * This shipping package supports the shipping calculator.
+   */
+  supportsShippingCalculator?: Maybe<ScalarsEnums['Boolean']>;
+}
+
+/**
+ * Shipping rate object
+ */
+export interface ShippingRate {
+  __typename?: 'ShippingRate';
+  /**
+   * Shipping rate cost
+   */
+  cost?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Shipping rate ID
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Shipping instance ID
+   */
+  instanceId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Shipping rate label
+   */
+  label?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Shipping method ID
+   */
+  methodId: ScalarsEnums['ID'];
+}
+
+/**
+ * A simple attribute object
+ */
+export interface SimpleAttribute {
+  __typename?: 'SimpleAttribute';
+  /**
+   * Name of attribute
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Selected value of attribute
+   */
+  value?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * A product object
+ */
+export interface SimpleProduct {
+  __typename?: 'SimpleProduct';
+  /**
+   * Connection between the Product type and the ProductAttribute type
+   */
+  attributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductAttributeConnection>;
+  /**
+   * Product average count
+   */
+  averageRating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Product backorders status
+   */
+  backorders?: Maybe<ScalarsEnums['BackordersEnum']>;
+  /**
+   * Can product be backordered?
+   */
+  backordersAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Catalog visibility
+   */
+  catalogVisibility?: Maybe<ScalarsEnums['CatalogVisibilityEnum']>;
+  /**
+   * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
+   */
+  commentCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the comments are open or closed for this particular post.
+   */
+  commentStatus?: Maybe<ScalarsEnums['String']>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums['String'];
+  /**
+   * Connection between the SimpleProduct type and the Product type
+   */
+  crossSell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<SimpleProductToProductConnectionWhereArgs>;
+  }) => Maybe<SimpleProductToProductConnection>;
+  /**
+   * The ID of the product in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * Date product created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale from
+   */
+  dateOnSaleFrom?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale to
+   */
+  dateOnSaleTo?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the SimpleProduct type and the VariationAttribute type
+   */
+  defaultAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<SimpleProductToVariationAttributeConnection>;
+  /**
+   * Product description
+   */
+  description: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Download expiry
+   */
+  downloadExpiry?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Download limit
+   */
+  downloadLimit?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Is downloadable?
+   */
+  downloadable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product downloads
+   */
+  downloads?: Maybe<Array<Maybe<ProductDownload>>>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * If the product is featured
+   */
+  featured?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Connection between the Product type and the MediaItem type
+   */
+  galleryImages: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToMediaItemConnectionWhereArgs>;
+  }) => Maybe<ProductToMediaItemConnection>;
+  /**
+   * Connection between the Product type and the GlobalProductAttribute type
+   */
+  globalAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToGlobalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToGlobalProductAttributeConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s height
+   */
+  height?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the product
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Main image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * Product&#039;s length
+   */
+  length?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the LocalProductAttribute type
+   */
+  localAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToLocalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToLocalProductAttributeConnection>;
+  /**
+   * If product manage stock
+   */
+  manageStock?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date product last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product on sale?
+   */
+  onSale?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Parent product
+   */
+  parent?: Maybe<Product>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Product&#039;s active price
+   */
+  price: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the productCategory type
+   */
+  productCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<ProductToProductCategoryConnection>;
+  /**
+   * Connection between the Product type and the productTag type
+   */
+  productTags: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTagConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTagConnection>;
+  /**
+   * Connection between the Product type and the productType type
+   */
+  productTypes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTypeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTypeConnection>;
+  /**
+   * Can product be purchased?
+   */
+  purchasable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Purchase note
+   */
+  purchaseNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s regular price
+   */
+  regularPrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  related: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductConnectionWhereArgs>;
+  }) => Maybe<ProductToProductConnection>;
+  /**
+   * Product review count
+   */
+  reviewCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the Comment type
+   */
+  reviews: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToCommentConnectionWhereArgs>;
+  }) => Maybe<ProductToCommentConnection>;
+  /**
+   * If reviews are allowed
+   */
+  reviewsAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product&#039;s sale price
+   */
+  salePrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * shipping class ID
+   */
+  shippingClassId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the shippingClass type
+   */
+  shippingClasses: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToShippingClassConnectionWhereArgs>;
+  }) => Maybe<ProductToShippingClassConnection>;
+  /**
+   * Does product need to be shipped?
+   */
+  shippingRequired?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Is product shipping taxable?
+   */
+  shippingTaxable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product short description
+   */
+  shortDescription: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product SKU
+   */
+  sku?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product slug
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If should be sold individually
+   */
+  soldIndividually?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product status
+   */
+  status?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Number of items available for sale
+   */
+  stockQuantity?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product stock status
+   */
+  stockStatus?: Maybe<ScalarsEnums['StockStatusEnum']>;
+  /**
+   * Tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Tax status
+   */
+  taxStatus?: Maybe<ScalarsEnums['TaxStatusEnum']>;
+  /**
+   * The template assigned to a node of content
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Number total of sales
+   */
+  totalSales?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product type
+   */
+  type?: Maybe<ScalarsEnums['ProductTypesEnum']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  upsell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToUpsellConnectionWhereArgs>;
+  }) => Maybe<ProductToUpsellConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product virtual?
+   */
+  virtual?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the Product type and the visibleProduct type
+   */
+  visibleProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<ProductToVisibleProductConnection>;
+  /**
+   * Product&#039;s weight
+   */
+  weight?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s width
+   */
+  width?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the SimpleProduct type and the Product type
+ */
+export interface SimpleProductToProductConnection {
+  __typename?: 'SimpleProductToProductConnection';
+  /**
+   * Edges for the SimpleProductToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<SimpleProductToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface SimpleProductToProductConnectionEdge {
+  __typename?: 'SimpleProductToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the SimpleProduct type and the VariationAttribute type
+ */
+export interface SimpleProductToVariationAttributeConnection {
+  __typename?: 'SimpleProductToVariationAttributeConnection';
+  /**
+   * Edges for the SimpleProductToVariationAttributeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<SimpleProductToVariationAttributeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VariationAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface SimpleProductToVariationAttributeConnectionEdge {
+  __typename?: 'SimpleProductToVariationAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VariationAttribute>;
+}
+
+/**
  * The tag type
  */
 export interface Tag {
   __typename?: 'Tag';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Connection between the tag type and the ContentNode type
@@ -12786,6 +29705,121 @@ export interface TagToTaxonomyConnectionEdge {
 }
 
 /**
+ * a tax line object
+ */
+export interface TaxLine {
+  __typename?: 'TaxLine';
+  /**
+   * The ID of the order item in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Is this a compound tax rate?
+   */
+  isCompound?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Tax rate label
+   */
+  label?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * The Id of the order the order item belongs to.
+   */
+  orderId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Tax rate code/name
+   */
+  rateCode?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Tax line&#039;s shipping tax total
+   */
+  shippingTaxTotal?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Tax line&#039;s tax rate
+   */
+  taxRate?: Maybe<TaxRate>;
+  /**
+   * Tax total (not including shipping taxes)
+   */
+  taxTotal?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * A Tax rate object
+ */
+export interface TaxRate {
+  __typename?: 'TaxRate';
+  /**
+   * City name.
+   */
+  city?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Tax class. Default is standard.
+   */
+  class?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Whether or not this is a compound rate.
+   */
+  compound?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Country ISO 3166 code.
+   */
+  country?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The ID of the customer in the database
+   */
+  databaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The globally unique identifier for the tax rate.
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Tax rate name.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Indicates the order that will appear in queries.
+   */
+  order?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Postcode/ZIP.
+   */
+  postcode?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Tax priority.
+   */
+  priority?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Tax rate.
+   */
+  rate?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Whether or not this tax rate also gets applied to shipping.
+   */
+  shipping?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * State code.
+   */
+  state?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
  * A taxonomy object
  */
 export interface Taxonomy {
@@ -12971,7 +30005,18 @@ export interface Template_SinglePostNoSeparators {
  * Terms are nodes within a Taxonomy, used to group and relate other nodes.
  */
 export interface TermNode {
-  __typename?: 'Category' | 'PostFormat' | 'Tag';
+  __typename?:
+  | 'Category'
+  | 'PostFormat'
+  | 'ProductCategory'
+  | 'ProductTag'
+  | 'ProductType'
+  | 'ShippingClass'
+  | 'Tag'
+  | 'VisibleProduct';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * The number of objects connected to the object
@@ -13199,14 +30244,27 @@ export interface Theme {
  */
 export interface UniformResourceIdentifiable {
   __typename?:
-    | 'Category'
-    | 'ContentType'
-    | 'MediaItem'
-    | 'Page'
-    | 'Post'
-    | 'PostFormat'
-    | 'Tag'
-    | 'User';
+  | 'Category'
+  | 'ContentType'
+  | 'ExternalProduct'
+  | 'GroupProduct'
+  | 'MediaItem'
+  | 'Page'
+  | 'Post'
+  | 'PostFormat'
+  | 'ProductCategory'
+  | 'ProductTag'
+  | 'ProductType'
+  | 'ProductVariation'
+  | 'ShippingClass'
+  | 'SimpleProduct'
+  | 'Tag'
+  | 'User'
+  | 'VariableProduct'
+  | 'VisibleProduct';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * The unique resource identifier path
@@ -13263,6 +30321,46 @@ export interface UpdateCommentPayload {
 }
 
 /**
+ * The payload for the updateCoupon mutation
+ */
+export interface UpdateCouponPayload {
+  __typename?: 'UpdateCouponPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  code?: Maybe<ScalarsEnums['String']>;
+  coupon?: Maybe<Coupon>;
+}
+
+/**
+ * The payload for the updateCustomer mutation
+ */
+export interface UpdateCustomerPayload {
+  __typename?: 'UpdateCustomerPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  customer?: Maybe<Customer>;
+}
+
+/**
+ * The payload for the updateItemQuantities mutation
+ */
+export interface UpdateItemQuantitiesPayload {
+  __typename?: 'UpdateItemQuantitiesPayload';
+  cart?: Maybe<Cart>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  items?: Maybe<Array<Maybe<CartItem>>>;
+  removed?: Maybe<Array<Maybe<CartItem>>>;
+  updated?: Maybe<Array<Maybe<CartItem>>>;
+}
+
+/**
  * The payload for the updateMediaItem mutation
  */
 export interface UpdateMediaItemPayload {
@@ -13275,6 +30373,18 @@ export interface UpdateMediaItemPayload {
    * The MediaItem object mutation type.
    */
   mediaItem?: Maybe<MediaItem>;
+}
+
+/**
+ * The payload for the updateOrder mutation
+ */
+export interface UpdateOrderPayload {
+  __typename?: 'UpdateOrderPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  order?: Maybe<Order>;
 }
 
 /**
@@ -13323,6 +30433,70 @@ export interface UpdatePostPayload {
 }
 
 /**
+ * The payload for the UpdateProductCategory mutation
+ */
+export interface UpdateProductCategoryPayload {
+  __typename?: 'UpdateProductCategoryPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_cat
+   */
+  productCategory?: Maybe<ProductCategory>;
+}
+
+/**
+ * The payload for the UpdateProductTag mutation
+ */
+export interface UpdateProductTagPayload {
+  __typename?: 'UpdateProductTagPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_tag
+   */
+  productTag?: Maybe<ProductTag>;
+}
+
+/**
+ * The payload for the UpdateProductType mutation
+ */
+export interface UpdateProductTypePayload {
+  __typename?: 'UpdateProductTypePayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_type
+   */
+  productType?: Maybe<ProductType>;
+}
+
+/**
+ * The payload for the updateReview mutation
+ */
+export interface UpdateReviewPayload {
+  __typename?: 'UpdateReviewPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The product rating of the review that was created
+   */
+  rating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * The product review that was created
+   */
+  review?: Maybe<Comment>;
+}
+
+/**
  * The payload for the updateSettings mutation
  */
 export interface UpdateSettingsPayload {
@@ -13336,21 +30510,48 @@ export interface UpdateSettingsPayload {
    */
   clientMutationId?: Maybe<ScalarsEnums['String']>;
   /**
-   * Update the discussion setting.
+   * Update the DiscussionSettings setting.
    */
   discussionSettings?: Maybe<DiscussionSettings>;
   /**
-   * Update the general setting.
+   * Update the GeneralSettings setting.
    */
   generalSettings?: Maybe<GeneralSettings>;
   /**
-   * Update the reading setting.
+   * Update the ReadingSettings setting.
    */
   readingSettings?: Maybe<ReadingSettings>;
   /**
-   * Update the writing setting.
+   * Update the WritingSettings setting.
    */
   writingSettings?: Maybe<WritingSettings>;
+}
+
+/**
+ * The payload for the UpdateShippingClass mutation
+ */
+export interface UpdateShippingClassPayload {
+  __typename?: 'UpdateShippingClassPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_shipping_class
+   */
+  shippingClass?: Maybe<ShippingClass>;
+}
+
+/**
+ * The payload for the updateShippingMethod mutation
+ */
+export interface UpdateShippingMethodPayload {
+  __typename?: 'UpdateShippingMethodPayload';
+  cart?: Maybe<Cart>;
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
 }
 
 /**
@@ -13381,6 +30582,21 @@ export interface UpdateUserPayload {
    * The User object mutation type.
    */
   user?: Maybe<User>;
+}
+
+/**
+ * The payload for the UpdateVisibleProduct mutation
+ */
+export interface UpdateVisibleProductPayload {
+  __typename?: 'UpdateVisibleProductPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The created product_visibility
+   */
+  visibleProduct?: Maybe<VisibleProduct>;
 }
 
 /**
@@ -13439,6 +30655,9 @@ export interface User {
      */
     where?: Maybe<UserToCommentConnectionWhereArgs>;
   }) => Maybe<UserToCommentConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
   conditionalTags?: Maybe<ConditionalTags>;
   /**
    * Identifies the primary key from the database.
@@ -13685,6 +30904,10 @@ export interface User {
    * Username for the user. This field is equivalent to WP_User-&gt;user_login.
    */
   username?: Maybe<ScalarsEnums['String']>;
+  /**
+   * A JWT token that can be used in future requests to for WooCommerce session identification
+   */
+  wooSessionToken?: Maybe<ScalarsEnums['String']>;
 }
 
 /**
@@ -13987,6 +31210,1066 @@ export interface UserToUserRoleConnectionEdge {
 }
 
 /**
+ * A variable product object
+ */
+export interface VariableProduct {
+  __typename?: 'VariableProduct';
+  /**
+   * Connection between the Product type and the ProductAttribute type
+   */
+  attributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductAttributeConnection>;
+  /**
+   * Product average count
+   */
+  averageRating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * Product backorders status
+   */
+  backorders?: Maybe<ScalarsEnums['BackordersEnum']>;
+  /**
+   * Can product be backordered?
+   */
+  backordersAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Catalog visibility
+   */
+  catalogVisibility?: Maybe<ScalarsEnums['CatalogVisibilityEnum']>;
+  /**
+   * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
+   */
+  commentCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the comments are open or closed for this particular post.
+   */
+  commentStatus?: Maybe<ScalarsEnums['String']>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums['String'];
+  /**
+   * Connection between the VariableProduct type and the Product type
+   */
+  crossSell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<VariableProductToProductConnectionWhereArgs>;
+  }) => Maybe<VariableProductToProductConnection>;
+  /**
+   * The ID of the product in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * Date product created
+   */
+  date?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale from
+   */
+  dateOnSaleFrom?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Date on sale to
+   */
+  dateOnSaleTo?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the VariableProduct type and the VariationAttribute type
+   */
+  defaultAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<VariableProductToVariationAttributeConnection>;
+  /**
+   * Product description
+   */
+  description: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * If the product is featured
+   */
+  featured?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Connection between the Product type and the MediaItem type
+   */
+  galleryImages: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToMediaItemConnectionWhereArgs>;
+  }) => Maybe<ProductToMediaItemConnection>;
+  /**
+   * Connection between the Product type and the GlobalProductAttribute type
+   */
+  globalAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToGlobalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToGlobalProductAttributeConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s height
+   */
+  height?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The globally unique identifier for the product
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Main image
+   */
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * Product&#039;s length
+   */
+  length?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the LocalProductAttribute type
+   */
+  localAttributes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToLocalProductAttributeConnectionWhereArgs>;
+  }) => Maybe<ProductToLocalProductAttributeConnection>;
+  /**
+   * If product manage stock
+   */
+  manageStock?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Menu order
+   */
+  menuOrder?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Object meta data
+   */
+  metaData: (args?: {
+    /**
+     * Retrieve meta by key
+     */
+    key?: Maybe<Scalars['String']>;
+    /**
+     * Retrieve multiple metas by key
+     */
+    keysIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+    /**
+     * Retrieve meta with matching keys
+     */
+    multiple?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Array<Maybe<MetaData>>>;
+  /**
+   * Date product last updated
+   */
+  modified?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product name
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Is product on sale?
+   */
+  onSale?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Parent product
+   */
+  parent?: Maybe<Product>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums['ID']>;
+  /**
+   * Product&#039;s active price
+   */
+  price: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the productCategory type
+   */
+  productCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<ProductToProductCategoryConnection>;
+  /**
+   * Connection between the Product type and the productTag type
+   */
+  productTags: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTagConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTagConnection>;
+  /**
+   * Connection between the Product type and the productType type
+   */
+  productTypes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductTypeConnectionWhereArgs>;
+  }) => Maybe<ProductToProductTypeConnection>;
+  /**
+   * Can product be purchased?
+   */
+  purchasable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Purchase note
+   */
+  purchaseNote?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s regular price
+   */
+  regularPrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  related: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToProductConnectionWhereArgs>;
+  }) => Maybe<ProductToProductConnection>;
+  /**
+   * Product review count
+   */
+  reviewCount?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the Comment type
+   */
+  reviews: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToCommentConnectionWhereArgs>;
+  }) => Maybe<ProductToCommentConnection>;
+  /**
+   * If reviews are allowed
+   */
+  reviewsAllowed?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product&#039;s sale price
+   */
+  salePrice: (args?: {
+    /**
+     * Format of the price
+     */
+    format?: Maybe<PricingFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * shipping class ID
+   */
+  shippingClassId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Connection between the Product type and the shippingClass type
+   */
+  shippingClasses: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToShippingClassConnectionWhereArgs>;
+  }) => Maybe<ProductToShippingClassConnection>;
+  /**
+   * Does product need to be shipped?
+   */
+  shippingRequired?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Is product shipping taxable?
+   */
+  shippingTaxable?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product short description
+   */
+  shortDescription: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums['String']>;
+  /**
+   * Product SKU
+   */
+  sku?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product slug
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * If should be sold individually
+   */
+  soldIndividually?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Product status
+   */
+  status?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Number of items available for sale
+   */
+  stockQuantity?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product stock status
+   */
+  stockStatus?: Maybe<ScalarsEnums['StockStatusEnum']>;
+  /**
+   * Tax class
+   */
+  taxClass?: Maybe<ScalarsEnums['TaxClassEnum']>;
+  /**
+   * Tax status
+   */
+  taxStatus?: Maybe<ScalarsEnums['TaxStatusEnum']>;
+  /**
+   * The template assigned to a node of content
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * Number total of sales
+   */
+  totalSales?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * Product type
+   */
+  type?: Maybe<ScalarsEnums['ProductTypesEnum']>;
+  /**
+   * Connection between the Product type and the Product type
+   */
+  upsell: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToUpsellConnectionWhereArgs>;
+  }) => Maybe<ProductToUpsellConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the VariableProduct type and the ProductVariation type
+   */
+  variations: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<VariableProductToProductVariationConnectionWhereArgs>;
+  }) => Maybe<VariableProductToProductVariationConnection>;
+  /**
+   * Connection between the Product type and the visibleProduct type
+   */
+  visibleProducts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<ProductToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<ProductToVisibleProductConnection>;
+  /**
+   * Product&#039;s weight
+   */
+  weight?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Product&#039;s width
+   */
+  width?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * Connection between the VariableProduct type and the Product type
+ */
+export interface VariableProductToProductConnection {
+  __typename?: 'VariableProductToProductConnection';
+  /**
+   * Edges for the VariableProductToProductConnection connection
+   */
+  edges?: Maybe<Array<Maybe<VariableProductToProductConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Product>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface VariableProductToProductConnectionEdge {
+  __typename?: 'VariableProductToProductConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Product>;
+}
+
+/**
+ * Connection between the VariableProduct type and the ProductVariation type
+ */
+export interface VariableProductToProductVariationConnection {
+  __typename?: 'VariableProductToProductVariationConnection';
+  /**
+   * Edges for the VariableProductToProductVariationConnection connection
+   */
+  edges?: Maybe<Array<Maybe<VariableProductToProductVariationConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ProductVariation>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface VariableProductToProductVariationConnectionEdge {
+  __typename?: 'VariableProductToProductVariationConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ProductVariation>;
+}
+
+/**
+ * Connection between the VariableProduct type and the VariationAttribute type
+ */
+export interface VariableProductToVariationAttributeConnection {
+  __typename?: 'VariableProductToVariationAttributeConnection';
+  /**
+   * Edges for the VariableProductToVariationAttributeConnection connection
+   */
+  edges?: Maybe<
+    Array<Maybe<VariableProductToVariationAttributeConnectionEdge>>
+  >;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<VariationAttribute>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface VariableProductToVariationAttributeConnectionEdge {
+  __typename?: 'VariableProductToVariationAttributeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<VariationAttribute>;
+}
+
+/**
+ * A product variation attribute object
+ */
+export interface VariationAttribute {
+  __typename?: 'VariationAttribute';
+  /**
+   * The Database ID of the attribute.
+   */
+  attributeId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The Global ID of the attribute.
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Label of attribute
+   */
+  label?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Name of attribute
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Selected value of attribute
+   */
+  value?: Maybe<ScalarsEnums['String']>;
+}
+
+/**
+ * The visibleProduct type
+ */
+export interface VisibleProduct {
+  __typename?: 'VisibleProduct';
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the visibleProduct type and the ContentNode type
+   */
+  contentNodes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<VisibleProductToContentNodeConnectionWhereArgs>;
+  }) => Maybe<VisibleProductToContentNodeConnection>;
+  /**
+   * The number of objects connected to the object
+   */
+  count?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums['Int'];
+  /**
+   * The description of the object
+   */
+  description?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the TermNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the TermNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars['String']>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars['String']>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars['Int']>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  id: ScalarsEnums['ID'];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums['Boolean'];
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums['Boolean']>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums['Boolean'];
+  /**
+   * The link to the term
+   */
+  link?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The human friendly name of the object.
+   */
+  name?: Maybe<ScalarsEnums['String']>;
+  /**
+   * An alphanumeric identifier for the object unique to its type.
+   */
+  slug?: Maybe<ScalarsEnums['String']>;
+  /**
+   * Connection between the visibleProduct type and the Taxonomy type
+   */
+  taxonomy?: Maybe<VisibleProductToTaxonomyConnectionEdge>;
+  /**
+   * The name of the taxonomy that the object is associated with
+   */
+  taxonomyName?: Maybe<ScalarsEnums['String']>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums['String']>>>;
+  /**
+   * The ID of the term group that this term object belongs to
+   */
+  termGroupId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The taxonomy ID that the object is associated with
+   */
+  termTaxonomyId?: Maybe<ScalarsEnums['Int']>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  visibleProductId?: Maybe<ScalarsEnums['Int']>;
+}
+
+/**
+ * Connection between the visibleProduct type and the ContentNode type
+ */
+export interface VisibleProductToContentNodeConnection {
+  __typename?: 'VisibleProductToContentNodeConnection';
+  /**
+   * Edges for the VisibleProductToContentNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<VisibleProductToContentNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface VisibleProductToContentNodeConnectionEdge {
+  __typename?: 'VisibleProductToContentNodeConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ContentNode>;
+}
+
+/**
+ * Connection between the visibleProduct type and the Taxonomy type
+ */
+export interface VisibleProductToTaxonomyConnectionEdge {
+  __typename?: 'VisibleProductToTaxonomyConnectionEdge';
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Taxonomy>;
+}
+
+/**
  * Information about pagination in a connection.
  */
 export interface WPPageInfo {
@@ -14010,6 +32293,25 @@ export interface WPPageInfo {
 }
 
 /**
+ * The payload for the writeReview mutation
+ */
+export interface WriteReviewPayload {
+  __typename?: 'WriteReviewPayload';
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums['String']>;
+  /**
+   * The product rating of the review that was created
+   */
+  rating?: Maybe<ScalarsEnums['Float']>;
+  /**
+   * The product review that was created
+   */
+  review?: Maybe<Comment>;
+}
+
+/**
  * The writing setting type
  */
 export interface WritingSettings {
@@ -14030,53 +32332,121 @@ export interface WritingSettings {
 
 export interface Mutation {
   __typename?: 'Mutation';
+  addCartItems: (args: {
+    input: AddCartItemsInput;
+  }) => Maybe<AddCartItemsPayload>;
+  addFee: (args: { input: AddFeeInput }) => Maybe<AddFeePayload>;
+  addToCart: (args: { input: AddToCartInput }) => Maybe<AddToCartPayload>;
+  applyCoupon: (args: { input: ApplyCouponInput }) => Maybe<ApplyCouponPayload>;
+  checkout: (args: { input: CheckoutInput }) => Maybe<CheckoutPayload>;
   createCategory: (args: {
     input: CreateCategoryInput;
   }) => Maybe<CreateCategoryPayload>;
   createComment: (args: {
     input: CreateCommentInput;
   }) => Maybe<CreateCommentPayload>;
+  createCoupon: (args: {
+    input: CreateCouponInput;
+  }) => Maybe<CreateCouponPayload>;
   createMediaItem: (args: {
     input: CreateMediaItemInput;
   }) => Maybe<CreateMediaItemPayload>;
+  createOrder: (args: { input: CreateOrderInput }) => Maybe<CreateOrderPayload>;
   createPage: (args: { input: CreatePageInput }) => Maybe<CreatePagePayload>;
   createPost: (args: { input: CreatePostInput }) => Maybe<CreatePostPayload>;
   createPostFormat: (args: {
     input: CreatePostFormatInput;
   }) => Maybe<CreatePostFormatPayload>;
+  createProductCategory: (args: {
+    input: CreateProductCategoryInput;
+  }) => Maybe<CreateProductCategoryPayload>;
+  createProductTag: (args: {
+    input: CreateProductTagInput;
+  }) => Maybe<CreateProductTagPayload>;
+  createProductType: (args: {
+    input: CreateProductTypeInput;
+  }) => Maybe<CreateProductTypePayload>;
+  createShippingClass: (args: {
+    input: CreateShippingClassInput;
+  }) => Maybe<CreateShippingClassPayload>;
   createTag: (args: { input: CreateTagInput }) => Maybe<CreateTagPayload>;
   createUser: (args: { input: CreateUserInput }) => Maybe<CreateUserPayload>;
+  createVisibleProduct: (args: {
+    input: CreateVisibleProductInput;
+  }) => Maybe<CreateVisibleProductPayload>;
   deleteCategory: (args: {
     input: DeleteCategoryInput;
   }) => Maybe<DeleteCategoryPayload>;
   deleteComment: (args: {
     input: DeleteCommentInput;
   }) => Maybe<DeleteCommentPayload>;
+  deleteCoupon: (args: {
+    input: DeleteCouponInput;
+  }) => Maybe<DeleteCouponPayload>;
   deleteMediaItem: (args: {
     input: DeleteMediaItemInput;
   }) => Maybe<DeleteMediaItemPayload>;
+  deleteOrder: (args: { input: DeleteOrderInput }) => Maybe<DeleteOrderPayload>;
+  deleteOrderItems: (args: {
+    input: DeleteOrderItemsInput;
+  }) => Maybe<DeleteOrderItemsPayload>;
   deletePage: (args: { input: DeletePageInput }) => Maybe<DeletePagePayload>;
   deletePost: (args: { input: DeletePostInput }) => Maybe<DeletePostPayload>;
   deletePostFormat: (args: {
     input: DeletePostFormatInput;
   }) => Maybe<DeletePostFormatPayload>;
+  deleteProductCategory: (args: {
+    input: DeleteProductCategoryInput;
+  }) => Maybe<DeleteProductCategoryPayload>;
+  deleteProductTag: (args: {
+    input: DeleteProductTagInput;
+  }) => Maybe<DeleteProductTagPayload>;
+  deleteProductType: (args: {
+    input: DeleteProductTypeInput;
+  }) => Maybe<DeleteProductTypePayload>;
+  deleteReview: (args: {
+    input: DeleteReviewInput;
+  }) => Maybe<DeleteReviewPayload>;
+  deleteShippingClass: (args: {
+    input: DeleteShippingClassInput;
+  }) => Maybe<DeleteShippingClassPayload>;
   deleteTag: (args: { input: DeleteTagInput }) => Maybe<DeleteTagPayload>;
   deleteUser: (args: { input: DeleteUserInput }) => Maybe<DeleteUserPayload>;
+  deleteVisibleProduct: (args: {
+    input: DeleteVisibleProductInput;
+  }) => Maybe<DeleteVisibleProductPayload>;
+  emptyCart: (args: { input: EmptyCartInput }) => Maybe<EmptyCartPayload>;
+  fillCart: (args: { input: FillCartInput }) => Maybe<FillCartPayload>;
   generateAuthorizationCode: (args: {
     input: GenerateAuthorizationCodeInput;
   }) => Maybe<GenerateAuthorizationCodePayload>;
   increaseCount: (args?: {
     count?: Maybe<Scalars['Int']>;
   }) => Maybe<ScalarsEnums['Int']>;
+  registerCustomer: (args: {
+    input: RegisterCustomerInput;
+  }) => Maybe<RegisterCustomerPayload>;
   registerUser: (args: {
     input: RegisterUserInput;
   }) => Maybe<RegisterUserPayload>;
+  removeCoupons: (args: {
+    input: RemoveCouponsInput;
+  }) => Maybe<RemoveCouponsPayload>;
+  removeItemsFromCart: (args: {
+    input: RemoveItemsFromCartInput;
+  }) => Maybe<RemoveItemsFromCartPayload>;
   resetUserPassword: (args: {
     input: ResetUserPasswordInput;
   }) => Maybe<ResetUserPasswordPayload>;
+  restoreCartItems: (args: {
+    input: RestoreCartItemsInput;
+  }) => Maybe<RestoreCartItemsPayload>;
   restoreComment: (args: {
     input: RestoreCommentInput;
   }) => Maybe<RestoreCommentPayload>;
+  restoreReview: (args: {
+    input: RestoreReviewInput;
+  }) => Maybe<RestoreReviewPayload>;
   sendPasswordResetEmail: (args: {
     input: SendPasswordResetEmailInput;
   }) => Maybe<SendPasswordResetEmailPayload>;
@@ -14086,24 +32456,61 @@ export interface Mutation {
   updateComment: (args: {
     input: UpdateCommentInput;
   }) => Maybe<UpdateCommentPayload>;
+  updateCoupon: (args: {
+    input: UpdateCouponInput;
+  }) => Maybe<UpdateCouponPayload>;
+  updateCustomer: (args: {
+    input: UpdateCustomerInput;
+  }) => Maybe<UpdateCustomerPayload>;
+  updateItemQuantities: (args: {
+    input: UpdateItemQuantitiesInput;
+  }) => Maybe<UpdateItemQuantitiesPayload>;
   updateMediaItem: (args: {
     input: UpdateMediaItemInput;
   }) => Maybe<UpdateMediaItemPayload>;
+  updateOrder: (args: { input: UpdateOrderInput }) => Maybe<UpdateOrderPayload>;
   updatePage: (args: { input: UpdatePageInput }) => Maybe<UpdatePagePayload>;
   updatePost: (args: { input: UpdatePostInput }) => Maybe<UpdatePostPayload>;
   updatePostFormat: (args: {
     input: UpdatePostFormatInput;
   }) => Maybe<UpdatePostFormatPayload>;
+  updateProductCategory: (args: {
+    input: UpdateProductCategoryInput;
+  }) => Maybe<UpdateProductCategoryPayload>;
+  updateProductTag: (args: {
+    input: UpdateProductTagInput;
+  }) => Maybe<UpdateProductTagPayload>;
+  updateProductType: (args: {
+    input: UpdateProductTypeInput;
+  }) => Maybe<UpdateProductTypePayload>;
+  updateReview: (args: {
+    input: UpdateReviewInput;
+  }) => Maybe<UpdateReviewPayload>;
   updateSettings: (args: {
     input: UpdateSettingsInput;
   }) => Maybe<UpdateSettingsPayload>;
+  updateShippingClass: (args: {
+    input: UpdateShippingClassInput;
+  }) => Maybe<UpdateShippingClassPayload>;
+  updateShippingMethod: (args: {
+    input: UpdateShippingMethodInput;
+  }) => Maybe<UpdateShippingMethodPayload>;
   updateTag: (args: { input: UpdateTagInput }) => Maybe<UpdateTagPayload>;
   updateUser: (args: { input: UpdateUserInput }) => Maybe<UpdateUserPayload>;
+  updateVisibleProduct: (args: {
+    input: UpdateVisibleProductInput;
+  }) => Maybe<UpdateVisibleProductPayload>;
+  writeReview: (args: { input: WriteReviewInput }) => Maybe<WriteReviewPayload>;
 }
 
 export interface Query {
   __typename?: 'Query';
   allSettings?: Maybe<Settings>;
+  cart: (args?: {
+    recalculateTotals?: Maybe<Scalars['Boolean']>;
+  }) => Maybe<Cart>;
+  cartFee: (args: { id: Scalars['ID'] }) => Maybe<CartFee>;
+  cartItem: (args: { key: Scalars['ID'] }) => Maybe<CartItem>;
   categories: (args?: {
     after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
@@ -14146,8 +32553,38 @@ export interface Query {
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
   }) => Maybe<RootQueryToContentTypeConnection>;
+  coupon: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<CouponIdTypeEnum>;
+  }) => Maybe<Coupon>;
+  coupons: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToCouponConnectionWhereArgs>;
+  }) => Maybe<RootQueryToCouponConnection>;
+  customer: (args?: {
+    customerId?: Maybe<Scalars['Int']>;
+    id?: Maybe<Scalars['ID']>;
+  }) => Maybe<Customer>;
+  customers: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToCustomerConnectionWhereArgs>;
+  }) => Maybe<RootQueryToCustomerConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
+  externalProduct: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<ProductIdTypeEnum>;
+  }) => Maybe<ExternalProduct>;
   generalSettings?: Maybe<GeneralSettings>;
+  groupedProduct: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<ProductIdTypeEnum>;
+  }) => Maybe<GroupProduct>;
   mediaItem: (args: {
     asPreview?: Maybe<Scalars['Boolean']>;
     id: Scalars['ID'];
@@ -14192,6 +32629,17 @@ export interface Query {
   nodeByUri: (args: {
     uri: Scalars['String'];
   }) => Maybe<UniformResourceIdentifiable>;
+  order: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<OrderIdTypeEnum>;
+  }) => Maybe<Order>;
+  orders: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToOrderConnectionWhereArgs>;
+  }) => Maybe<RootQueryToOrderConnection>;
   page: (args: {
     asPreview?: Maybe<Scalars['Boolean']>;
     id: Scalars['ID'];
@@ -14209,12 +32657,20 @@ export interface Query {
     last?: Maybe<Scalars['Int']>;
     where?: Maybe<RootQueryToPageConnectionWhereArgs>;
   }) => Maybe<RootQueryToPageConnection>;
+  paymentGateways: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToPaymentGatewayConnectionWhereArgs>;
+  }) => Maybe<RootQueryToPaymentGatewayConnection>;
   plugin: (args: { id: Scalars['ID'] }) => Maybe<Plugin>;
   plugins: (args?: {
     after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToPluginConnectionWhereArgs>;
   }) => Maybe<RootQueryToPluginConnection>;
   post: (args: {
     asPreview?: Maybe<Scalars['Boolean']>;
@@ -14245,7 +32701,66 @@ export interface Query {
     last?: Maybe<Scalars['Int']>;
     where?: Maybe<RootQueryToPostConnectionWhereArgs>;
   }) => Maybe<RootQueryToPostConnection>;
+  product: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<ProductIdTypeEnum>;
+  }) => Maybe<Product>;
+  productCategories: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToProductCategoryConnectionWhereArgs>;
+  }) => Maybe<RootQueryToProductCategoryConnection>;
+  productCategory: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<ProductCategoryIdType>;
+  }) => Maybe<ProductCategory>;
+  productTag: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<ProductTagIdType>;
+  }) => Maybe<ProductTag>;
+  productTags: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToProductTagConnectionWhereArgs>;
+  }) => Maybe<RootQueryToProductTagConnection>;
+  productType: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<ProductTypeIdType>;
+  }) => Maybe<ProductType>;
+  productTypes: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToProductTypeConnectionWhereArgs>;
+  }) => Maybe<RootQueryToProductTypeConnection>;
+  productVariation: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<ProductVariationIdTypeEnum>;
+  }) => Maybe<ProductVariation>;
+  products: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToProductConnectionWhereArgs>;
+  }) => Maybe<RootQueryToProductConnection>;
   readingSettings?: Maybe<ReadingSettings>;
+  refund: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<RefundIdTypeEnum>;
+  }) => Maybe<Refund>;
+  refunds: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToRefundConnectionWhereArgs>;
+  }) => Maybe<RootQueryToRefundConnection>;
   registeredScripts: (args?: {
     after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
@@ -14265,6 +32780,31 @@ export interface Query {
     last?: Maybe<Scalars['Int']>;
     where?: Maybe<RootQueryToContentRevisionUnionConnectionWhereArgs>;
   }) => Maybe<RootQueryToContentRevisionUnionConnection>;
+  shippingClass: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<ShippingClassIdType>;
+  }) => Maybe<ShippingClass>;
+  shippingClasses: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToShippingClassConnectionWhereArgs>;
+  }) => Maybe<RootQueryToShippingClassConnection>;
+  shippingMethod: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<ShippingMethodIdTypeEnum>;
+  }) => Maybe<ShippingMethod>;
+  shippingMethods: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+  }) => Maybe<RootQueryToShippingMethodConnection>;
+  simpleProduct: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<ProductIdTypeEnum>;
+  }) => Maybe<SimpleProduct>;
   tag: (args: { id: Scalars['ID']; idType?: Maybe<TagIdType> }) => Maybe<Tag>;
   tags: (args?: {
     after?: Maybe<Scalars['String']>;
@@ -14273,6 +32813,17 @@ export interface Query {
     last?: Maybe<Scalars['Int']>;
     where?: Maybe<RootQueryToTagConnectionWhereArgs>;
   }) => Maybe<RootQueryToTagConnection>;
+  taxRate: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<TaxRateIdTypeEnum>;
+  }) => Maybe<TaxRate>;
+  taxRates: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToTaxRateConnectionWhereArgs>;
+  }) => Maybe<RootQueryToTaxRateConnection>;
   taxonomies: (args?: {
     after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
@@ -14320,7 +32871,22 @@ export interface Query {
     last?: Maybe<Scalars['Int']>;
     where?: Maybe<RootQueryToUserConnectionWhereArgs>;
   }) => Maybe<RootQueryToUserConnection>;
+  variableProduct: (args?: {
+    id?: Maybe<Scalars['ID']>;
+    idType?: Maybe<ProductIdTypeEnum>;
+  }) => Maybe<VariableProduct>;
   viewer?: Maybe<User>;
+  visibleProduct: (args: {
+    id: Scalars['ID'];
+    idType?: Maybe<VisibleProductIdType>;
+  }) => Maybe<VisibleProduct>;
+  visibleProducts: (args?: {
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    where?: Maybe<RootQueryToVisibleProductConnectionWhereArgs>;
+  }) => Maybe<RootQueryToVisibleProductConnection>;
   writingSettings?: Maybe<WritingSettings>;
 }
 
@@ -14329,7 +32895,21 @@ export interface Subscription {
 }
 
 export interface SchemaObjectTypes {
+  AddCartItemsPayload: AddCartItemsPayload;
+  AddFeePayload: AddFeePayload;
+  AddToCartPayload: AddToCartPayload;
+  AppliedCoupon: AppliedCoupon;
+  ApplyCouponPayload: ApplyCouponPayload;
   Avatar: Avatar;
+  Cart: Cart;
+  CartFee: CartFee;
+  CartItem: CartItem;
+  CartItemError: CartItemError;
+  CartItemToProductConnectionEdge: CartItemToProductConnectionEdge;
+  CartItemToProductVariationConnectionEdge: CartItemToProductVariationConnectionEdge;
+  CartTax: CartTax;
+  CartToCartItemConnection: CartToCartItemConnection;
+  CartToCartItemConnectionEdge: CartToCartItemConnectionEdge;
   Category: Category;
   CategoryToAncestorsCategoryConnection: CategoryToAncestorsCategoryConnection;
   CategoryToAncestorsCategoryConnectionEdge: CategoryToAncestorsCategoryConnectionEdge;
@@ -14341,6 +32921,7 @@ export interface SchemaObjectTypes {
   CategoryToPostConnection: CategoryToPostConnection;
   CategoryToPostConnectionEdge: CategoryToPostConnectionEdge;
   CategoryToTaxonomyConnectionEdge: CategoryToTaxonomyConnectionEdge;
+  CheckoutPayload: CheckoutPayload;
   Comment: Comment;
   CommentAuthor: CommentAuthor;
   CommentToCommentConnection: CommentToCommentConnection;
@@ -14361,33 +32942,88 @@ export interface SchemaObjectTypes {
   ContentTypeToContentNodeConnectionEdge: ContentTypeToContentNodeConnectionEdge;
   ContentTypeToTaxonomyConnection: ContentTypeToTaxonomyConnection;
   ContentTypeToTaxonomyConnectionEdge: ContentTypeToTaxonomyConnectionEdge;
+  Coupon: Coupon;
+  CouponLine: CouponLine;
+  CouponToCustomerConnection: CouponToCustomerConnection;
+  CouponToCustomerConnectionEdge: CouponToCustomerConnectionEdge;
+  CouponToExcludedProductCategoriesConnection: CouponToExcludedProductCategoriesConnection;
+  CouponToExcludedProductCategoriesConnectionEdge: CouponToExcludedProductCategoriesConnectionEdge;
+  CouponToExcludedProductsConnection: CouponToExcludedProductsConnection;
+  CouponToExcludedProductsConnectionEdge: CouponToExcludedProductsConnectionEdge;
+  CouponToProductCategoryConnection: CouponToProductCategoryConnection;
+  CouponToProductCategoryConnectionEdge: CouponToProductCategoryConnectionEdge;
+  CouponToProductConnection: CouponToProductConnection;
+  CouponToProductConnectionEdge: CouponToProductConnectionEdge;
   CreateCategoryPayload: CreateCategoryPayload;
   CreateCommentPayload: CreateCommentPayload;
+  CreateCouponPayload: CreateCouponPayload;
   CreateMediaItemPayload: CreateMediaItemPayload;
+  CreateOrderPayload: CreateOrderPayload;
   CreatePagePayload: CreatePagePayload;
   CreatePostFormatPayload: CreatePostFormatPayload;
   CreatePostPayload: CreatePostPayload;
+  CreateProductCategoryPayload: CreateProductCategoryPayload;
+  CreateProductTagPayload: CreateProductTagPayload;
+  CreateProductTypePayload: CreateProductTypePayload;
+  CreateShippingClassPayload: CreateShippingClassPayload;
   CreateTagPayload: CreateTagPayload;
   CreateUserPayload: CreateUserPayload;
+  CreateVisibleProductPayload: CreateVisibleProductPayload;
+  Customer: Customer;
+  CustomerAddress: CustomerAddress;
+  CustomerToDownloadableItemConnection: CustomerToDownloadableItemConnection;
+  CustomerToDownloadableItemConnectionEdge: CustomerToDownloadableItemConnectionEdge;
+  CustomerToOrderConnection: CustomerToOrderConnection;
+  CustomerToOrderConnectionEdge: CustomerToOrderConnectionEdge;
+  CustomerToRefundConnection: CustomerToRefundConnection;
+  CustomerToRefundConnectionEdge: CustomerToRefundConnectionEdge;
   DefaultTemplate: DefaultTemplate;
   DeleteCategoryPayload: DeleteCategoryPayload;
   DeleteCommentPayload: DeleteCommentPayload;
+  DeleteCouponPayload: DeleteCouponPayload;
   DeleteMediaItemPayload: DeleteMediaItemPayload;
+  DeleteOrderItemsPayload: DeleteOrderItemsPayload;
+  DeleteOrderPayload: DeleteOrderPayload;
   DeletePagePayload: DeletePagePayload;
   DeletePostFormatPayload: DeletePostFormatPayload;
   DeletePostPayload: DeletePostPayload;
+  DeleteProductCategoryPayload: DeleteProductCategoryPayload;
+  DeleteProductTagPayload: DeleteProductTagPayload;
+  DeleteProductTypePayload: DeleteProductTypePayload;
+  DeleteReviewPayload: DeleteReviewPayload;
+  DeleteShippingClassPayload: DeleteShippingClassPayload;
   DeleteTagPayload: DeleteTagPayload;
   DeleteUserPayload: DeleteUserPayload;
+  DeleteVisibleProductPayload: DeleteVisibleProductPayload;
   DiscussionSettings: DiscussionSettings;
+  DownloadableItem: DownloadableItem;
+  EmptyCartPayload: EmptyCartPayload;
   EnqueuedScript: EnqueuedScript;
   EnqueuedStylesheet: EnqueuedStylesheet;
+  ExternalProduct: ExternalProduct;
+  ExternalProductToVariationAttributeConnection: ExternalProductToVariationAttributeConnection;
+  ExternalProductToVariationAttributeConnectionEdge: ExternalProductToVariationAttributeConnectionEdge;
+  FeeLine: FeeLine;
+  FillCartPayload: FillCartPayload;
   GeneralSettings: GeneralSettings;
   GenerateAuthorizationCodePayload: GenerateAuthorizationCodePayload;
+  GlobalProductAttribute: GlobalProductAttribute;
+  GlobalProductAttributeToTermNodeConnection: GlobalProductAttributeToTermNodeConnection;
+  GlobalProductAttributeToTermNodeConnectionEdge: GlobalProductAttributeToTermNodeConnectionEdge;
+  GroupProduct: GroupProduct;
+  GroupProductToProductConnection: GroupProductToProductConnection;
+  GroupProductToProductConnectionEdge: GroupProductToProductConnectionEdge;
+  GroupProductToVariationAttributeConnection: GroupProductToVariationAttributeConnection;
+  GroupProductToVariationAttributeConnectionEdge: GroupProductToVariationAttributeConnectionEdge;
   HierarchicalContentNodeToContentNodeAncestorsConnection: HierarchicalContentNodeToContentNodeAncestorsConnection;
   HierarchicalContentNodeToContentNodeAncestorsConnectionEdge: HierarchicalContentNodeToContentNodeAncestorsConnectionEdge;
   HierarchicalContentNodeToContentNodeChildrenConnection: HierarchicalContentNodeToContentNodeChildrenConnection;
   HierarchicalContentNodeToContentNodeChildrenConnectionEdge: HierarchicalContentNodeToContentNodeChildrenConnectionEdge;
   HierarchicalContentNodeToParentContentNodeConnectionEdge: HierarchicalContentNodeToParentContentNodeConnectionEdge;
+  LineItem: LineItem;
+  LineItemToProductConnectionEdge: LineItemToProductConnectionEdge;
+  LineItemToProductVariationConnectionEdge: LineItemToProductVariationConnectionEdge;
+  LocalProductAttribute: LocalProductAttribute;
   MediaDetails: MediaDetails;
   MediaItem: MediaItem;
   MediaItemMeta: MediaItemMeta;
@@ -14402,16 +33038,36 @@ export interface SchemaObjectTypes {
   MenuItemToMenuItemLinkableConnectionEdge: MenuItemToMenuItemLinkableConnectionEdge;
   MenuToMenuItemConnection: MenuToMenuItemConnection;
   MenuToMenuItemConnectionEdge: MenuToMenuItemConnectionEdge;
+  MetaData: MetaData;
   Mutation: Mutation;
   NodeWithAuthorToUserConnectionEdge: NodeWithAuthorToUserConnectionEdge;
   NodeWithFeaturedImageToMediaItemConnectionEdge: NodeWithFeaturedImageToMediaItemConnectionEdge;
   NodeWithRevisionsToContentNodeConnectionEdge: NodeWithRevisionsToContentNodeConnectionEdge;
+  Order: Order;
+  OrderItemTax: OrderItemTax;
+  OrderToCommentConnection: OrderToCommentConnection;
+  OrderToCommentConnectionEdge: OrderToCommentConnectionEdge;
+  OrderToCouponLineConnection: OrderToCouponLineConnection;
+  OrderToCouponLineConnectionEdge: OrderToCouponLineConnectionEdge;
+  OrderToDownloadableItemConnection: OrderToDownloadableItemConnection;
+  OrderToDownloadableItemConnectionEdge: OrderToDownloadableItemConnectionEdge;
+  OrderToFeeLineConnection: OrderToFeeLineConnection;
+  OrderToFeeLineConnectionEdge: OrderToFeeLineConnectionEdge;
+  OrderToLineItemConnection: OrderToLineItemConnection;
+  OrderToLineItemConnectionEdge: OrderToLineItemConnectionEdge;
+  OrderToRefundConnection: OrderToRefundConnection;
+  OrderToRefundConnectionEdge: OrderToRefundConnectionEdge;
+  OrderToShippingLineConnection: OrderToShippingLineConnection;
+  OrderToShippingLineConnectionEdge: OrderToShippingLineConnectionEdge;
+  OrderToTaxLineConnection: OrderToTaxLineConnection;
+  OrderToTaxLineConnectionEdge: OrderToTaxLineConnectionEdge;
   Page: Page;
   PageToCommentConnection: PageToCommentConnection;
   PageToCommentConnectionEdge: PageToCommentConnectionEdge;
   PageToPreviewConnectionEdge: PageToPreviewConnectionEdge;
   PageToRevisionConnection: PageToRevisionConnection;
   PageToRevisionConnectionEdge: PageToRevisionConnectionEdge;
+  PaymentGateway: PaymentGateway;
   Plugin: Plugin;
   Post: Post;
   PostFormat: PostFormat;
@@ -14434,11 +33090,72 @@ export interface SchemaObjectTypes {
   PostToTermNodeConnection: PostToTermNodeConnection;
   PostToTermNodeConnectionEdge: PostToTermNodeConnectionEdge;
   PostTypeLabelDetails: PostTypeLabelDetails;
+  ProductAttributeOutput: ProductAttributeOutput;
+  ProductCategory: ProductCategory;
+  ProductCategoryToAncestorsProductCategoryConnection: ProductCategoryToAncestorsProductCategoryConnection;
+  ProductCategoryToAncestorsProductCategoryConnectionEdge: ProductCategoryToAncestorsProductCategoryConnectionEdge;
+  ProductCategoryToContentNodeConnection: ProductCategoryToContentNodeConnection;
+  ProductCategoryToContentNodeConnectionEdge: ProductCategoryToContentNodeConnectionEdge;
+  ProductCategoryToParentProductCategoryConnectionEdge: ProductCategoryToParentProductCategoryConnectionEdge;
+  ProductCategoryToProductCategoryConnection: ProductCategoryToProductCategoryConnection;
+  ProductCategoryToProductCategoryConnectionEdge: ProductCategoryToProductCategoryConnectionEdge;
+  ProductCategoryToProductConnection: ProductCategoryToProductConnection;
+  ProductCategoryToProductConnectionEdge: ProductCategoryToProductConnectionEdge;
+  ProductCategoryToTaxonomyConnectionEdge: ProductCategoryToTaxonomyConnectionEdge;
+  ProductDownload: ProductDownload;
+  ProductTag: ProductTag;
+  ProductTagToContentNodeConnection: ProductTagToContentNodeConnection;
+  ProductTagToContentNodeConnectionEdge: ProductTagToContentNodeConnectionEdge;
+  ProductTagToProductConnection: ProductTagToProductConnection;
+  ProductTagToProductConnectionEdge: ProductTagToProductConnectionEdge;
+  ProductTagToTaxonomyConnectionEdge: ProductTagToTaxonomyConnectionEdge;
+  ProductToCommentConnection: ProductToCommentConnection;
+  ProductToCommentConnectionEdge: ProductToCommentConnectionEdge;
+  ProductToGlobalProductAttributeConnection: ProductToGlobalProductAttributeConnection;
+  ProductToGlobalProductAttributeConnectionEdge: ProductToGlobalProductAttributeConnectionEdge;
+  ProductToLocalProductAttributeConnection: ProductToLocalProductAttributeConnection;
+  ProductToLocalProductAttributeConnectionEdge: ProductToLocalProductAttributeConnectionEdge;
+  ProductToMediaItemConnection: ProductToMediaItemConnection;
+  ProductToMediaItemConnectionEdge: ProductToMediaItemConnectionEdge;
+  ProductToProductAttributeConnection: ProductToProductAttributeConnection;
+  ProductToProductAttributeConnectionEdge: ProductToProductAttributeConnectionEdge;
+  ProductToProductCategoryConnection: ProductToProductCategoryConnection;
+  ProductToProductCategoryConnectionEdge: ProductToProductCategoryConnectionEdge;
+  ProductToProductConnection: ProductToProductConnection;
+  ProductToProductConnectionEdge: ProductToProductConnectionEdge;
+  ProductToProductTagConnection: ProductToProductTagConnection;
+  ProductToProductTagConnectionEdge: ProductToProductTagConnectionEdge;
+  ProductToProductTypeConnection: ProductToProductTypeConnection;
+  ProductToProductTypeConnectionEdge: ProductToProductTypeConnectionEdge;
+  ProductToShippingClassConnection: ProductToShippingClassConnection;
+  ProductToShippingClassConnectionEdge: ProductToShippingClassConnectionEdge;
+  ProductToUpsellConnection: ProductToUpsellConnection;
+  ProductToUpsellConnectionEdge: ProductToUpsellConnectionEdge;
+  ProductToVisibleProductConnection: ProductToVisibleProductConnection;
+  ProductToVisibleProductConnectionEdge: ProductToVisibleProductConnectionEdge;
+  ProductType: ProductType;
+  ProductTypeToContentNodeConnection: ProductTypeToContentNodeConnection;
+  ProductTypeToContentNodeConnectionEdge: ProductTypeToContentNodeConnectionEdge;
+  ProductTypeToTaxonomyConnectionEdge: ProductTypeToTaxonomyConnectionEdge;
+  ProductVariation: ProductVariation;
+  ProductVariationToShippingClassConnection: ProductVariationToShippingClassConnection;
+  ProductVariationToShippingClassConnectionEdge: ProductVariationToShippingClassConnectionEdge;
+  ProductVariationToVariableProductConnectionEdge: ProductVariationToVariableProductConnectionEdge;
+  ProductVariationToVariationAttributeConnection: ProductVariationToVariationAttributeConnection;
+  ProductVariationToVariationAttributeConnectionEdge: ProductVariationToVariationAttributeConnectionEdge;
+  ProductVariationToVisibleProductConnection: ProductVariationToVisibleProductConnection;
+  ProductVariationToVisibleProductConnectionEdge: ProductVariationToVisibleProductConnectionEdge;
   Query: Query;
   ReadingSettings: ReadingSettings;
+  Refund: Refund;
+  RegisterCustomerPayload: RegisterCustomerPayload;
   RegisterUserPayload: RegisterUserPayload;
+  RemoveCouponsPayload: RemoveCouponsPayload;
+  RemoveItemsFromCartPayload: RemoveItemsFromCartPayload;
   ResetUserPasswordPayload: ResetUserPasswordPayload;
+  RestoreCartItemsPayload: RestoreCartItemsPayload;
   RestoreCommentPayload: RestoreCommentPayload;
+  RestoreReviewPayload: RestoreReviewPayload;
   RootQueryToCategoryConnection: RootQueryToCategoryConnection;
   RootQueryToCategoryConnectionEdge: RootQueryToCategoryConnectionEdge;
   RootQueryToCommentConnection: RootQueryToCommentConnection;
@@ -14449,6 +33166,10 @@ export interface SchemaObjectTypes {
   RootQueryToContentRevisionUnionConnectionEdge: RootQueryToContentRevisionUnionConnectionEdge;
   RootQueryToContentTypeConnection: RootQueryToContentTypeConnection;
   RootQueryToContentTypeConnectionEdge: RootQueryToContentTypeConnectionEdge;
+  RootQueryToCouponConnection: RootQueryToCouponConnection;
+  RootQueryToCouponConnectionEdge: RootQueryToCouponConnectionEdge;
+  RootQueryToCustomerConnection: RootQueryToCustomerConnection;
+  RootQueryToCustomerConnectionEdge: RootQueryToCustomerConnectionEdge;
   RootQueryToEnqueuedScriptConnection: RootQueryToEnqueuedScriptConnection;
   RootQueryToEnqueuedScriptConnectionEdge: RootQueryToEnqueuedScriptConnectionEdge;
   RootQueryToEnqueuedStylesheetConnection: RootQueryToEnqueuedStylesheetConnection;
@@ -14459,16 +33180,36 @@ export interface SchemaObjectTypes {
   RootQueryToMenuConnectionEdge: RootQueryToMenuConnectionEdge;
   RootQueryToMenuItemConnection: RootQueryToMenuItemConnection;
   RootQueryToMenuItemConnectionEdge: RootQueryToMenuItemConnectionEdge;
+  RootQueryToOrderConnection: RootQueryToOrderConnection;
+  RootQueryToOrderConnectionEdge: RootQueryToOrderConnectionEdge;
   RootQueryToPageConnection: RootQueryToPageConnection;
   RootQueryToPageConnectionEdge: RootQueryToPageConnectionEdge;
+  RootQueryToPaymentGatewayConnection: RootQueryToPaymentGatewayConnection;
+  RootQueryToPaymentGatewayConnectionEdge: RootQueryToPaymentGatewayConnectionEdge;
   RootQueryToPluginConnection: RootQueryToPluginConnection;
   RootQueryToPluginConnectionEdge: RootQueryToPluginConnectionEdge;
   RootQueryToPostConnection: RootQueryToPostConnection;
   RootQueryToPostConnectionEdge: RootQueryToPostConnectionEdge;
   RootQueryToPostFormatConnection: RootQueryToPostFormatConnection;
   RootQueryToPostFormatConnectionEdge: RootQueryToPostFormatConnectionEdge;
+  RootQueryToProductCategoryConnection: RootQueryToProductCategoryConnection;
+  RootQueryToProductCategoryConnectionEdge: RootQueryToProductCategoryConnectionEdge;
+  RootQueryToProductConnection: RootQueryToProductConnection;
+  RootQueryToProductConnectionEdge: RootQueryToProductConnectionEdge;
+  RootQueryToProductTagConnection: RootQueryToProductTagConnection;
+  RootQueryToProductTagConnectionEdge: RootQueryToProductTagConnectionEdge;
+  RootQueryToProductTypeConnection: RootQueryToProductTypeConnection;
+  RootQueryToProductTypeConnectionEdge: RootQueryToProductTypeConnectionEdge;
+  RootQueryToRefundConnection: RootQueryToRefundConnection;
+  RootQueryToRefundConnectionEdge: RootQueryToRefundConnectionEdge;
+  RootQueryToShippingClassConnection: RootQueryToShippingClassConnection;
+  RootQueryToShippingClassConnectionEdge: RootQueryToShippingClassConnectionEdge;
+  RootQueryToShippingMethodConnection: RootQueryToShippingMethodConnection;
+  RootQueryToShippingMethodConnectionEdge: RootQueryToShippingMethodConnectionEdge;
   RootQueryToTagConnection: RootQueryToTagConnection;
   RootQueryToTagConnectionEdge: RootQueryToTagConnectionEdge;
+  RootQueryToTaxRateConnection: RootQueryToTaxRateConnection;
+  RootQueryToTaxRateConnectionEdge: RootQueryToTaxRateConnectionEdge;
   RootQueryToTaxonomyConnection: RootQueryToTaxonomyConnection;
   RootQueryToTaxonomyConnectionEdge: RootQueryToTaxonomyConnectionEdge;
   RootQueryToTermNodeConnection: RootQueryToTermNodeConnection;
@@ -14479,8 +33220,24 @@ export interface SchemaObjectTypes {
   RootQueryToUserConnectionEdge: RootQueryToUserConnectionEdge;
   RootQueryToUserRoleConnection: RootQueryToUserRoleConnection;
   RootQueryToUserRoleConnectionEdge: RootQueryToUserRoleConnectionEdge;
+  RootQueryToVisibleProductConnection: RootQueryToVisibleProductConnection;
+  RootQueryToVisibleProductConnectionEdge: RootQueryToVisibleProductConnectionEdge;
   SendPasswordResetEmailPayload: SendPasswordResetEmailPayload;
   Settings: Settings;
+  ShippingClass: ShippingClass;
+  ShippingClassToContentNodeConnection: ShippingClassToContentNodeConnection;
+  ShippingClassToContentNodeConnectionEdge: ShippingClassToContentNodeConnectionEdge;
+  ShippingClassToTaxonomyConnectionEdge: ShippingClassToTaxonomyConnectionEdge;
+  ShippingLine: ShippingLine;
+  ShippingMethod: ShippingMethod;
+  ShippingPackage: ShippingPackage;
+  ShippingRate: ShippingRate;
+  SimpleAttribute: SimpleAttribute;
+  SimpleProduct: SimpleProduct;
+  SimpleProductToProductConnection: SimpleProductToProductConnection;
+  SimpleProductToProductConnectionEdge: SimpleProductToProductConnectionEdge;
+  SimpleProductToVariationAttributeConnection: SimpleProductToVariationAttributeConnection;
+  SimpleProductToVariationAttributeConnectionEdge: SimpleProductToVariationAttributeConnectionEdge;
   Subscription: Subscription;
   Tag: Tag;
   TagToContentNodeConnection: TagToContentNodeConnection;
@@ -14488,6 +33245,8 @@ export interface SchemaObjectTypes {
   TagToPostConnection: TagToPostConnection;
   TagToPostConnectionEdge: TagToPostConnectionEdge;
   TagToTaxonomyConnectionEdge: TagToTaxonomyConnectionEdge;
+  TaxLine: TaxLine;
+  TaxRate: TaxRate;
   Taxonomy: Taxonomy;
   TaxonomyToContentTypeConnection: TaxonomyToContentTypeConnection;
   TaxonomyToContentTypeConnectionEdge: TaxonomyToContentTypeConnectionEdge;
@@ -14502,13 +33261,24 @@ export interface SchemaObjectTypes {
   Theme: Theme;
   UpdateCategoryPayload: UpdateCategoryPayload;
   UpdateCommentPayload: UpdateCommentPayload;
+  UpdateCouponPayload: UpdateCouponPayload;
+  UpdateCustomerPayload: UpdateCustomerPayload;
+  UpdateItemQuantitiesPayload: UpdateItemQuantitiesPayload;
   UpdateMediaItemPayload: UpdateMediaItemPayload;
+  UpdateOrderPayload: UpdateOrderPayload;
   UpdatePagePayload: UpdatePagePayload;
   UpdatePostFormatPayload: UpdatePostFormatPayload;
   UpdatePostPayload: UpdatePostPayload;
+  UpdateProductCategoryPayload: UpdateProductCategoryPayload;
+  UpdateProductTagPayload: UpdateProductTagPayload;
+  UpdateProductTypePayload: UpdateProductTypePayload;
+  UpdateReviewPayload: UpdateReviewPayload;
   UpdateSettingsPayload: UpdateSettingsPayload;
+  UpdateShippingClassPayload: UpdateShippingClassPayload;
+  UpdateShippingMethodPayload: UpdateShippingMethodPayload;
   UpdateTagPayload: UpdateTagPayload;
   UpdateUserPayload: UpdateUserPayload;
+  UpdateVisibleProductPayload: UpdateVisibleProductPayload;
   User: User;
   UserRole: UserRole;
   UserToCommentConnection: UserToCommentConnection;
@@ -14527,11 +33297,38 @@ export interface SchemaObjectTypes {
   UserToPostConnectionEdge: UserToPostConnectionEdge;
   UserToUserRoleConnection: UserToUserRoleConnection;
   UserToUserRoleConnectionEdge: UserToUserRoleConnectionEdge;
+  VariableProduct: VariableProduct;
+  VariableProductToProductConnection: VariableProductToProductConnection;
+  VariableProductToProductConnectionEdge: VariableProductToProductConnectionEdge;
+  VariableProductToProductVariationConnection: VariableProductToProductVariationConnection;
+  VariableProductToProductVariationConnectionEdge: VariableProductToProductVariationConnectionEdge;
+  VariableProductToVariationAttributeConnection: VariableProductToVariationAttributeConnection;
+  VariableProductToVariationAttributeConnectionEdge: VariableProductToVariationAttributeConnectionEdge;
+  VariationAttribute: VariationAttribute;
+  VisibleProduct: VisibleProduct;
+  VisibleProductToContentNodeConnection: VisibleProductToContentNodeConnection;
+  VisibleProductToContentNodeConnectionEdge: VisibleProductToContentNodeConnectionEdge;
+  VisibleProductToTaxonomyConnectionEdge: VisibleProductToTaxonomyConnectionEdge;
   WPPageInfo: WPPageInfo;
+  WriteReviewPayload: WriteReviewPayload;
   WritingSettings: WritingSettings;
 }
 export type SchemaObjectTypesNames =
+  | 'AddCartItemsPayload'
+  | 'AddFeePayload'
+  | 'AddToCartPayload'
+  | 'AppliedCoupon'
+  | 'ApplyCouponPayload'
   | 'Avatar'
+  | 'Cart'
+  | 'CartFee'
+  | 'CartItem'
+  | 'CartItemError'
+  | 'CartItemToProductConnectionEdge'
+  | 'CartItemToProductVariationConnectionEdge'
+  | 'CartTax'
+  | 'CartToCartItemConnection'
+  | 'CartToCartItemConnectionEdge'
   | 'Category'
   | 'CategoryToAncestorsCategoryConnection'
   | 'CategoryToAncestorsCategoryConnectionEdge'
@@ -14543,6 +33340,7 @@ export type SchemaObjectTypesNames =
   | 'CategoryToPostConnection'
   | 'CategoryToPostConnectionEdge'
   | 'CategoryToTaxonomyConnectionEdge'
+  | 'CheckoutPayload'
   | 'Comment'
   | 'CommentAuthor'
   | 'CommentToCommentConnection'
@@ -14563,33 +33361,88 @@ export type SchemaObjectTypesNames =
   | 'ContentTypeToContentNodeConnectionEdge'
   | 'ContentTypeToTaxonomyConnection'
   | 'ContentTypeToTaxonomyConnectionEdge'
+  | 'Coupon'
+  | 'CouponLine'
+  | 'CouponToCustomerConnection'
+  | 'CouponToCustomerConnectionEdge'
+  | 'CouponToExcludedProductCategoriesConnection'
+  | 'CouponToExcludedProductCategoriesConnectionEdge'
+  | 'CouponToExcludedProductsConnection'
+  | 'CouponToExcludedProductsConnectionEdge'
+  | 'CouponToProductCategoryConnection'
+  | 'CouponToProductCategoryConnectionEdge'
+  | 'CouponToProductConnection'
+  | 'CouponToProductConnectionEdge'
   | 'CreateCategoryPayload'
   | 'CreateCommentPayload'
+  | 'CreateCouponPayload'
   | 'CreateMediaItemPayload'
+  | 'CreateOrderPayload'
   | 'CreatePagePayload'
   | 'CreatePostFormatPayload'
   | 'CreatePostPayload'
+  | 'CreateProductCategoryPayload'
+  | 'CreateProductTagPayload'
+  | 'CreateProductTypePayload'
+  | 'CreateShippingClassPayload'
   | 'CreateTagPayload'
   | 'CreateUserPayload'
+  | 'CreateVisibleProductPayload'
+  | 'Customer'
+  | 'CustomerAddress'
+  | 'CustomerToDownloadableItemConnection'
+  | 'CustomerToDownloadableItemConnectionEdge'
+  | 'CustomerToOrderConnection'
+  | 'CustomerToOrderConnectionEdge'
+  | 'CustomerToRefundConnection'
+  | 'CustomerToRefundConnectionEdge'
   | 'DefaultTemplate'
   | 'DeleteCategoryPayload'
   | 'DeleteCommentPayload'
+  | 'DeleteCouponPayload'
   | 'DeleteMediaItemPayload'
+  | 'DeleteOrderItemsPayload'
+  | 'DeleteOrderPayload'
   | 'DeletePagePayload'
   | 'DeletePostFormatPayload'
   | 'DeletePostPayload'
+  | 'DeleteProductCategoryPayload'
+  | 'DeleteProductTagPayload'
+  | 'DeleteProductTypePayload'
+  | 'DeleteReviewPayload'
+  | 'DeleteShippingClassPayload'
   | 'DeleteTagPayload'
   | 'DeleteUserPayload'
+  | 'DeleteVisibleProductPayload'
   | 'DiscussionSettings'
+  | 'DownloadableItem'
+  | 'EmptyCartPayload'
   | 'EnqueuedScript'
   | 'EnqueuedStylesheet'
+  | 'ExternalProduct'
+  | 'ExternalProductToVariationAttributeConnection'
+  | 'ExternalProductToVariationAttributeConnectionEdge'
+  | 'FeeLine'
+  | 'FillCartPayload'
   | 'GeneralSettings'
   | 'GenerateAuthorizationCodePayload'
+  | 'GlobalProductAttribute'
+  | 'GlobalProductAttributeToTermNodeConnection'
+  | 'GlobalProductAttributeToTermNodeConnectionEdge'
+  | 'GroupProduct'
+  | 'GroupProductToProductConnection'
+  | 'GroupProductToProductConnectionEdge'
+  | 'GroupProductToVariationAttributeConnection'
+  | 'GroupProductToVariationAttributeConnectionEdge'
   | 'HierarchicalContentNodeToContentNodeAncestorsConnection'
   | 'HierarchicalContentNodeToContentNodeAncestorsConnectionEdge'
   | 'HierarchicalContentNodeToContentNodeChildrenConnection'
   | 'HierarchicalContentNodeToContentNodeChildrenConnectionEdge'
   | 'HierarchicalContentNodeToParentContentNodeConnectionEdge'
+  | 'LineItem'
+  | 'LineItemToProductConnectionEdge'
+  | 'LineItemToProductVariationConnectionEdge'
+  | 'LocalProductAttribute'
   | 'MediaDetails'
   | 'MediaItem'
   | 'MediaItemMeta'
@@ -14604,16 +33457,36 @@ export type SchemaObjectTypesNames =
   | 'MenuItemToMenuItemLinkableConnectionEdge'
   | 'MenuToMenuItemConnection'
   | 'MenuToMenuItemConnectionEdge'
+  | 'MetaData'
   | 'Mutation'
   | 'NodeWithAuthorToUserConnectionEdge'
   | 'NodeWithFeaturedImageToMediaItemConnectionEdge'
   | 'NodeWithRevisionsToContentNodeConnectionEdge'
+  | 'Order'
+  | 'OrderItemTax'
+  | 'OrderToCommentConnection'
+  | 'OrderToCommentConnectionEdge'
+  | 'OrderToCouponLineConnection'
+  | 'OrderToCouponLineConnectionEdge'
+  | 'OrderToDownloadableItemConnection'
+  | 'OrderToDownloadableItemConnectionEdge'
+  | 'OrderToFeeLineConnection'
+  | 'OrderToFeeLineConnectionEdge'
+  | 'OrderToLineItemConnection'
+  | 'OrderToLineItemConnectionEdge'
+  | 'OrderToRefundConnection'
+  | 'OrderToRefundConnectionEdge'
+  | 'OrderToShippingLineConnection'
+  | 'OrderToShippingLineConnectionEdge'
+  | 'OrderToTaxLineConnection'
+  | 'OrderToTaxLineConnectionEdge'
   | 'Page'
   | 'PageToCommentConnection'
   | 'PageToCommentConnectionEdge'
   | 'PageToPreviewConnectionEdge'
   | 'PageToRevisionConnection'
   | 'PageToRevisionConnectionEdge'
+  | 'PaymentGateway'
   | 'Plugin'
   | 'Post'
   | 'PostFormat'
@@ -14636,11 +33509,72 @@ export type SchemaObjectTypesNames =
   | 'PostToTermNodeConnection'
   | 'PostToTermNodeConnectionEdge'
   | 'PostTypeLabelDetails'
+  | 'ProductAttributeOutput'
+  | 'ProductCategory'
+  | 'ProductCategoryToAncestorsProductCategoryConnection'
+  | 'ProductCategoryToAncestorsProductCategoryConnectionEdge'
+  | 'ProductCategoryToContentNodeConnection'
+  | 'ProductCategoryToContentNodeConnectionEdge'
+  | 'ProductCategoryToParentProductCategoryConnectionEdge'
+  | 'ProductCategoryToProductCategoryConnection'
+  | 'ProductCategoryToProductCategoryConnectionEdge'
+  | 'ProductCategoryToProductConnection'
+  | 'ProductCategoryToProductConnectionEdge'
+  | 'ProductCategoryToTaxonomyConnectionEdge'
+  | 'ProductDownload'
+  | 'ProductTag'
+  | 'ProductTagToContentNodeConnection'
+  | 'ProductTagToContentNodeConnectionEdge'
+  | 'ProductTagToProductConnection'
+  | 'ProductTagToProductConnectionEdge'
+  | 'ProductTagToTaxonomyConnectionEdge'
+  | 'ProductToCommentConnection'
+  | 'ProductToCommentConnectionEdge'
+  | 'ProductToGlobalProductAttributeConnection'
+  | 'ProductToGlobalProductAttributeConnectionEdge'
+  | 'ProductToLocalProductAttributeConnection'
+  | 'ProductToLocalProductAttributeConnectionEdge'
+  | 'ProductToMediaItemConnection'
+  | 'ProductToMediaItemConnectionEdge'
+  | 'ProductToProductAttributeConnection'
+  | 'ProductToProductAttributeConnectionEdge'
+  | 'ProductToProductCategoryConnection'
+  | 'ProductToProductCategoryConnectionEdge'
+  | 'ProductToProductConnection'
+  | 'ProductToProductConnectionEdge'
+  | 'ProductToProductTagConnection'
+  | 'ProductToProductTagConnectionEdge'
+  | 'ProductToProductTypeConnection'
+  | 'ProductToProductTypeConnectionEdge'
+  | 'ProductToShippingClassConnection'
+  | 'ProductToShippingClassConnectionEdge'
+  | 'ProductToUpsellConnection'
+  | 'ProductToUpsellConnectionEdge'
+  | 'ProductToVisibleProductConnection'
+  | 'ProductToVisibleProductConnectionEdge'
+  | 'ProductType'
+  | 'ProductTypeToContentNodeConnection'
+  | 'ProductTypeToContentNodeConnectionEdge'
+  | 'ProductTypeToTaxonomyConnectionEdge'
+  | 'ProductVariation'
+  | 'ProductVariationToShippingClassConnection'
+  | 'ProductVariationToShippingClassConnectionEdge'
+  | 'ProductVariationToVariableProductConnectionEdge'
+  | 'ProductVariationToVariationAttributeConnection'
+  | 'ProductVariationToVariationAttributeConnectionEdge'
+  | 'ProductVariationToVisibleProductConnection'
+  | 'ProductVariationToVisibleProductConnectionEdge'
   | 'Query'
   | 'ReadingSettings'
+  | 'Refund'
+  | 'RegisterCustomerPayload'
   | 'RegisterUserPayload'
+  | 'RemoveCouponsPayload'
+  | 'RemoveItemsFromCartPayload'
   | 'ResetUserPasswordPayload'
+  | 'RestoreCartItemsPayload'
   | 'RestoreCommentPayload'
+  | 'RestoreReviewPayload'
   | 'RootQueryToCategoryConnection'
   | 'RootQueryToCategoryConnectionEdge'
   | 'RootQueryToCommentConnection'
@@ -14651,6 +33585,10 @@ export type SchemaObjectTypesNames =
   | 'RootQueryToContentRevisionUnionConnectionEdge'
   | 'RootQueryToContentTypeConnection'
   | 'RootQueryToContentTypeConnectionEdge'
+  | 'RootQueryToCouponConnection'
+  | 'RootQueryToCouponConnectionEdge'
+  | 'RootQueryToCustomerConnection'
+  | 'RootQueryToCustomerConnectionEdge'
   | 'RootQueryToEnqueuedScriptConnection'
   | 'RootQueryToEnqueuedScriptConnectionEdge'
   | 'RootQueryToEnqueuedStylesheetConnection'
@@ -14661,16 +33599,36 @@ export type SchemaObjectTypesNames =
   | 'RootQueryToMenuConnectionEdge'
   | 'RootQueryToMenuItemConnection'
   | 'RootQueryToMenuItemConnectionEdge'
+  | 'RootQueryToOrderConnection'
+  | 'RootQueryToOrderConnectionEdge'
   | 'RootQueryToPageConnection'
   | 'RootQueryToPageConnectionEdge'
+  | 'RootQueryToPaymentGatewayConnection'
+  | 'RootQueryToPaymentGatewayConnectionEdge'
   | 'RootQueryToPluginConnection'
   | 'RootQueryToPluginConnectionEdge'
   | 'RootQueryToPostConnection'
   | 'RootQueryToPostConnectionEdge'
   | 'RootQueryToPostFormatConnection'
   | 'RootQueryToPostFormatConnectionEdge'
+  | 'RootQueryToProductCategoryConnection'
+  | 'RootQueryToProductCategoryConnectionEdge'
+  | 'RootQueryToProductConnection'
+  | 'RootQueryToProductConnectionEdge'
+  | 'RootQueryToProductTagConnection'
+  | 'RootQueryToProductTagConnectionEdge'
+  | 'RootQueryToProductTypeConnection'
+  | 'RootQueryToProductTypeConnectionEdge'
+  | 'RootQueryToRefundConnection'
+  | 'RootQueryToRefundConnectionEdge'
+  | 'RootQueryToShippingClassConnection'
+  | 'RootQueryToShippingClassConnectionEdge'
+  | 'RootQueryToShippingMethodConnection'
+  | 'RootQueryToShippingMethodConnectionEdge'
   | 'RootQueryToTagConnection'
   | 'RootQueryToTagConnectionEdge'
+  | 'RootQueryToTaxRateConnection'
+  | 'RootQueryToTaxRateConnectionEdge'
   | 'RootQueryToTaxonomyConnection'
   | 'RootQueryToTaxonomyConnectionEdge'
   | 'RootQueryToTermNodeConnection'
@@ -14681,8 +33639,24 @@ export type SchemaObjectTypesNames =
   | 'RootQueryToUserConnectionEdge'
   | 'RootQueryToUserRoleConnection'
   | 'RootQueryToUserRoleConnectionEdge'
+  | 'RootQueryToVisibleProductConnection'
+  | 'RootQueryToVisibleProductConnectionEdge'
   | 'SendPasswordResetEmailPayload'
   | 'Settings'
+  | 'ShippingClass'
+  | 'ShippingClassToContentNodeConnection'
+  | 'ShippingClassToContentNodeConnectionEdge'
+  | 'ShippingClassToTaxonomyConnectionEdge'
+  | 'ShippingLine'
+  | 'ShippingMethod'
+  | 'ShippingPackage'
+  | 'ShippingRate'
+  | 'SimpleAttribute'
+  | 'SimpleProduct'
+  | 'SimpleProductToProductConnection'
+  | 'SimpleProductToProductConnectionEdge'
+  | 'SimpleProductToVariationAttributeConnection'
+  | 'SimpleProductToVariationAttributeConnectionEdge'
   | 'Subscription'
   | 'Tag'
   | 'TagToContentNodeConnection'
@@ -14690,6 +33664,8 @@ export type SchemaObjectTypesNames =
   | 'TagToPostConnection'
   | 'TagToPostConnectionEdge'
   | 'TagToTaxonomyConnectionEdge'
+  | 'TaxLine'
+  | 'TaxRate'
   | 'Taxonomy'
   | 'TaxonomyToContentTypeConnection'
   | 'TaxonomyToContentTypeConnectionEdge'
@@ -14704,13 +33680,24 @@ export type SchemaObjectTypesNames =
   | 'Theme'
   | 'UpdateCategoryPayload'
   | 'UpdateCommentPayload'
+  | 'UpdateCouponPayload'
+  | 'UpdateCustomerPayload'
+  | 'UpdateItemQuantitiesPayload'
   | 'UpdateMediaItemPayload'
+  | 'UpdateOrderPayload'
   | 'UpdatePagePayload'
   | 'UpdatePostFormatPayload'
   | 'UpdatePostPayload'
+  | 'UpdateProductCategoryPayload'
+  | 'UpdateProductTagPayload'
+  | 'UpdateProductTypePayload'
+  | 'UpdateReviewPayload'
   | 'UpdateSettingsPayload'
+  | 'UpdateShippingClassPayload'
+  | 'UpdateShippingMethodPayload'
   | 'UpdateTagPayload'
   | 'UpdateUserPayload'
+  | 'UpdateVisibleProductPayload'
   | 'User'
   | 'UserRole'
   | 'UserToCommentConnection'
@@ -14729,8 +33716,30 @@ export type SchemaObjectTypesNames =
   | 'UserToPostConnectionEdge'
   | 'UserToUserRoleConnection'
   | 'UserToUserRoleConnectionEdge'
+  | 'VariableProduct'
+  | 'VariableProductToProductConnection'
+  | 'VariableProductToProductConnectionEdge'
+  | 'VariableProductToProductVariationConnection'
+  | 'VariableProductToProductVariationConnectionEdge'
+  | 'VariableProductToVariationAttributeConnection'
+  | 'VariableProductToVariationAttributeConnectionEdge'
+  | 'VariationAttribute'
+  | 'VisibleProduct'
+  | 'VisibleProductToContentNodeConnection'
+  | 'VisibleProductToContentNodeConnectionEdge'
+  | 'VisibleProductToTaxonomyConnectionEdge'
   | 'WPPageInfo'
+  | 'WriteReviewPayload'
   | 'WritingSettings';
+
+export interface $Attribute {
+  SimpleAttribute?: SimpleAttribute;
+  VariationAttribute?: VariationAttribute;
+}
+
+export interface $CartError {
+  CartItemError?: CartItemError;
+}
 
 export interface $Commenter {
   CommentAuthor?: CommentAuthor;
@@ -14738,9 +33747,14 @@ export interface $Commenter {
 }
 
 export interface $ContentNode {
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
+  ProductVariation?: ProductVariation;
+  SimpleProduct?: SimpleProduct;
+  VariableProduct?: VariableProduct;
 }
 
 export interface $ContentRevisionUnion {
@@ -14759,14 +33773,24 @@ export interface $ContentTemplate {
 export interface $DatabaseIdentifier {
   Category?: Category;
   Comment?: Comment;
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   MediaItem?: MediaItem;
   Menu?: Menu;
   MenuItem?: MenuItem;
   Page?: Page;
   Post?: Post;
   PostFormat?: PostFormat;
+  ProductCategory?: ProductCategory;
+  ProductTag?: ProductTag;
+  ProductType?: ProductType;
+  ProductVariation?: ProductVariation;
+  ShippingClass?: ShippingClass;
+  SimpleProduct?: SimpleProduct;
   Tag?: Tag;
   User?: User;
+  VariableProduct?: VariableProduct;
+  VisibleProduct?: VisibleProduct;
 }
 
 export interface $EnqueuedAsset {
@@ -14781,12 +33805,15 @@ export interface $HierarchicalContentNode {
 
 export interface $HierarchicalTermNode {
   Category?: Category;
+  ProductCategory?: ProductCategory;
 }
 
 export interface $MenuItemLinkable {
   Category?: Category;
   Page?: Page;
   Post?: Post;
+  ProductCategory?: ProductCategory;
+  ProductTag?: ProductTag;
   Tag?: Tag;
 }
 
@@ -14794,6 +33821,8 @@ export interface $MenuItemObjectUnion {
   Category?: Category;
   Page?: Page;
   Post?: Post;
+  ProductCategory?: ProductCategory;
+  ProductTag?: ProductTag;
   Tag?: Tag;
 }
 
@@ -14802,20 +33831,36 @@ export interface $Node {
   Comment?: Comment;
   CommentAuthor?: CommentAuthor;
   ContentType?: ContentType;
+  Coupon?: Coupon;
+  Customer?: Customer;
   EnqueuedScript?: EnqueuedScript;
   EnqueuedStylesheet?: EnqueuedStylesheet;
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   MediaItem?: MediaItem;
   Menu?: Menu;
   MenuItem?: MenuItem;
+  Order?: Order;
   Page?: Page;
   Plugin?: Plugin;
   Post?: Post;
   PostFormat?: PostFormat;
+  ProductCategory?: ProductCategory;
+  ProductTag?: ProductTag;
+  ProductType?: ProductType;
+  ProductVariation?: ProductVariation;
+  Refund?: Refund;
+  ShippingClass?: ShippingClass;
+  ShippingMethod?: ShippingMethod;
+  SimpleProduct?: SimpleProduct;
   Tag?: Tag;
+  TaxRate?: TaxRate;
   Taxonomy?: Taxonomy;
   Theme?: Theme;
   User?: User;
   UserRole?: UserRole;
+  VariableProduct?: VariableProduct;
+  VisibleProduct?: VisibleProduct;
 }
 
 export interface $NodeWithAuthor {
@@ -14825,14 +33870,23 @@ export interface $NodeWithAuthor {
 }
 
 export interface $NodeWithComments {
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   MediaItem?: MediaItem;
+  Order?: Order;
   Page?: Page;
   Post?: Post;
+  SimpleProduct?: SimpleProduct;
+  VariableProduct?: VariableProduct;
 }
 
 export interface $NodeWithContentEditor {
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   Page?: Page;
   Post?: Post;
+  SimpleProduct?: SimpleProduct;
+  VariableProduct?: VariableProduct;
 }
 
 export interface $NodeWithExcerpt {
@@ -14840,8 +33894,13 @@ export interface $NodeWithExcerpt {
 }
 
 export interface $NodeWithFeaturedImage {
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   Page?: Page;
   Post?: Post;
+  ProductVariation?: ProductVariation;
+  SimpleProduct?: SimpleProduct;
+  VariableProduct?: VariableProduct;
 }
 
 export interface $NodeWithPageAttributes {
@@ -14869,21 +33928,48 @@ export interface $NodeWithTrackbacks {
   Post?: Post;
 }
 
+export interface $Product {
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
+  SimpleProduct?: SimpleProduct;
+  VariableProduct?: VariableProduct;
+}
+
+export interface $ProductAttribute {
+  GlobalProductAttribute?: GlobalProductAttribute;
+  LocalProductAttribute?: LocalProductAttribute;
+}
+
 export interface $TermNode {
   Category?: Category;
   PostFormat?: PostFormat;
+  ProductCategory?: ProductCategory;
+  ProductTag?: ProductTag;
+  ProductType?: ProductType;
+  ShippingClass?: ShippingClass;
   Tag?: Tag;
+  VisibleProduct?: VisibleProduct;
 }
 
 export interface $UniformResourceIdentifiable {
   Category?: Category;
   ContentType?: ContentType;
+  ExternalProduct?: ExternalProduct;
+  GroupProduct?: GroupProduct;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
   PostFormat?: PostFormat;
+  ProductCategory?: ProductCategory;
+  ProductTag?: ProductTag;
+  ProductType?: ProductType;
+  ProductVariation?: ProductVariation;
+  ShippingClass?: ShippingClass;
+  SimpleProduct?: SimpleProduct;
   Tag?: Tag;
   User?: User;
+  VariableProduct?: VariableProduct;
+  VisibleProduct?: VisibleProduct;
 }
 
 export interface GeneratedSchema {
@@ -14898,6 +33984,9 @@ export type MakeNullable<T> = {
 
 export interface ScalarsEnums extends MakeNullable<Scalars> {
   AvatarRatingEnum: AvatarRatingEnum | undefined;
+  BackordersEnum: BackordersEnum | undefined;
+  CartErrorType: CartErrorType | undefined;
+  CatalogVisibilityEnum: CatalogVisibilityEnum | undefined;
   CategoryIdType: CategoryIdType | undefined;
   CommentsConnectionOrderbyEnum: CommentsConnectionOrderbyEnum | undefined;
   ContentNodeIdTypeEnum: ContentNodeIdTypeEnum | undefined;
@@ -14906,6 +33995,11 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   ContentTypesOfCategoryEnum: ContentTypesOfCategoryEnum | undefined;
   ContentTypesOfPostFormatEnum: ContentTypesOfPostFormatEnum | undefined;
   ContentTypesOfTagEnum: ContentTypesOfTagEnum | undefined;
+  CountriesEnum: CountriesEnum | undefined;
+  CouponIdTypeEnum: CouponIdTypeEnum | undefined;
+  CustomerConnectionOrderbyEnum: CustomerConnectionOrderbyEnum | undefined;
+  DiscountTypeEnum: DiscountTypeEnum | undefined;
+  ManageStockEnum: ManageStockEnum | undefined;
   MediaItemIdType: MediaItemIdType | undefined;
   MediaItemSizeEnum: MediaItemSizeEnum | undefined;
   MediaItemStatusEnum: MediaItemStatusEnum | undefined;
@@ -14914,27 +34008,53 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   MenuNodeIdTypeEnum: MenuNodeIdTypeEnum | undefined;
   MimeTypeEnum: MimeTypeEnum | undefined;
   OrderEnum: OrderEnum | undefined;
+  OrderIdTypeEnum: OrderIdTypeEnum | undefined;
+  OrderStatusEnum: OrderStatusEnum | undefined;
+  OrdersOrderByEnum: OrdersOrderByEnum | undefined;
   PageIdType: PageIdType | undefined;
+  PluginStatusEnum: PluginStatusEnum | undefined;
   PostFormatIdType: PostFormatIdType | undefined;
   PostIdType: PostIdType | undefined;
   PostObjectFieldFormatEnum: PostObjectFieldFormatEnum | undefined;
   PostObjectsConnectionDateColumnEnum:
-    | PostObjectsConnectionDateColumnEnum
-    | undefined;
+  | PostObjectsConnectionDateColumnEnum
+  | undefined;
   PostObjectsConnectionOrderbyEnum:
-    | PostObjectsConnectionOrderbyEnum
-    | undefined;
+  | PostObjectsConnectionOrderbyEnum
+  | undefined;
   PostStatusEnum: PostStatusEnum | undefined;
+  PostTypeOrderByEnum: PostTypeOrderByEnum | undefined;
+  PricingFieldFormatEnum: PricingFieldFormatEnum | undefined;
+  ProductAttributeTypesEnum: ProductAttributeTypesEnum | undefined;
+  ProductCategoryDisplay: ProductCategoryDisplay | undefined;
+  ProductCategoryIdType: ProductCategoryIdType | undefined;
+  ProductIdTypeEnum: ProductIdTypeEnum | undefined;
+  ProductTagIdType: ProductTagIdType | undefined;
+  ProductTaxonomyEnum: ProductTaxonomyEnum | undefined;
+  ProductTypeIdType: ProductTypeIdType | undefined;
+  ProductTypesEnum: ProductTypesEnum | undefined;
+  ProductVariationIdTypeEnum: ProductVariationIdTypeEnum | undefined;
+  ProductsOrderByEnum: ProductsOrderByEnum | undefined;
+  RefundIdTypeEnum: RefundIdTypeEnum | undefined;
   RelationEnum: RelationEnum | undefined;
+  ShippingClassIdType: ShippingClassIdType | undefined;
+  ShippingMethodIdTypeEnum: ShippingMethodIdTypeEnum | undefined;
+  StockStatusEnum: StockStatusEnum | undefined;
   TagIdType: TagIdType | undefined;
+  TaxClassEnum: TaxClassEnum | undefined;
+  TaxRateConnectionOrderbyEnum: TaxRateConnectionOrderbyEnum | undefined;
+  TaxRateIdTypeEnum: TaxRateIdTypeEnum | undefined;
+  TaxStatusEnum: TaxStatusEnum | undefined;
   TaxonomyEnum: TaxonomyEnum | undefined;
   TaxonomyIdTypeEnum: TaxonomyIdTypeEnum | undefined;
+  TaxonomyOperatorEnum: TaxonomyOperatorEnum | undefined;
   TermNodeIdTypeEnum: TermNodeIdTypeEnum | undefined;
   TermObjectsConnectionOrderbyEnum:
-    | TermObjectsConnectionOrderbyEnum
-    | undefined;
+  | TermObjectsConnectionOrderbyEnum
+  | undefined;
   UserNodeIdTypeEnum: UserNodeIdTypeEnum | undefined;
   UserRoleEnum: UserRoleEnum | undefined;
   UsersConnectionOrderbyEnum: UsersConnectionOrderbyEnum | undefined;
   UsersConnectionSearchColumnEnum: UsersConnectionSearchColumnEnum | undefined;
+  VisibleProductIdType: VisibleProductIdType | undefined;
 }
