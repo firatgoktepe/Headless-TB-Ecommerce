@@ -9,6 +9,9 @@ const POSTS_PER_PAGE = 6;
 
 export default function Shop() {
   const { useQuery, usePosts } = client;
+  const { products } = useQuery();
+  const items = products({}).nodes;
+  console.log("products", items);
   const { query = {} } = useRouter();
   const generalSettings = useQuery().generalSettings;
   const { postSlug, postCursor } = query;
@@ -36,13 +39,37 @@ export default function Shop() {
       <Hero title="Ürünlerimiz" />
 
       <main className="content content-single">
-        <Posts
-          posts={posts.nodes}
-          heading="Latest Posts"
-          intro="The Posts component in src/pages/index.tsx shows the latest six posts from the connected WordPress site."
-          headingLevel="h2"
-          postTitleLevel="h3"
-        />
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="row">
+                {items.map((product, index) => {
+                  return (
+                    <div key={index} className="col-12 col-md-6 col-lg-4">
+                      <div className="card">
+                        <img
+                          src={product.image.sourceUrl()}
+                          className="card-img-top"
+                          alt={product.image.altText}
+                        />
+                        <div className="card-body">
+                          <h5 className="card-title">{product.name}</h5>
+
+                          <div
+                            // eslint-disable-next-line react/no-danger
+                            dangerouslySetInnerHTML={{
+                              __html: product.shortDescription() ?? "",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />
@@ -52,7 +79,7 @@ export default function Shop() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context, {
-    // Page,
+    Page: Shop,
     client,
   });
 }
