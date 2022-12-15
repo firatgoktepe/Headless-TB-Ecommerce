@@ -62,7 +62,9 @@ export default function Shop() {
                             }}
                           />
                         </div>
+                        <p>{product.$on.SimpleProduct.price()}</p>
                       </div>
+                      <button>Sepete Ekle</button>
                     </div>
                   );
                 })}
