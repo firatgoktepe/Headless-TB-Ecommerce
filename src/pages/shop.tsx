@@ -8,10 +8,9 @@ import { useRouter } from "next/router";
 const POSTS_PER_PAGE = 6;
 
 export default function Shop() {
-  const { useQuery, usePosts } = client;
+  const { useQuery, usePosts, useMutation } = client;
   const { products } = useQuery();
   const items = products({}).nodes;
-  console.log("products", items);
   const { query = {} } = useRouter();
   const generalSettings = useQuery().generalSettings;
   const { postSlug, postCursor } = query;
@@ -22,8 +21,6 @@ export default function Shop() {
     first: !isBefore ? POSTS_PER_PAGE : undefined,
     last: isBefore ? POSTS_PER_PAGE : undefined,
   });
-
-  console.log("dsada", client.client);
 
   return (
     <>
