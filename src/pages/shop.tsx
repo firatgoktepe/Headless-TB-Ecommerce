@@ -4,6 +4,7 @@ import { Footer, Header, Hero, Posts } from "components";
 import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import AddToCartButton from "components/cart/AddToCartButton";
 
 const POSTS_PER_PAGE = 6;
 
@@ -61,7 +62,7 @@ export default function Shop() {
                         </div>
                         <p>{product.$on.SimpleProduct.price()}</p>
                       </div>
-                      <button>Sepete Ekle</button>
+                      <AddToCartButton product={product} />
                     </div>
                   );
                 })}
