@@ -17,10 +17,12 @@ export default function Cart() {
   const [cart, setCart] = useContext(AppContext);
 
   if (typeof window !== "undefined") {
-    var existingCart = JSON.parse(localStorage.getItem("wpd-cart")).products;
+    var existingCart =
+      JSON.parse(localStorage.getItem("wpd-cart")) &&
+      JSON.parse(localStorage.getItem("wpd-cart")).products;
     console.log("dsasadsdsdas", existingCart);
   } else {
-    return null;
+    var existingCart = cart.products;
   }
 
   return (
@@ -41,25 +43,28 @@ export default function Cart() {
           <div className="row">
             <div className="col-12">
               <div className="row">
-                {existingCart.map((product, index) => {
-                  return (
-                    <div key={index} className="col-12 col-md-6 col-lg-4">
-                      <div className="card">
-                        <div className="card-body">
-                          <div
-                            // eslint-disable-next-line react/no-danger
-                            dangerouslySetInnerHTML={{
-                              __html: product.name ?? "",
-                            }}
-                          />
-                          <p className="card-text">
-                            <small className="text-muted">{product.qty}</small>
-                          </p>
+                {existingCart &&
+                  existingCart.map((product, index) => {
+                    return (
+                      <div key={index} className="col-12 col-md-6 col-lg-4">
+                        <div className="card">
+                          <div className="card-body">
+                            <div
+                              // eslint-disable-next-line react/no-danger
+                              dangerouslySetInnerHTML={{
+                                __html: product.name ?? "",
+                              }}
+                            />
+                            <p className="card-text">
+                              <small className="text-muted">
+                                {product.qty}
+                              </small>
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
               <Link href="/shop">Return to Shop</Link>
             </div>
