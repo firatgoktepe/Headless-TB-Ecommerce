@@ -5,6 +5,7 @@ import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import AddToCartButton from "components/cart/AddToCartButton";
+import Link from "next/link";
 
 const POSTS_PER_PAGE = 6;
 
@@ -44,24 +45,26 @@ export default function Shop() {
                 {items.map((product, index) => {
                   return (
                     <div key={index} className="col-12 col-md-6 col-lg-4">
-                      <div className="card">
-                        <img
-                          src={product.image.sourceUrl()}
-                          className="card-img-top"
-                          alt={product.image.altText}
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">{product.name}</h5>
-
-                          <div
-                            // eslint-disable-next-line react/no-danger
-                            dangerouslySetInnerHTML={{
-                              __html: product.shortDescription() ?? "",
-                            }}
+                      <Link href={`/product/${product.slug}`}>
+                        <div className="card">
+                          <img
+                            src={product.image.sourceUrl()}
+                            className="card-img-top"
+                            alt={product.image.altText}
                           />
+                          <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+
+                            <div
+                              // eslint-disable-next-line react/no-danger
+                              dangerouslySetInnerHTML={{
+                                __html: product.shortDescription() ?? "",
+                              }}
+                            />
+                          </div>
+                          <p>{product.$on.SimpleProduct.price()}</p>
                         </div>
-                        <p>{product.$on.SimpleProduct.price()}</p>
-                      </div>
+                      </Link>
                       <AddToCartButton product={product} />
                     </div>
                   );
