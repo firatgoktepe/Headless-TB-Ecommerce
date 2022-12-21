@@ -16,6 +16,7 @@
     "wpe-build": "next build"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.3",
     "@faustjs/core": "^0.15.7",
     "@faustjs/next": "^0.15.9",
     "next": "^12.2.4",
